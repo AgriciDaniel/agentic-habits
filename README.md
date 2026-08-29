@@ -5,8 +5,8 @@
 <p align="center">
   <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-C2410C?style=flat-square"></a>
   <a href=".github/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/AgriciDaniel/agentic-habits/ci.yml?style=flat-square&label=checks&color=1C1917"></a>
-  <img alt="dependencies: none" src="https://img.shields.io/badge/dependencies-none-1C1917?style=flat-square">
-  <img alt="markdown only" src="https://img.shields.io/badge/markdown-only-1C1917?style=flat-square">
+  <img alt="rules: markdown" src="https://img.shields.io/badge/rules-markdown-1C1917?style=flat-square">
+  <img alt="gate: shell + jq" src="https://img.shields.io/badge/gate-shell%20%2B%20jq-1C1917?style=flat-square">
 </p>
 
 <p align="center">
@@ -110,12 +110,15 @@ skipped gets escalated to a hook, proposed and approved, never written silently.
 | `/habits add <text>` | Turn a loose wish into a habit card, pick the scope, preview, write |
 | `/habits review` | Conflicts, duplicates, dead weight, budget, promotions, retirements |
 | `/habits check` | Score this session against the live habits, from evidence only |
+| `/habits judge` | The same, in a fresh read-only context, which is the verdict that counts |
+| `/habits cases` | The case file: what actually happened, with evidence |
 | `/habits lapse <id>` | Record a miss and run the repair ladder |
 | `/habits move <id> <scope>` | Promote or demote between session, project, path, and system |
 | `/habits enforce <id>` | Propose a hook for a habit that context alone keeps missing |
 | `/habits drop <id>` | Retire it to the archive with a date and a reason |
 
-Plus `edit`, `export`, and `import`. Anything unrecognized is treated as `add`.
+Plus `/habits edit`, `/habits export`, and `/habits import`. Anything
+unrecognized is treated as `add`.
 
 ## When a habit is missed
 
@@ -150,13 +153,21 @@ given no way to run anything:
 4.  gate:   exit 0, turn allowed
 ```
 
-The false claim never reached the user. That is the difference between a rule
-and a gate, and it is the reason this repository is not just a better-organised
-list of good intentions.
+The false claim never reached the user.
 
-It fails open on every uncertainty, never recurses, and does not block an honest
-"I have not run this". Sixteen unit tests in CI, two of which exist because a
-live run caught the first version counting a *denied* command as verification.
+What this gate is: an existence proof that the enforcement tier is reachable,
+covering one high-value failure with a regex and a transcript scan. What it is
+not: a general guarantee. It reads sentences, so a sufficiently novel phrasing
+gets past it, and it counts a shell command that looks like a check, so a
+command that merely looks like one would count. Both are deliberate, because it
+fails open on every uncertainty: a gate that blocks wrongly gets deleted, and
+then it protects nothing. That false-positive surface is exactly why
+`gates.md` says this tier should stay small.
+
+Twenty-seven tests in CI, written from the specification rather than from the
+script. Several exist because an independent reviewer measured the first version
+blocking honest disclosures, blocking questions, and accepting `ls` as proof a
+test suite ran.
 
 ## What ships
 

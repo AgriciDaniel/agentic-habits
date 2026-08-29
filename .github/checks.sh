@@ -72,6 +72,29 @@ head_ "Assets"
 [ -f assets/cover.png ] && grep -q "assets/cover.png" README.md && pass "cover image exists and is the README hero" || bad "assets/cover.png missing or unreferenced"
 [ -f assets/social-preview.png ] && pass "social preview image present" || bad "assets/social-preview.png missing"
 
+head_ "Prose and package agree"
+# These exist because three documents once described a package that no longer
+# existed, and structural checks could not see it. Each is a claim the prose
+# makes about the repository, checked against the repository.
+if grep -rq "\.sh$" /dev/null 2>&1 || ls skills/habits/assets/gates/*.sh >/dev/null 2>&1; then
+  grep -qi "nothing here executes" SECURITY.md \
+    && bad "SECURITY.md says nothing executes, but skills/ ships a shell script" \
+    || pass "SECURITY.md does not claim the package is inert"
+  grep -q "No scripts in the skill" CONTRIBUTING.md \
+    && bad "CONTRIBUTING.md forbids scripts in skills/, which is where the gate lives" \
+    || pass "CONTRIBUTING.md's script rule matches what ships"
+  grep -q "dependencies-none\|markdown-only" README.md \
+    && bad "README badges claim no dependencies or markdown only, but the gate needs jq" \
+    || pass "README badges match what ships"
+fi
+# Every verb the skill offers should be discoverable from the README.
+missing=""
+for v in $(grep -o '^| `/habits [a-z]*' skills/habits/SKILL.md | awk '{print $3}' | tr -d '`' | sort -u); do
+  [ -z "$v" ] && continue
+  grep -q "/habits $v" README.md || missing="$missing $v"
+done
+[ -z "$missing" ] && pass "every /habits verb appears in the README" || bad "verbs missing from README:$missing"
+
 head_ "Gate"
 GATE="skills/habits/assets/gates/completion-gate.sh"
 [ -x "$GATE" ] && pass "completion-gate.sh is present and executable" || bad "completion-gate.sh missing or not executable"

@@ -37,7 +37,13 @@ Three supporting tests:
 
 ## Did the agent follow it?
 
-This is `/habits check`, and it runs as a verdict, not an opinion.
+Two commands, and they are not interchangeable. `/habits check` scores in the
+working context and **must label itself same-context self-review**; it is useful
+and it is not independent. `/habits judge` dispatches the read-only
+`habit-judge` agent, which did not write the work and cannot edit it. That is
+the verdict worth recording, and a fresh reviewing context is the officially
+recommended shape for exactly this reason: it is not biased toward the code it
+just wrote.
 
 **Fresh context.** The reviewer that never wrote the work spots what the writer
 who just finished cannot. Use the `habit-judge` agent, which has read-only
@@ -50,16 +56,37 @@ as a claim ledger:
 
 | habit | fired | evidence | verdict |
 |---|---|---|---|
-| SYS-01 | yes | 3 edits, each preceded by a Read of that file | PASS |
-| SYS-03 | yes | "build is fixed" with no command run in the turn | FAIL |
+| SYS-01 | yes | `[RAW]` 3 Edit calls, each preceded by a Read of that file | PASS |
+| SYS-03 | yes | `[RAW]` "build is fixed"; `[INFER]` no command ran in that turn | FAIL |
 | SYS-06 | no | no irreversible action this session | N/A |
-| SYS-13 | unknown | not visible from a diff alone | UNKNOWN |
+| SYS-13 | unknown | `[INFER]` not visible from a diff alone | UNKNOWN |
+
+**Two provenance labels, kept disjoint.** `[RAW]` is something that was in the
+transcript: a tool call, a tool result, a quoted sentence. `[INFER]` is
+reasoning over what was there, and reasoning over an *absence* is always
+`[INFER]`, because a transcript that does not show a command is not proof no
+command ran.
+
+The labels exist because of a specific way this goes wrong. A tool named
+`run_tests` appearing in a transcript is `[RAW]` evidence that a tool with that
+name was called, and it is not evidence that tests ran. Treating the name as the
+observation launders an assumption into a fact, and it is the same mistake the
+completion gate can still make in its own step 4. A judge that cannot express
+the difference will make it silently.
 
 **The gate on the gate.** PASS requires a quotation, a line reference, or a
 command result. **No evidence means not PASS.** UNKNOWN is a legitimate and
 common verdict, and reporting it honestly is the entire value of the exercise. A
 judge that returns mostly PASS on thin evidence is worse than no judge, because
 it manufactures confidence.
+
+**Flag gaps, not near-misses.** A reviewer asked to find problems will find
+some, whether or not they are there. The official guidance on adversarial review
+is explicit about it, and it showed up the first time this judge was run: given
+a habit worded "when an action deletes, overwrites, publishes, or touches
+production", it FAILed an ordinary file edit. That verdict was wrong, and it was
+useful, because a judge over-firing is diagnosing a vague trigger. Route it to
+the first rung of the repair ladder rather than to the lapse count.
 
 **A FAIL is an offer, not a write.** Ask before recording a lapse. The user may
 know the miss was correct in context, and a lapse count that includes justified

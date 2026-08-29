@@ -29,22 +29,37 @@ command -v jq >/dev/null 2>&1 || exit 0
 msg=$(jq -r '.last_assistant_message // ""' <<<"$input" 2>/dev/null)
 [ -n "$msg" ] || exit 0
 
-# 3. Reward disclosure. If the turn already admits the check was not run, allow.
-if grep -Eiq 'have not (yet )?(run|executed|verified)|did not run|not (yet )?verified|unverified|without running|could not run|untested' <<<"$msg"; then
-  exit 0
-fi
+# 3. Sentence by sentence, is there an unhedged assertion that a runnable check
+#    came back clean? Questions, instructions, hedged futures, and sentences
+#    that disclose the check was not run are all not claims.
+#
+#    Per sentence rather than per message: a disclosure about one check must not
+#    launder an unverified claim about a different one.
 
-# 4. Narrow trigger: a claim that a runnable check came back clean.
+disclose='\b(ha(ve|s)( not|n.t)|did( not|n.t)|do( not|n.t)|can( ?not|.t)|could( not|n.t)|unable|never|without|no way|not yet)\b[^.!?]{0,40}\b(run|ran|execut|verif|check|test)|\b(unverified|untested|by inspection|on my reading|in principle|from reading alone)\b'
+
+hedge='\b(should|would|will|might|may|could|expect|assume|presumably|likely|probably|once you|after you|if you|please|whether|to confirm|to verify|let me|i.ll|going to|need to|make sure|try|suppose)\b|\b(on my reading|by inspection|in principle|appears|looks like|seems)\b'
+
 claim='\b(tests?|test suite|specs?|build|builds|lint|linter|type ?check|typecheck|compilation|compiles?|compiled|ci)\b[^.!?]{0,60}\b(pass(es|ed|ing)?|green|clean|succeed(s|ed)?|work(s|ed|ing)?|no errors?|without errors?)\b'
 claim_alt='\b(all|every) (tests?|checks?|specs?)\b[^.!?]{0,30}\b(pass(es|ed|ing)?|green|clean)\b'
-grep -Eiq "$claim" <<<"$msg" || grep -Eiq "$claim_alt" <<<"$msg" || exit 0
 
-# 5. Did anything actually run this turn? Fail open if we cannot tell.
+found=""
+while IFS= read -r sentence; do
+  [ -n "$sentence" ] || continue
+  case "$sentence" in *\?*) continue ;; esac              # a question is not a claim
+  grep -Eiq "$hedge"    <<<"$sentence" && continue         # hedged or imperative
+  grep -Eiq "$disclose" <<<"$sentence" && continue         # discloses it was not run
+  if grep -Eiq "$claim" <<<"$sentence" || grep -Eiq "$claim_alt" <<<"$sentence"; then
+    found="$sentence"; break
+  fi
+done <<< "$(printf '%s' "$msg" | tr '\n' ' ' | sed 's/\([.!?]\)/\1\n/g')"
+
+[ -n "$found" ] || exit 0
+
+# 4. Did a real check actually run this turn? Fail open if we cannot tell.
 transcript=$(jq -r '.transcript_path // ""' <<<"$input" 2>/dev/null)
 [ -n "$transcript" ] && [ -r "$transcript" ] || exit 0
 
-# Line number of the last real user prompt: type user, not meta, and carrying
-# text rather than a tool result. Everything after it belongs to this turn.
 start=$(jq -n --slurpfile t <(cat "$transcript" 2>/dev/null) '
   [ $t[] | select(type == "object") ] as $rows
   | [ range(0; $rows | length) as $i
@@ -60,28 +75,34 @@ start=$(jq -n --slurpfile t <(cat "$transcript" 2>/dev/null) '
         )
       | $i ]
   | last // -1' 2>/dev/null) || exit 0
-[ -n "$start" ] && [ "$start" != "null" ] && [ "$start" -ge 0 ] 2>/dev/null || exit 0
+case "$start" in ''|*[!0-9-]*) exit 0 ;; esac
+[ "$start" -ge 0 ] || exit 0
 
-# A tool call that was denied, errored, or never returned is not evidence.
-# Count only verification calls whose result came back without is_error.
+# A tool call is evidence only when all three hold:
+#   it was a shell command whose text actually looks like a check, or a tool
+#   whose name is a check runner; its result came back; and that result was not
+#   an error. A denied or failed call is an attempt, not an observation.
 ran=$(jq -n --slurpfile t <(cat "$transcript" 2>/dev/null) --argjson start "$start" '
+  def checkish: test("(^|[^a-z])(test|spec|lint|build|tsc|typecheck|type-check|pytest|jest|vitest|mocha|rspec|cargo|go +test|make|gradle|mvn|ruff|eslint|mypy|check|ci)([^a-z]|$)"; "i");
   [ $t[] | select(type == "object") ] as $rows
   | ($rows[($start + 1):]) as $turn
-  | [ $turn[]
-      | select(.type == "user")
+  | [ $turn[] | select(.type == "user")
       | ((.message.content // []) | if type == "array" then .[] else empty end)
-      | select(.type == "tool_result" and .is_error == true)
-      | .tool_use_id ] as $failed
-  | [ $turn[]
-      | select(.type == "assistant")
+      | select(.type == "tool_result")
+      | {id: .tool_use_id, err: (.is_error == true)} ] as $results
+  | [ $turn[] | select(.type == "assistant")
       | ((.message.content // []) | if type == "array" then .[] else empty end)
       | select(.type == "tool_use")
-      | select(.name == "Bash" or .name == "BashOutput"
-               or (.name | test("test|lint|build|check"; "i")))
-      | select(([.id] | inside($failed)) | not) ]
+      | select(
+          ((.name == "Bash" or .name == "BashOutput")
+            and ((.input.command // "") | checkish))
+          or ((.name != "Bash") and (.name | checkish))
+        )
+      | .id ] as $checks
+  | [ $checks[] | select(. as $id | ($results | map(select(.id == $id and .err == false)) | length) > 0) ]
   | length' 2>/dev/null) || exit 0
-[ -n "$ran" ] && [ "$ran" != "null" ] 2>/dev/null || exit 0
-[ "$ran" -gt 0 ] 2>/dev/null && exit 0
+case "$ran" in ''|*[!0-9]*) exit 0 ;; esac
+[ "$ran" -gt 0 ] && exit 0
 
 # 6. Claimed a clean check, ran nothing. Block, and say exactly what to do.
 cat >&2 <<'MSG'

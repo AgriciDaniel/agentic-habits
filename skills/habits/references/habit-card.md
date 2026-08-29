@@ -58,10 +58,24 @@ never put anything in it that the agent would need in order to follow the habit.
 | `gate` | Event and script when a gate enforces it, such as `Stop/completion-gate` |
 | `cases` | Comma-separated case IDs from the workbook that this habit rests on |
 | `evidence` | `sourced`, `practitioner`, or `reasoned`. How well the habit itself is supported |
+| `stakes` | `normal` or `critical`. What a failure costs. **The user sets this, never the agent** |
 
 `probation` marks a habit on its second miss, currently placed differently and
 being watched. `enforced` marks a habit that also has a gate, kept in the file
 so a reader knows why the agent behaves that way.
+
+`stakes` and `tier` are deliberately separate and must not be collapsed. `tier`
+records the mechanism that happens to exist: a habit is `gated` because someone
+wrote a hook. `stakes` records what the user says a failure costs, and only the
+user may set it. The agent may nominate a habit as critical and must not
+designate one, for the same reason a firmly worded rule is not a more important
+rule: priority asserted by the thing being governed is an input, never a
+determinant.
+
+The pair gives `enforce` its second legitimate trigger. The repair ladder reaches
+enforcement through history, after a habit has been missed twice, which leaves
+a habit whose *first* failure is unacceptable unreachable. `stakes=critical` is
+how the user says "gate this before it ever fails".
 
 `tier` is the honesty field. A `stated` habit is a hint and the skill says so.
 `gated` means a hook enforces it and the `gate` field names which. `evidence`
@@ -153,11 +167,9 @@ CLAUDE.md files at the relevant scopes for:
 - **Restatement.** The same idea already in CLAUDE.md without a trigger. Sharpen
   the existing line in place instead of duplicating it here.
 
-Precedence when a conflict cannot be avoided: a direct instruction from the user
-in the current conversation outranks everything. Below that, the narrower scope
-wins, since project rules load after user rules and the more specific rule is
-the one that was written with the actual situation in view. Say which rule you
-followed and why when it matters.
+Precedence when a conflict cannot be avoided is not decided here. There is one
+ladder, in `precedence.md`, and it is the only one. Say which rule you followed
+and why when it matters.
 
 ## Writing style inside a card
 

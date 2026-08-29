@@ -40,8 +40,14 @@ checks that the two match verbatim and will fail if they drift.
 
 - **No em dashes.** Commas, colons, parentheses, or a full stop instead. CI
   fails the build on one.
-- **No scripts in the skill.** The skill is markdown that an agent reads.
-  Tooling belongs in `.github/`, never in `skills/`.
+- **The stated tier stays markdown.** Habit cards, references, and templates
+  are text an agent reads. No scripts there.
+- **The gate tier is the one exception, and it is bounded.** Enforcement needs
+  something the harness executes, so `skills/habits/assets/gates/` holds shell
+  scripts. A new one must be POSIX-ish shell, depend on nothing beyond `jq`,
+  make no network call, fail open on every uncertainty, and arrive with tests
+  written from `gates.md` rather than from itself. Everything else is tooling
+  and belongs in `.github/`.
 - **First person, present tense, in the cards.** The agent is the reader.
 - **No hedging words in a card.** "Consider", "try to", and "where possible"
   turn a habit back into a mood.

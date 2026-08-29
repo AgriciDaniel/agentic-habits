@@ -2,6 +2,130 @@
 
 All notable changes to this skill are recorded here. Dates are ISO.
 
+## 0.3.0 - 2026-08-29
+
+An independent read-only review, run in a fresh context against seven frozen
+acceptance criteria, returned `improved_not_passed` with fifteen findings. It
+measured the shipped gate rather than reading its documentation, and most of
+what follows is its work. Every measured finding was reproduced before being
+acted on.
+
+### Fixed: the gate blocked the one thing it must never block
+
+The disclosure branch was a fixed phrase list. Five of six natural ways of
+saying "I could not run this" were blocked, including "unable to run", "could
+not verify", "no way to run", and "never ran it". A gate that punishes honest
+disclosure produces concealment, which `gates.md` said in prose while the code
+did the opposite.
+
+Decision logic rebuilt sentence by sentence rather than per message:
+
+- **Disclosure is recognised by negation near running or verifying**, not by a
+  phrase list, and it is evaluated per sentence, so a disclosure about one check
+  no longer launders an unverified claim about a different one.
+- **A claim must be an unhedged assertion.** Questions, instructions, reported
+  speech, and hedged futures are not claims. The old regex blocked "Run npm test
+  to confirm the tests pass", "Please check whether the build succeeds", and
+  "the test suite should pass once you run it".
+- **Evidence means a command that looks like a check**, matched against the
+  shell command text rather than counting any `Bash` call. `ls` no longer proves
+  a test suite ran.
+
+### Fixed: the tests enshrined the implementation
+
+The old suite was written from the same understanding as the script, so it
+passed while the script blocked honest disclosures. One case asserted exit 2 on
+a hedged future while sitting under a heading that said false positives are the
+expensive failure.
+
+Rewritten from `gates.md` instead: 27 cases, including every phrasing the
+reviewer measured, and the laundering cases they constructed.
+
+### Fixed: three documents described a package that no longer existed
+
+`SECURITY.md` said "nothing here executes" about a repository that ships a hook
+which runs at the end of every turn and reads the transcript. `CONTRIBUTING.md`
+forbade scripts in `skills/`, where the gate lives. Two README badges claimed no
+dependencies and markdown only. A reader deciding whether to install was being
+misinformed, which is a consent problem rather than a code one.
+
+All corrected, and `checks.sh` now tests these three claims directly, along with
+whether every verb the skill offers appears in the README. That check found two
+missing verbs on its first run.
+
+### Fixed: `import` had no procedure, while the changelog claimed it did
+
+The 0.2.0 rewrite of `SKILL.md` dropped the export and import flow that 0.1.1
+had added, and the changelog entry announcing it survived. Restored, with the
+dedupe, renumbering, budget, and untrusted-data steps, plus the limit that
+matters: it protects the `/habits import` path only.
+
+### Fixed: precedence
+
+- Safety now sits **above** the user, and authorization below, because the old
+  single rung named both and the ordering was correct for only one of them.
+- Skills added as a channel. They were named as a persistence mechanism and
+  appeared nowhere in the ladder.
+- The second, contradicting ladder in `habit-card.md` is gone. There is one.
+- New section on where the line between data and instruction actually falls: it
+  is how a file arrived, not what it contains. A habit file in a cloned
+  repository is loaded as instructions before anyone could review it, which
+  `SECURITY.md` now warns about instead of the package silently promoting the
+  placement that creates it.
+
+### Added: the evidence discipline the judge was missing
+
+The package enforced evidence at the moment of a claim and graded evidence at
+the level of a rule, and had nothing at the level of a judgment.
+
+- The ledger's evidence column now carries `[RAW]` and `[INFER]`, kept disjoint,
+  with reasoning over an absence always `[INFER]`. A tool named `run_tests` is
+  raw evidence that a tool with that name was called and no evidence that tests
+  ran; collapsing those launders an assumption into a fact.
+- The judge is told to flag misses, not near-misses, because a reviewer asked to
+  find problems will find some. This is documented guidance and it showed up on
+  the judge's first run, which FAILed an ordinary edit under a habit about
+  irreversible actions. A judge over-firing is diagnosing a vague trigger.
+
+### Added: `stakes`, set only by the user
+
+`tier` records the mechanism that exists. `stakes` records what the user says a
+failure costs, and only the user may set it. The repair ladder reached
+enforcement through history, which left a habit whose *first* failure is
+unacceptable unreachable by design. `stakes=critical` is the second legitimate
+trigger for `enforce`.
+
+### Added: SYS-16, compression never drops a dissent
+
+**When** summarising or reporting on work already done. **Instead** carry every
+disagreement and caveat forward, and drop detail instead. Filtering volume is
+the job and filtering disconfirmation is the failure, and from the inside they
+are identical. Nothing else in the pack covered what a second pass over your own
+output is allowed to lose.
+
+### Added: the probes now ship
+
+`verification.md` was the strongest section in the repository and the only
+evidence it carried was its own word. `.github/live-checks/` now holds the
+scripts: `gate-replay.sh` replays the recorded session deterministically and
+runs in CI, `rules-canary.sh` reruns the loading, comment-stripping control, and
+path-scoping measurements against a live model.
+
+Also: sixteen claims about the harness that had escaped the tested / quoted /
+neither trichotomy are now filed, including a new section for claims that are
+neither vendor documentation nor tested. Two starter habits were regraded from
+`reasoned` to `sourced` after their citations were found and filed, and two
+newly documented facts landed: a `Stop` hook is overridden after eight
+consecutive blocks, and `/goal` conditions are a documented mechanism between a
+prompt and a hook.
+
+### Honest about what did not change
+
+The gate is still one regex and a transcript scan. It is defeated by a novel
+phrasing and by a command that merely looks like a check. The README now says
+so, and calls it an existence proof for the enforcement tier rather than the
+difference between a rule and a guarantee.
+
 ## 0.2.0 - 2026-08-29
 
 The skill stops being a filing system for good intentions. Three tiers now, and
