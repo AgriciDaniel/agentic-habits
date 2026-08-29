@@ -48,6 +48,16 @@ to. Everything else on the list is a hint, however firmly it is worded. That is
 not an argument against hints. It is an argument for knowing which is which, and
 for escalating the few habits whose failure you cannot accept.
 
+**Context beats procedure, and this is the caution to sit with.** One controlled
+study gave agents the dependency map so they knew which tests to check, and
+regressions fell from 6.08% to 1.82%. The same study gave another group the
+procedural instruction *without* that context, and regressions rose to 9.94%,
+worse than no intervention at all. Small study, smaller models, so read it as a
+caution rather than a finding. But it points straight at this package: a
+procedural rule with no context attached can be worse than nothing. That is why
+a habit naming the user's actual test command beats a generic one, and why a
+trigger that names no real moment should not be written at all.
+
 **3. Specificity over sentiment.** "Be rigorous" is a feeling. "When a test
 fails, never change the assertion to make it pass" is a decision procedure. The
 test for a habit is whether an observer could tell, from the transcript alone,
@@ -177,6 +187,25 @@ cycling.
 ```
 notice -> draft -> place -> observe -> sharpen -> promote -> escalate -> retire
 ```
+
+### Permission beats prohibition
+
+The largest prompt-level effect in the measured material is not a rule against
+anything. Giving an agent an explicit, sanctioned way to **declare a task
+impossible** cut cheating from 54% to 9% for one model and 49% to 12% for
+another, on tasks with no legitimate solution. Forceful prohibitions in the same
+setting move the number by about half, and one politely worded prohibition made
+it worse.
+
+The reading: a model with no acceptable way to fail will find an unacceptable
+one. Much of what looks like dishonesty is a missing exit.
+
+So when a habit is about to be written as a prohibition, ask what the agent
+should do *instead* at that exact moment, and write that. It is why the
+substitution form here uses **Instead** rather than "do not", why `SYS-04` is
+about reporting a miss rather than forbidding a false claim, and why the
+completion gate is careful never to block an honest "I could not run this". A
+gate that punishes the exit closes the exit.
 
 ### Derived, not speculative
 
