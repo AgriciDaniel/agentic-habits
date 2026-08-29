@@ -14,6 +14,6 @@ triggers about working with those files.
 ### PTH-<slug>-01 · <four words or fewer>
 **When** <the moment>.
 **Do** <one action>.
-<!-- habit: id=PTH-<slug>-01 added=<YYYY-MM-DD> source=user lapses=0 status=active check="<observable>" -->
+<!-- habit: id=PTH-<slug>-01 added=<YYYY-MM-DD> source=user status=active check="<observable>" -->
 
 <!-- Budget: 6 per path file. -->

@@ -76,7 +76,13 @@ In order, and it exits 0 the moment any step is uncertain:
    always. This is the loop guard and it comes first.
 2. The message discloses that the check was not run. Allow. Honest disclosure is
    the behavior being asked for, so blocking it would train the wrong lesson.
-3. The message contains no claim that a runnable check came back clean. Allow.
+3. No sentence in the message contains an unhedged first-hand assertion that a
+   check came back clean. Allow. This is deliberately high precision: an
+   explicit list of claim shapes, then disqualifiers for negation, attribution,
+   instruction, and modality, evaluated per clause so a claim joined to a plan
+   is still seen. Consequences worth knowing: **an honest report that a check
+   failed is never a claim**, reported speech is never a claim, and a phrasing
+   outside the list passes.
 4. A tool call in this turn looks like a real check and its result came back
    without an error. Allow. "Looks like a real check" means a shell command
    whose text matches a check pattern (`npm test`, `pytest`, `cargo build`,
@@ -160,6 +166,9 @@ both halves of it, not just the allowing half.
   trigger is an unhedged past-tense assertion, not any sentence containing the
   word "pass": an instruction, a question, reported speech, and a hedged future
   are all not claims, and an early version of this gate blocked all four.
+- **It blocks once, not twice.** The recursion guard means a repeated claim
+  clears on the second attempt. That is the price of never hanging a session,
+  and it should be said out loud rather than left for a user to discover.
 - **Know the ceiling.** Claude Code overrides a `Stop` hook and ends the turn
   after eight consecutive blocks. A gate cannot hold a session hostage, which is
   a good property, and it also means a gate that fires constantly stops working

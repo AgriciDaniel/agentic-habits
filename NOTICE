@@ -1,0 +1,61 @@
+Agentic habits
+Copyright 2026 Daniel Agrici
+
+The MIT license in LICENSE covers this repository's original code and original
+prose. It does not grant rights in third-party material quoted or reproduced
+here, which remains subject to its own terms.
+
+Quoted material, excluded from the MIT grant
+
+  Short passages from Anthropic's Claude Code documentation
+  (https://code.claude.com/docs/) are quoted in
+  skills/habits/references/verification.md, gates.md, placement.md,
+  methodology.md and judging.md, and in README.md, as evidence and for
+  commentary, so that documented behavior can be told apart from tested and
+  untested claims. Those passages are not licensed under MIT.
+
+  Short passages from Anthropic engineering writing, in particular
+  https://claude.com/blog/ai-code-migration, are quoted in
+  skills/habits/references/verification.md on the same basis.
+
+  Base rates and figures in skills/habits/references/evidence.md are summarised
+  from vendor system cards and published research. The summaries are original;
+  the underlying findings belong to their authors.
+
+  Every quotation should carry its source. Where one does not yet, that is a
+  defect recorded in verification.md, not a claim of ownership.
+
+Derived formats
+
+  The When and Do card format derives from published work on implementation
+  intentions: Peter M. Gollwitzer, "Implementation intentions: strong effects of
+  simple plans", American Psychologist 54(7), 493-503, 1999. The format is used.
+  No text from that work is reproduced.
+
+  The five-value confidence vocabulary, the honest run-outcome vocabulary, and
+  several operating rules are adapted from the same author's repositories
+  AgriciDaniel/secretary, AgriciDaniel/sync and AgriciDaniel/gauntlet-loop-brain,
+  and are credited by source in skills/habits/references/methodology.md.
+
+Trademarks
+
+  Claude, Claude Code and Anthropic are trademarks of Anthropic PBC, used here
+  only to identify the harness this package targets. This project is not
+  affiliated with, endorsed by, or sponsored by Anthropic.
+
+Visual assets
+
+  assets/cover.png and assets/social-preview.png are inventoried in
+  assets/PROVENANCE.md. Until that record is complete, no MIT rights conclusion
+  is made for them.
+
+Session evidence
+
+  Transcript excerpts in skills/habits/references/verification.md are from the
+  maintainer's own throwaway sessions and contain no third-party or client
+  material.
+
+Public availability is not permission
+
+  A public URL is evidence of access, not permission to republish. Before adding
+  any new quotation, image or capture, check the source's own terms.

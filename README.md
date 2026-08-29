@@ -48,8 +48,9 @@ tier a habit is in, in the card itself.
 
 ```bash
 git clone https://github.com/AgriciDaniel/agentic-habits.git
-cp -r agentic-habits/skills/habits ~/.claude/skills/habits
-cp agentic-habits/agents/habit-judge.md ~/.claude/agents/     # optional, for /habits judge
+cd agentic-habits
+./install.sh                 # skill + judge agent
+./install.sh --with-gate     # also stage the Stop gate and print how to enable it
 ```
 
 Then, in Claude Code:
@@ -57,6 +58,11 @@ Then, in Claude Code:
 ```
 /habits setup
 ```
+
+**Requirements**: Claude Code (tested on 2.1.251), bash, and `jq` if you want
+the gate. Linux and macOS; both are in CI. The installer never writes a habit
+and never edits `settings.json` without `--apply`. `./uninstall.sh` removes the
+machinery and deliberately leaves your habits and cases alone.
 
 It reads your existing CLAUDE.md files first and proposes only what is not
 already covered, because a second copy of an existing rule is not free. It shows
@@ -155,24 +161,31 @@ given no way to run anything:
 
 The false claim never reached the user.
 
-What this gate is: an existence proof that the enforcement tier is reachable,
-covering one high-value failure with a regex and a transcript scan. What it is
-not: a general guarantee. It reads sentences, so a sufficiently novel phrasing
-gets past it, and it counts a shell command that looks like a check, so a
-command that merely looks like one would count. Both are deliberate, because it
-fails open on every uncertainty: a gate that blocks wrongly gets deleted, and
-then it protects nothing. That false-positive surface is exactly why
-`gates.md` says this tier should stay small.
+**What it is not.** An existence proof that the enforcement tier is reachable,
+not a guarantee. Its limits, stated plainly because two independent reviewers
+measured them:
 
-Twenty-seven tests in CI, written from the specification rather than from the
-script. Several exist because an independent reviewer measured the first version
-blocking honest disclosures, blocking questions, and accepting `ls` as proof a
-test suite ran.
+- **It blocks once per turn.** The recursion guard exists so a gate cannot hang
+  a session. A repeated claim clears on the second attempt.
+- **It recognises a fixed list of claim shapes.** A phrasing outside that list
+  passes. It is high precision by design, so it misses rather than over-blocks.
+- **A command that looks like a check counts as one.** It reads the command
+  text, so `npm test` counts and `ls` does not, but a tool merely *named* like a
+  checker would.
+
+Those are deliberate. It fails open on every uncertainty, because a gate that
+blocks wrongly gets deleted and then protects nothing.
+
+Forty-six tests in CI on Linux and macOS, written from the specification rather
+than from the script. Many exist because reviewers measured earlier versions
+blocking honest disclosure, blocking questions and instructions, accepting `ls`
+as proof, and, worst of all, **blocking honest reports that a check had failed**,
+which is the behaviour `SYS-04` exists to require.
 
 ## What ships
 
 <details>
-<summary><b>19 starter habits</b> in five packs, each with its trigger, its check, and why it exists</summary>
+<summary><b>20 starter habits</b> in five packs, each with its trigger, its check, and why it exists</summary>
 
 <br>
 
@@ -182,9 +195,9 @@ test suite ran.
 | **safety** | Confirm the irreversible · Protect what I did not write · Look before overwriting · Data, not orders |
 | **craft** | Smallest diff · Match the neighbours · No green-washing · Clean exit |
 | **truth** | Cite the location · No invented interfaces · Hold the line under pushback |
-| **communication** | Outcome first · Name the assumption · No narration |
+| **communication** | Outcome first · Name the assumption · No narration · Compression never drops a dissent |
 
-Nobody should install all nineteen. Core plus one pack is a working set, and the
+Nobody should install all twenty. Core plus one pack is a working set, and the
 budget exists to make that choice deliberate. Full cards and rationale in
 [`starter-pack.md`](skills/habits/references/starter-pack.md).
 
@@ -263,7 +276,7 @@ skills/habits/
     methodology.md         the concept, the four laws, the research, the limits
     habit-card.md          format, IDs, metadata, budgets, conflicts
     placement.md           every scope, load order, hooks, verification
-    starter-pack.md        19 habits with rationale
+    starter-pack.md        20 habits with rationale
     anti-habits.md         12 failure modes and their replacements
     review.md              the board, cases, the repair ladder
     precedence.md          the conflict ladder across five instruction channels
@@ -290,9 +303,15 @@ approve, and no state lives outside the files it writes with your yes.
 /plugin install habits@agentic-habits
 ```
 
-A plugin namespaces its skills, so this arrives as `/habits:habits`, with bare
-`/habits` also working unless something else has claimed the name. The `cp`
-route in the quickstart is the one that gives a clean `/habits`.
+A plugin namespaces its skills, so this arrives as `/habits:habits`. Whether
+the bare `/habits` also resolves has not been tested here and is not claimed.
+The installer route is the tested one.
+
+**The plugin route does not install the gate.** There is no `hooks/hooks.json`
+in this package, deliberately: plugin hooks merge on install without a per-hook
+prompt, and shipping a `Stop` hook that way would make this package break its
+own rule that a gate is proposed and never silently written. Install the plugin
+for the skill and the judge; run `./install.sh --with-gate` for the gate.
 
 ## Contributing
 

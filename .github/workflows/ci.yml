@@ -14,29 +14,59 @@ jobs:
     name: structure and house style
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Run structural checks
         run: bash .github/checks.sh
 
   gate:
     name: completion gate
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Unit test the Stop hook
         run: bash .github/test-gate.sh
       - name: Replay the recorded gate session
         run: bash .github/live-checks/gate-replay.sh
 
+  install:
+    name: installer
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install, reinstall, gate, uninstall
+        run: bash .github/test-install.sh
+
+  shell:
+    name: shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Lint every shipped shell script
+        run: |
+          shellcheck --version
+          shellcheck -S warning install.sh uninstall.sh \
+            skills/habits/assets/gates/*.sh \
+            .github/*.sh .github/live-checks/*.sh
+
   plugin:
     name: plugin manifest
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Validate plugin and marketplace JSON
         run: |
           jq empty .claude-plugin/plugin.json
           jq empty .claude-plugin/marketplace.json
           test "$(jq -r .name .claude-plugin/plugin.json)" = "habits"
           test "$(jq -r '.plugins[0].name' .claude-plugin/marketplace.json)" = "habits"
+          test "$(jq -r '.plugins[0].version' .claude-plugin/marketplace.json)" = "$(jq -r .version .claude-plugin/plugin.json)"
+          jq -e '.description' .claude-plugin/marketplace.json > /dev/null
           echo "manifests ok"

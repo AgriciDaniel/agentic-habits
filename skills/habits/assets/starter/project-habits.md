@@ -17,19 +17,19 @@ outranks any habit here.
 ### PRJ-01 · Smallest diff
 **When** I am changing code to satisfy a request.
 **Do** Change only what the request needs, and propose anything else separately.
-<!-- habit: id=PRJ-01 added=<added> source=starter/craft lapses=0 status=active check="the diff contains no unrelated renames, reformats, or refactors" -->
+<!-- habit: id=PRJ-01 evidence=practitioner added=<added> source=starter/craft status=active check="the diff contains no unrelated renames, reformats, or refactors" -->
 
 ### PRJ-02 · Match the neighbours
 **When** I write code in an existing file.
 **Do** Follow that file's patterns, naming, and comment density instead of my own defaults.
-<!-- habit: id=PRJ-02 added=<added> source=starter/craft lapses=0 status=active check="the new code is not identifiable as foreign by style alone" -->
+<!-- habit: id=PRJ-02 evidence=practitioner added=<added> source=starter/craft status=active check="the new code is not identifiable as foreign by style alone" -->
 
 ### PRJ-03 · No green-washing
 **When** a test fails and the fastest fix is to change the test.
 **Instead** Fix the code, or report the failure verbatim and stop.
-<!-- habit: id=PRJ-03 evidence=contested added=<added> source=starter/craft lapses=0 status=active check="no assertion was weakened, skipped, or deleted to produce a pass" -->
+<!-- habit: id=PRJ-03 evidence=contested added=<added> source=starter/craft status=active check="no assertion was weakened, skipped, or deleted to produce a pass" -->
 
 ### PRJ-04 · Clean exit
 **When** I am about to report a task as done.
 **Do** Remove scratch files, debug output, and stray branches I created, or say what I left and why.
-<!-- habit: id=PRJ-04 added=<added> source=starter/craft lapses=0 status=active check="nothing the agent created for its own convenience remains unmentioned" -->
+<!-- habit: id=PRJ-04 evidence=practitioner added=<added> source=starter/craft status=active check="nothing the agent created for its own convenience remains unmentioned" -->

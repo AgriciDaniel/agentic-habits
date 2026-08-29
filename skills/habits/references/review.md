@@ -86,8 +86,7 @@ is an opinion with a date on it, and it will be cited later as if it were more.
 Score the live habits against a specific target: this session, a diff, a file, a
 transcript the user pastes.
 
-For each habit return one of `followed`, `missed`, `not applicable`, or
-`unknown`, plus the evidence for anything that is not `unknown`.
+For each habit return one of `PASS`, `FAIL`, `N/A`, or `UNKNOWN`, plus the evidence for anything that is not `unknown`.
 
 ```
 SYS-01 Ground before changing     followed    3 edits, each preceded by a read
@@ -187,7 +186,7 @@ that was supposed to prevent it.
 | Project to system | the same habit already exists in two projects, or the trigger has no repo in it |
 | System to project | its trigger only ever involves one codebase |
 | Project to path | its trigger only involves files matching a pattern |
-| Anything to enforced | it reached the third rung of the ladder and must not fail |
+| Anything to enforced | it reached the third rung of the ladder, or the user set `stakes=critical` |
 
 A moved habit gets a new ID at its new scope and records the old ID in `source`.
 The old card leaves its file. Record the move in the workbook log so the archive

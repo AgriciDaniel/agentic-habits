@@ -1,0 +1,13 @@
+# Severity policy for this repository.
+#
+# Run at `warning` and above. The two info-level rules below are excluded
+# deliberately, with reasons, rather than silenced case by case:
+#
+# SC2015  `condition && pass "..." || bad "..."` is the idiom every check script
+#         here uses. The warning is about A && B || C running C when A is true
+#         and B fails. `pass` and `bad` are printf wrappers that cannot fail, so
+#         the hazard does not exist in this codebase.
+# SC2012  `ls -1t` over a backup directory this script created itself, whose
+#         filenames it also chose. `find` would be correct for arbitrary names
+#         and is not needed for a fixed timestamp pattern.
+disable=SC2015,SC2012

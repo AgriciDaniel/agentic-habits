@@ -29,30 +29,61 @@ command -v jq >/dev/null 2>&1 || exit 0
 msg=$(jq -r '.last_assistant_message // ""' <<<"$input" 2>/dev/null)
 [ -n "$msg" ] || exit 0
 
-# 3. Sentence by sentence, is there an unhedged assertion that a runnable check
-#    came back clean? Questions, instructions, hedged futures, and sentences
-#    that disclose the check was not run are all not claims.
+# 3. Is there an unhedged first-hand assertion that a check came back clean?
 #
-#    Per sentence rather than per message: a disclosure about one check must not
-#    launder an unverified claim about a different one.
+#    High precision by construction. An explicit list of claim shapes, then a
+#    set of disqualifiers, evaluated per clause rather than per sentence so a
+#    claim joined to a plan ("all tests pass and I will commit") is still seen.
+#
+#    The bar is deliberately high. A gate that fires wrongly gets deleted, and a
+#    deleted gate protects nothing. Missing a claim costs one unverified
+#    sentence, which the judge still catches.
 
+# What a claim actually looks like. Tight, anchored, no sliding window.
+claim='\b(all |the )?(unit |integration |e2e )?tests?( suite)? (now )?(pass|passes|passed)\b'
+claim="$claim"'|\btest suite (now )?(passes|passed)\b'
+claim="$claim"'|\ball (tests|checks|specs) (pass|passed|are green)\b'
+claim="$claim"'|\b(the |our )?(build|suite|pipeline) (is|was) (now )?green\b'
+claim="$claim"'|\b(the |our )?build (succeeds|succeeded|passes|passed|is clean)\b'
+claim="$claim"'|\b(lint|linter|type ?check|typecheck|compilation) (is|was) (now )?clean\b'
+claim="$claim"'|\b(lint|linter|type ?check|typecheck) (passes|passed)\b'
+claim="$claim"'|\bit compiles\b|\bcompiles (cleanly|without errors?)\b|\beverything compiles\b'
+claim="$claim"'|\b(zero|no) (test )?failures\b|\bno errors?\b'
+
+# Any one of these and the clause is not a first-hand present claim.
+# Order matters only for readability; any match disqualifies.
+# An honest statement that the check was not run. Recognised by negation near
+# running or verifying, rather than by a phrase list, because a phrase list
+# blocked five of six natural phrasings in an earlier version.
 disclose='\b(ha(ve|s)( not|n.t)|did( not|n.t)|do( not|n.t)|can( ?not|.t)|could( not|n.t)|unable|never|without|no way|not yet)\b[^.!?]{0,40}\b(run|ran|execut|verif|check|test)|\b(unverified|untested|by inspection|on my reading|in principle|from reading alone)\b'
 
-hedge='\b(should|would|will|might|may|could|expect|assume|presumably|likely|probably|once you|after you|if you|please|whether|to confirm|to verify|let me|i.ll|going to|need to|make sure|try|suppose)\b|\b(on my reading|by inspection|in principle|appears|looks like|seems)\b'
+negation='\b(not|never|fail|fails|failed|failing|broken|red|cannot|unable|without running)\b|n.t\b'
+attribution='\b(said|says|claim|claims|claimed|asked|asks|according to|per the|assuming)\b'
+instruction='\b(run|runs|check|checks|verify|confirm|please|ensure|make sure|you|your|let me|only when|unless|before you|after you|if you|once you|to confirm|to verify|merge)\b'
+modal='\b(will|would|should|shall|may|might|could|going to|expect|expects|assume|likely|probably|presumably|in principle|by inspection|on my reading|appears|seems|looks like)\b'
 
-claim='\b(tests?|test suite|specs?|build|builds|lint|linter|type ?check|typecheck|compilation|compiles?|compiled|ci)\b[^.!?]{0,60}\b(pass(es|ed|ing)?|green|clean|succeed(s|ed)?|work(s|ed|ing)?|no errors?|without errors?)\b'
-claim_alt='\b(all|every) (tests?|checks?|specs?)\b[^.!?]{0,30}\b(pass(es|ed|ing)?|green|clean)\b'
+# Attribution and prior-turn evidence modify the whole sentence, so they are
+# tested before the sentence is split. Negation, instruction and modal bind
+# tightly, so they are tested per clause: "all tests pass and I will commit"
+# must still be seen as a claim.
+prior='\b(as shown|as established|earlier|previous turn|previously|already ran|ran .* (earlier|before)|from the .* run|per the .* run)\b'
 
 found=""
 while IFS= read -r sentence; do
   [ -n "$sentence" ] || continue
-  case "$sentence" in *\?*) continue ;; esac              # a question is not a claim
-  grep -Eiq "$hedge"    <<<"$sentence" && continue         # hedged or imperative
-  grep -Eiq "$disclose" <<<"$sentence" && continue         # discloses it was not run
-  if grep -Eiq "$claim" <<<"$sentence" || grep -Eiq "$claim_alt" <<<"$sentence"; then
-    found="$sentence"; break
-  fi
-done <<< "$(printf '%s' "$msg" | tr '\n' ' ' | sed 's/\([.!?]\)/\1\n/g')"
+  case "$sentence" in *\?*) continue ;; esac
+  grep -Eiq "$disclose"    <<<"$sentence" && continue
+  grep -Eiq "$attribution" <<<"$sentence" && continue
+  grep -Eiq "$prior"       <<<"$sentence" && continue
+  while IFS= read -r clause; do
+    [ -n "$clause" ] || continue
+    grep -Eiq "$negation"    <<<"$clause" && continue
+    grep -Eiq "$instruction" <<<"$clause" && continue
+    grep -Eiq "$modal"       <<<"$clause" && continue
+    if grep -Eiq "$claim" <<<"$clause"; then found="$clause"; break; fi
+  done <<< "$(printf '%s' "$sentence" | awk '{gsub(/,| and | but | so | because | while | although | however /,"&\n"); print}')"
+  [ -n "$found" ] && break
+done <<< "$(printf '%s' "$msg" | tr '\n' ' ' | awk '{gsub(/[.!?;:]/,"&\n"); print}')"
 
 [ -n "$found" ] || exit 0
 

@@ -1,6 +1,6 @@
 # Precedence
 
-Five channels can tell this agent what to do, and they can disagree. Leaving a
+Six channels can tell this agent what to do, and they can disagree. Leaving a
 conflict to be resolved by whichever line happened to land closer to the end of
 the context is not a design. Anthropic's own production prompt hardcodes
 precedence ladders for exactly this reason, and treats an unresolved conflict as

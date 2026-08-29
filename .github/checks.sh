@@ -95,6 +95,40 @@ for v in $(grep -o '^| `/habits [a-z]*' skills/habits/SKILL.md | awk '{print $3}
 done
 [ -z "$missing" ] && pass "every /habits verb appears in the README" || bad "verbs missing from README:$missing"
 
+head_ "Counts, because prose drifts from the package"
+shipped=$(grep -hc '^### \(SYS\|PRJ\)-' "$STARTER"/*.md | paste -sd+ | bc)
+doc=$(grep -c '^### \(SYS\|PRJ\)-' "$REFS/starter-pack.md")
+[ "$shipped" = "$doc" ] && pass "$shipped cards ship and $doc are documented" || bad "$shipped cards ship but starter-pack.md documents $doc"
+# CHANGELOG records history and must keep its old numbers; this script holds the patterns.
+stale=$(grep -rln "nineteen habits\|19 starter habits\|19 habits with\|all nineteen" \
+        --exclude-dir=.git --exclude=CHANGELOG.md --exclude=checks.sh . || true)
+[ -z "$stale" ] && pass "no stale habit count in prose" || { bad "files still claiming the old count:"; printf '%s\n' "$stale" | sed 's/^/        /'; }
+gt=$(grep -c 'check "' .github/test-gate.sh)
+grep -q "$gt tests\|$gt cases\|Forty-six" README.md skills/habits/references/gates.md skills/habits/references/verification.md \
+  && pass "gate test count ($gt) is stated somewhere current" || bad "gate test count ($gt) not reflected in the docs"
+
+head_ "Grader integrity"
+# Every shipped check= must appear verbatim as the Check: line in starter-pack.md.
+drift=0
+while IFS=$'\t' read -r id chk; do
+  [ -n "$id" ] || continue
+  doc_chk=$(awk -v id="$id" '
+    $0 ~ "^### " id " " {f=1} f && /^Check: /{sub(/^Check: /,""); print; exit}' "$REFS/starter-pack.md")
+  if [ "$doc_chk" != "$chk" ]; then bad "check drift for $id"; drift=1; fi
+done < <(grep -ho 'id=[A-Z]*-[0-9]* .*check="[^"]*"' "$STARTER"/*.md \
+         | sed 's/id=\([A-Z]*-[0-9]*\).*check="\([^"]*\)".*/\1\t\2/')
+[ "$drift" -eq 0 ] && pass "every shipped check matches its documented Check line"
+grep -q 'lapses=0' "$STARTER"/*.md && bad "a shipped card carries a fabricated lapses=0" || pass "no fabricated lapse counts on shipped cards"
+missing=$(for f in "$STARTER"/*.md; do grep -o 'id=[A-Z]*-[0-9]*[^>]*' "$f" | grep -v 'evidence=' | sed 's/ .*//'; done)
+[ -z "$missing" ] && pass "every shipped card carries an evidence grade" || { bad "cards with no evidence grade:"; printf '%s\n' "$missing" | sed 's/^/        /'; }
+
+head_ "Manifests carry what a marketplace needs"
+jq -e '.description and (.description | length > 20)' .claude-plugin/marketplace.json >/dev/null 2>&1 \
+  && pass "marketplace has a description (its absence fails plugin validate --strict)" \
+  || bad "marketplace.json has no description, so --strict fails"
+mv=$(jq -r '.plugins[0].version' .claude-plugin/marketplace.json); pv=$(jq -r '.version' .claude-plugin/plugin.json)
+[ "$mv" = "$pv" ] && pass "marketplace entry version matches plugin.json ($pv)" || bad "version mismatch: marketplace $mv, plugin $pv"
+
 head_ "Gate"
 GATE="skills/habits/assets/gates/completion-gate.sh"
 [ -x "$GATE" ] && pass "completion-gate.sh is present and executable" || bad "completion-gate.sh missing or not executable"

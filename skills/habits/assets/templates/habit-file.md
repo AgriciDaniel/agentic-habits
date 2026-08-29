@@ -9,7 +9,7 @@ habit here, and a conflict between the two is worth mentioning once.
 ### <SYS|PRJ>-01 · <four words or fewer>
 **When** <the moment, first person, present tense>.
 **Do** <one action, imperative>.
-<!-- habit: id=<ID> added=<YYYY-MM-DD> source=<starter/pack|user|import/name> lapses=0 status=active check="<what is observably different>" -->
+<!-- habit: id=<ID> added=<YYYY-MM-DD> source=<starter/pack|user|import/name> status=active check="<what is observably different>" -->
 
 <!--
 Budget: 12 at system scope, 10 per project file.
