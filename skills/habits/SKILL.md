@@ -159,10 +159,14 @@ not answer a miss by writing the rule again, louder.
    important".
 2. Check a shell script could see it at all. Judgment, tone, and scope cannot be
    gated; they can only be judged.
-3. Show the exact script, the exact settings block, and what it will block,
+3. Prefer the shipped gate for the claim-versus-evidence case. For anything
+   else, hand off to `hookify`, the first-party plugin that writes hooks from
+   described behavior, rather than composing a script here. This skill's job at
+   this tier is deciding what deserves a gate, not generating one.
+4. Show the exact script, the exact settings block, and what it will block,
    including the false positives it will cause.
-4. Approval, then install, then verify by triggering it deliberately.
-5. Record `tier=gated` and the event in the card, so a reader knows why the
+5. Approval, then install, then verify by triggering it deliberately.
+6. Record `tier=gated` and the event in the card, so a reader knows why the
    agent behaves that way.
 
 `references/gates.md` has the shipped gate, the install, and the settings shape

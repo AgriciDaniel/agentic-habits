@@ -92,6 +92,33 @@ the first rung of the repair ladder rather than to the lapse count.
 know the miss was correct in context, and a lapse count that includes justified
 misses will retire the wrong habits.
 
+## Validate the judge before you trust it
+
+Anthropic's published procedure for a judge in a code migration is two runs, and
+it transfers directly:
+
+> "Run it against the original code to confirm it passes. Then run it against
+> deliberately broken code to confirm it fails, a judge that doesn't catch
+> breakage isn't a judge."
+
+So a judge or a gate that has only ever been observed **allowing** things is not
+evidence of compliance. It is an untested instrument. Both directions are
+required, and both belong in the shipped tests rather than in a manual
+checklist. `.github/test-gate.sh` is structured exactly this way: cases that
+must block, and cases that must not.
+
+Two more principles from the same source, which set the order of preference:
+
+> "Let scripts, a compiler, a diff, a test suite, be the referee."
+>
+> "Make review adversarial and verification mechanical."
+
+Read together with the tiers: **deterministic first, model second.** A rule a
+script can check should be checked by a script, and a model judge is for what is
+left over. That is also why this package puts the gate at the moment of the
+claim and the judge after the fact, rather than asking a model to arbitrate in
+the hook itself.
+
 ## Judging the set, not the habit
 
 Once cases accumulate, the set can be scored on things opinion cannot reach:

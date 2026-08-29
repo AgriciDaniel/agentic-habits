@@ -178,6 +178,34 @@ cycling.
 notice -> draft -> place -> observe -> sharpen -> promote -> escalate -> retire
 ```
 
+### Derived, not speculative
+
+This is the sharpest test available for whether a rule belongs in a file at all,
+and it cuts against most published rule sets, including parts of this one.
+
+A rules file is well supported as a **sink for observed repeated failures**.
+Anthropic's own migration playbook says it plainly: "When a reviewer keeps
+catching the same mistake across files, the fix isn't per-file. You add one
+sentence to the rulebook and regenerate the affected batch." The same shape
+appears as "when Claude makes a mistake twice, the correction goes into
+CLAUDE.md".
+
+What is not well supported is the speculative, prohibition-shaped rule written
+upfront because it seems prudent. Nothing recommends those, and the documented
+cost of a bloated instruction file lands on them first.
+
+So: **a habit harvested from a recurring correction is on solid ground. A habit
+authored upfront from what seems wise is not.** That distinction should decide
+what survives a review, and it is uncomfortable here for an obvious reason. The
+starter pack in this repository is authored upfront. It is a menu of plausible
+rules, drafted from known failure patterns rather than harvested from your
+sessions, and its own evidence grades say as much: two of twenty are documented,
+the rest are arguments.
+
+Treat the pack as a vocabulary for writing your own, not as a set to adopt. The
+habits that will actually earn their context are the two or three you write
+after something goes wrong, and those are the ones with a case attached.
+
 **Notice.** The signal is repetition: the same correction twice, the same
 cleanup after the agent twice, the same explanation typed again. One occurrence
 is noise. Auto memory is a useful upstream detector here, since Claude records

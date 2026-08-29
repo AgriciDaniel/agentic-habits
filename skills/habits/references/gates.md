@@ -99,6 +99,47 @@ tried to run the suite, permission was denied, the transcript still recorded a
 through. It now matches each call to its result and ignores any whose
 `is_error` came back true. Unit tests cover both directions.
 
+## Do not write a hook generator: Anthropic ships one
+
+`hookify` is a first-party plugin in the `anthropics/claude-code` demo
+marketplace, alongside `code-review` and `security-guidance`. Its stated purpose
+is to "easily create custom hooks to prevent unwanted behaviors by analyzing
+conversation patterns or explicit instructions", and it ships a
+`conversation-analyzer` agent and a `writing-rules` skill.
+
+That is hook *authoring*, and it is better to use it than to reimplement it.
+
+```
+/plugin marketplace add anthropics/claude-code
+/plugin install hookify@claude-code-plugins
+```
+
+What this skill contributes at the gate tier is the two things hookify does not
+decide for you:
+
+- **Which habit deserves a gate.** The repair ladder answers it from history,
+  after a habit has been missed twice, and `stakes=critical` answers it from
+  consequence, before it ever fails. A hook generator will happily write a hook
+  for a habit that never needed one, and every gate you add is a false-positive
+  surface on every future turn.
+- **One gate that is already written and tested.** `completion-gate.sh` covers
+  the specific claim-versus-evidence case with 27 tests and a recorded live
+  block.
+
+So `/habits enforce` should hand off to `hookify` for anything beyond the
+shipped gate, and spend its own effort on the decision rather than the shell.
+
+## Validate a gate in both directions
+
+A gate that has only ever been observed allowing turns is untested, not
+trustworthy. The rule Anthropic publishes for validating a judge applies
+unchanged: run it against the good case to confirm it passes, then against a
+deliberately broken case to confirm it fires, because an instrument that does
+not catch breakage is not an instrument.
+
+`.github/test-gate.sh` is built that way, and any gate added here should extend
+both halves of it, not just the allowing half.
+
 ## Design rules for any gate you add
 
 - **Fail open.** Any parse failure, missing field, unreadable transcript, or

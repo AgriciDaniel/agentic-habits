@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 # Tests for assets/gates/completion-gate.sh, written from the specification in
-# references/gates.md rather than from the implementation. Several cases exist
+# references/gates.md rather than from the implementation.
+#
+# Structured in both directions on purpose: cases that must block, and cases
+# that must not. "Run it against the original code to confirm it passes. Then
+# run it against deliberately broken code to confirm it fails, a judge that
+# doesn't catch breakage isn't a judge." A gate only ever observed allowing
+# turns is untested, not trustworthy. Several cases exist
 # because an independent reviewer measured the shipped script failing them.
 set -uo pipefail
 cd "$(dirname "$0")/.." || exit 1
