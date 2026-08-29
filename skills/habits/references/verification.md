@@ -203,6 +203,27 @@ for guidance here.
 - Hook exit codes: only 2 blocks; 1 is a non-blocking error and the turn
   proceeds; `stop_hook_active` exists to prevent recursion.
 
+### From Anthropic engineering writing, quoted and checked at source
+
+Confirmed by direct fetch of https://claude.com/blog/ai-code-migration during
+this session, not relayed.
+
+- "Run it against the original code to confirm it passes. Then run it against
+  deliberately broken code to confirm it fails, a judge that doesn't catch
+  breakage isn't a judge."
+- "Two adversarial reviewers evaluate the work of the implementers using
+  separate contexts and disagreement between reviewers goes to a third agent."
+- "When a reviewer keeps catching the same mistake across files, the fix isn't
+  per-file. You add one sentence to the rulebook and regenerate the affected
+  batch."
+- "Let scripts, a compiler, a diff, a test suite, be the referee."
+- "Make review adversarial and verification mechanical."
+
+The third of these is the strongest first-party support this design has: a rules
+file is endorsed as a sink for *observed repeated* failures. It is not support
+for rules authored upfront, which is what the starter pack is, and
+`methodology.md` now says so.
+
 ### Not from Anthropic documentation, and labelled as such where used
 
 - **Anthropic's production system prompt design.** The claims that it fronts
@@ -246,6 +267,35 @@ harness executes them rather than asking the model to.
 that bloated CLAUDE.md files cause Claude to ignore your instructions, with a
 target under two hundred lines per file. No threshold, count, or percentage is
 published anywhere. The budgets here remain design choices.
+
+## Reported by a research agent, not yet verified here
+
+Filed rather than used. A subagent's report is `[SEARCH]`-grade at best: it is
+somebody else's reading of somebody else's page, and this package does not repeat
+that as fact. Each of these would change something if true, and none has been
+checked against a primary source from this session.
+
+- That Anthropic's `Petri` tool and a June 2026 steering post already publish,
+  respectively, the judge-over-transcript architecture and a stated/gated/judged
+  tiering. If so, neither is novel here and the README should say so.
+- That `agentic-os` publishes substantially this thesis, and that a large
+  community CLAUDE.md pack already carries anti-rationalization tables.
+- That Codex caps combined project docs at 32,768 bytes and Windsurf at 12,000
+  characters, silently. If true this is a **better** justification for the
+  budget than the adherence argument currently used, because it is a hard
+  ceiling rather than a soft claim.
+- That a factorial study found the "instructions degrade past ~200 lines" effect
+  null. This would directly weaken a claim this package leans on.
+- That `InFoBench` DRFR already defines the ledger shape, and that adherence
+  metrics in the field are uniformly binary with no abstention state, which
+  would make `UNKNOWN` the genuinely novel part.
+- That `rulesync` could publish a habit set to 41 harnesses without hand-porting.
+
+**Verified from a primary source this session, and therefore acted on:**
+`hookify` exists as a first-party plugin in the `anthropics/claude-code` demo
+marketplace, described as creating "custom hooks to prevent unwanted behaviors
+by analyzing conversation patterns or explicit instructions". `gates.md` now
+hands off to it instead of implying this package should generate hooks.
 
 ## Neither tested nor documented
 

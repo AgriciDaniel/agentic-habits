@@ -2,6 +2,55 @@
 
 All notable changes to this skill are recorded here. Dates are ISO.
 
+## 0.3.1 - 2026-08-29
+
+Deep research pass. Three research streams plus the independent review; only
+what was verified against a primary source in-session was acted on, and the
+rest is filed as unverified rather than repeated as fact.
+
+### Adopted rather than reinvented
+
+`hookify` is a first-party plugin in the `anthropics/claude-code` marketplace
+that writes hooks from described behavior. Verified by fetching the marketplace
+directory. `/habits enforce` now hands off to it for anything beyond the shipped
+gate, and spends its own effort on the decision this package is actually about:
+which habit deserves a gate, answered from history by the repair ladder or from
+consequence by `stakes=critical`.
+
+### Added: validate an instrument in both directions
+
+From Anthropic's code-migration playbook, quoted at source: "Run it against the
+original code to confirm it passes. Then run it against deliberately broken code
+to confirm it fails, a judge that doesn't catch breakage isn't a judge." A gate
+observed only allowing turns is untested, not trustworthy. Both `gates.md` and
+`judging.md` now say so, and the test suite's two halves are named for it.
+
+Also adopted, from the same source: deterministic before model. "Let scripts, a
+compiler, a diff, a test suite, be the referee" and "make review adversarial and
+verification mechanical" set the order of preference the tiers already follow.
+
+### Added: derived beats speculative, which indicts this repository's own pack
+
+The strongest first-party support for a rules file is as a sink for *observed
+repeated* failures: "When a reviewer keeps catching the same mistake across
+files, the fix isn't per-file. You add one sentence to the rulebook and
+regenerate the affected batch."
+
+Nothing supports the speculative rule authored upfront because it seems prudent,
+and the starter pack in this repository is exactly that. `methodology.md` now
+says so plainly and recasts the pack as a vocabulary for writing your own rather
+than a set to adopt.
+
+### Filed, not used
+
+Six claims from a prior-art research stream that would each change something if
+true, including that the judge-over-transcript architecture and the
+stated/gated/judged tiering are already published elsewhere, and that a hard
+32,768-byte cap on project docs in another harness would justify the budget
+better than the adherence argument does. None was verifiable from a primary
+source this session, so all are recorded in `verification.md` as reported and
+unchecked.
+
 ## 0.3.0 - 2026-08-29
 
 An independent read-only review, run in a fresh context against seven frozen
