@@ -15,8 +15,16 @@ Worth knowing before adopting any of them, and the reason the card format has an
 | Grade | Habits | Meaning |
 |---|---|---|
 | `sourced` | SYS-03, SYS-05 | Official Claude Code documentation states the practice directly. Both citations are filed in `verification.md` |
+| `measured` | SYS-06, SYS-11, SYS-12 | The failure they target has a published rate. Unrequested actions by permissive coding agents at 5 to 28%, moving from 0.0% to 17.1% when a consent declaration was removed; hallucinated package references in 19.7% of 576,000 generated samples; sycophantic reversal from a correct answer at ~42% under a mild challenge and ~76% under a flat contrary assertion. See `evidence.md` |
 | `practitioner` | none | |
-| `reasoned` | the other eighteen | An argument, and often a good one. Not a finding |
+| `reasoned` | the other fifteen | An argument, and often a good one. Not a finding |
+
+One honest demotion. **`PRJ-03 No green-washing` is partly fighting a solved
+problem.** Test hard-coding and special-casing on Anthropic's reward-hack-prone
+coding suite fell from 64% for Sonnet 3.7 to 0% for Opus 4.5 and 4.6. Keep it if
+your model is older or your suite is unusual, and do not sell it as a live
+threat on current frontier models. What has *not* been trained out is what a
+model does when the task cannot be done at all, which is `SYS-04`'s territory.
 
 SYS-05 is backed by "After two failed corrections, `/clear` and write a better
 initial prompt incorporating what you learned." SYS-03 by "Have Claude show

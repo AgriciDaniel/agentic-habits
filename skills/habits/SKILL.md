@@ -23,6 +23,13 @@ Most rule sets ship only the first tier and imply the second. Say which tier a
 habit is in whenever it matters, and never let "durable rule" imply "reliable
 rule".
 
+How much the first tier buys, measured: on Anthropic's Impossible Tasks
+evaluation an explicit forceful written instruction moved the failure rate from
+55% to 35% for one model, and 50% to 23% for the next. **A written rule roughly
+halves the failure and leaves a quarter to a third standing.** That is the
+ceiling this skill works under, and `references/evidence.md` carries the rest of
+the base rates.
+
 Read `references/methodology.md` for the argument, the four laws, and where the
 human habit research it borrows from stops applying.
 
@@ -237,5 +244,8 @@ line between data and instruction actually falls.
 - `references/starter-pack.md` - 19 habits, each tagged by how well evidenced it is.
 - `references/anti-habits.md` - 12 failure modes and their replacements.
 - `references/review.md` - the board, the repair ladder, promotion, retirement.
+- `references/evidence.md` - measured base rates for the failures these habits
+  target, what the strongest interventions actually are, and what a
+  transcript-only judge can and cannot do.
 - `references/verification.md` - what is tested, what is quoted, what is neither.
   Read it before repeating any claim in this skill as fact.

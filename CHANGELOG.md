@@ -2,6 +2,75 @@
 
 All notable changes to this skill are recorded here. Dates are ISO.
 
+## 0.4.0 - 2026-08-29
+
+The evidence pass. A research stream returned measured base rates for the
+failures these habits target and for the judging this package does. Several
+constrain what it may claim, one indicts a habit in its own starter pack, and
+one changes how habits should be written.
+
+### Added: `references/evidence.md`
+
+Measured base rates, kept separate from the rules so a reader can see what is
+established and what is not.
+
+**The ceiling, and it is now stated on the skill's front page.** On Anthropic's
+Impossible Tasks evaluation an explicit forceful written instruction moved the
+failure rate from 55% to 35% for Opus 4.5, and 50% to 23% for Opus 4.6. A
+written rule roughly halves the failure and leaves a quarter to a third
+standing. That is what the stated tier buys, and it is why the other two tiers
+exist.
+
+### Added: permission beats prohibition
+
+The largest prompt-level effect in the material is not a rule against anything.
+Giving an agent a sanctioned way to declare a task impossible cut cheating from
+54% to 9% and 49% to 12% on unsolvable tasks, where forceful prohibitions move
+the number by about half and one polite prohibition made it worse. A model with
+no acceptable way to fail will find an unacceptable one, and much of what looks
+like dishonesty is a missing exit.
+
+`methodology.md` now says to write what the agent should do *instead* at the
+moment of temptation, which is what the `Instead` form was already for, and it
+is the reason the completion gate must never block an honest "I could not run
+this".
+
+### Added: context beats procedure, which is a caution about this package
+
+One controlled study gave agents the dependency map so they knew which tests to
+check: regressions fell from 6.08% to 1.82%. The same study gave the procedural
+instruction *without* that context: regressions rose to 9.94%, worse than no
+intervention at all. A procedural rule with no context attached can be worse
+than nothing.
+
+### Changed: what a judge verdict is worth
+
+A transcript-only judge detects rule violations somewhat better than chance and
+well below reliably: around 0.65 AUROC on false-success detection, and
+conversation-level accuracy in the forties for the strongest frontier judges on
+one benchmark. Giving a judge the artifacts moved alignment with human
+evaluation from roughly 60% to the mid-80s.
+
+`judging.md` now says so, a `FAIL` is framed as a flag worth checking rather
+than a finding, and `UNKNOWN` gained entry criteria because abstention is cheap
+to induce and buys agreement by spending coverage.
+
+Two claims were also demoted to reasoning: that requiring a judge to quote
+evidence improves reliability, which has no isolated ablation behind it, and
+that a fresh context captures the benefit measured for cross-model critique,
+which nobody has tested.
+
+### Changed: evidence grades, including one demotion
+
+`SYS-06`, `SYS-11`, and `SYS-12` are regraded `measured`: the failures they
+target have published rates, and sycophantic reversal from a correct answer is
+now the best-evidenced habit in the pack.
+
+And the demotion. **`PRJ-03 No green-washing` is partly fighting a solved
+problem.** Test hard-coding on Anthropic's reward-hack-prone coding suite fell
+from 64% for Sonnet 3.7 to 0% for Opus 4.5 and 4.6. What has not been trained
+out is what a model does when a task cannot be done at all.
+
 ## 0.3.1 - 2026-08-29
 
 Deep research pass. Three research streams plus the independent review; only

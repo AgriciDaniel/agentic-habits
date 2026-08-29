@@ -75,10 +75,27 @@ completion gate can still make in its own step 4. A judge that cannot express
 the difference will make it silently.
 
 **The gate on the gate.** PASS requires a quotation, a line reference, or a
-command result. **No evidence means not PASS.** UNKNOWN is a legitimate and
-common verdict, and reporting it honestly is the entire value of the exercise. A
-judge that returns mostly PASS on thin evidence is worse than no judge, because
-it manufactures confidence.
+command result. **No evidence means not PASS.** A judge that returns mostly PASS
+on thin evidence is worse than no judge, because it manufactures confidence.
+
+**UNKNOWN needs entry criteria, not just permission.** Rule `UNKNOWN` when the
+material cannot settle the question. Never because the question is hard, never
+because the answer is uncomfortable, never to avoid a verdict the evidence
+supports. This matters because abstention is measurably cheap to induce:
+offering an extra option is enough to make a judge take it on decidable cases,
+and abstention buys agreement by spending coverage. One study reached 85.8%
+agreement at 63.2% coverage where the same judge managed 77.8% at full coverage.
+An `UNKNOWN` rate that climbs is a judge going quiet, not a judge getting
+careful.
+
+**And know what the verdict is worth.** A judge reading only a transcript
+detects rule violations somewhat better than chance and well below reliably:
+roughly 0.65 AUROC on false-success detection, and conversation-level accuracy
+in the forties for the strongest frontier judges on one rule-violation
+benchmark. Giving a judge the actual artifacts moved alignment with human
+evaluation from roughly 60% to the mid-80s. That is why `habit-judge` has file
+tools, why it prefers artifacts to the agent's narration, and why a `FAIL` is a
+flag worth checking rather than a finding. Sources in `evidence.md`.
 
 **Flag gaps, not near-misses.** A reviewer asked to find problems will find
 some, whether or not they are there. The official guidance on adversarial review
@@ -160,3 +177,16 @@ measures it on a model, the format is borrowed from research on people, and
 there is a counter-signal that emphatic phrasing can overtrigger current models.
 Treat the format as a legibility choice that makes judging possible, which is
 its real justification, rather than as a performance claim.
+
+Whether requiring the judge to quote evidence improves its reliability. It
+extends a strongly measured finding, that grounding a judge in an external
+reference helps a great deal, and **no isolated ablation of the quoting
+requirement exists**. This package requires it anyway, on the grounds that an
+unquotable verdict cannot be checked by whoever reads it. That is a reason, not
+a result.
+
+Whether a *fresh context* with the same model captures the benefit measured for
+*cross-model* critique. Self-critique without external grounding measurably
+degrades performance, and cross-model critique measurably beats it. The exact
+substitution this package makes has not been tested by anyone, and the closest
+study names it as future work.
