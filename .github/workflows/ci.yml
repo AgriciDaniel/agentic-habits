@@ -14,7 +14,7 @@ jobs:
     name: structure and house style
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Run structural checks
         run: bash .github/checks.sh
 
@@ -26,7 +26,7 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Unit test the Stop hook
         run: bash .github/test-gate.sh
       - name: Replay the recorded gate session
@@ -40,7 +40,7 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Install, reinstall, gate, uninstall
         run: bash .github/test-install.sh
 
@@ -48,7 +48,7 @@ jobs:
     name: shellcheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Lint every shipped shell script
         run: |
           shellcheck --version
@@ -60,7 +60,7 @@ jobs:
     name: plugin manifest
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Validate plugin and marketplace JSON
         run: |
           jq empty .claude-plugin/plugin.json
