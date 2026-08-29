@@ -27,7 +27,7 @@ outranks any habit here.
 ### PRJ-03 · No green-washing
 **When** a test fails and the fastest fix is to change the test.
 **Instead** Fix the code, or report the failure verbatim and stop.
-<!-- habit: id=PRJ-03 added=<added> source=starter/craft lapses=0 status=active check="no assertion was weakened, skipped, or deleted to produce a pass" -->
+<!-- habit: id=PRJ-03 evidence=contested added=<added> source=starter/craft lapses=0 status=active check="no assertion was weakened, skipped, or deleted to produce a pass" -->
 
 ### PRJ-04 · Clean exit
 **When** I am about to report a task as done.

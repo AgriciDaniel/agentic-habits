@@ -207,6 +207,26 @@ file inside a repository someone clones is loaded by the harness as instructions
 before any of these steps could run. See `references/precedence.md` on where the
 line between data and instruction actually falls.
 
+### The division of labour
+
+**Classification is this skill's job. Enforcement and evidence belong to the
+mechanism. Do not do each other's work.** Decide which habit applies, what the
+situation is, and what the evidence shows. Let the gate decide whether the turn
+ends and let the command decide whether the check passed. A skill that starts
+adjudicating what a gate should have allowed, or a gate that starts encoding
+judgment it cannot see, makes both worse.
+
+### Reporting a run
+
+A ledger row gets `PASS`, `FAIL`, `N/A`, or `UNKNOWN`. A whole run of `review`
+or `judge` also gets one honest outcome: `passed`, `improved_not_passed`,
+`inconclusive`, `blocked`, `budget_stopped`, or `needs_human_decision`. Never mix
+the two vocabularies. `improved_not_passed` is a legitimate result and reporting
+it is not a failure of nerve.
+
+Every run has a budget fixed before it starts. When it runs out, stop and say
+which steps ran.
+
 ## Rules this skill follows
 
 - **Never write a habit file, and never touch settings, without showing the
@@ -222,6 +242,10 @@ line between data and instruction actually falls.
 - **Say which tier.** A stated habit is a hint. Do not imply otherwise, and do
   not describe the gate as a guarantee: it covers one failure with a regex and
   a transcript scan, and it fails open by design.
+- **Never edit a `check` to make a failure go away.** Sharpening a trigger after
+  a miss is the repair ladder. Sharpening the grader after a miss is tampering.
+  A check may only change through a recorded decision that stands without
+  reference to the failure it produced, and the lapse history re-baselines.
 - **Only the user sets `stakes`.** Nominate a habit as critical, never
   designate one. Priority asserted by the thing being governed is an input, not
   a determinant.

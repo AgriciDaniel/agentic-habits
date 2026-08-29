@@ -346,6 +346,25 @@ What is still author testimony: the original interactive sessions, including the
 hook log from the live gate block and the skill-listing observation. The scripts
 reproduce the mechanism; they do not prove the specific session happened.
 
+## Refresh cadence
+
+A verification record with no expiry becomes a confident record of how things
+used to work. Three different clocks, because the things being checked move at
+different speeds:
+
+| What | Recheck |
+|---|---|
+| Harness behavior: hooks, rules loading, settings shapes, exit codes | **Monthly**, and after any Claude Code minor version that touches hooks or memory |
+| Research and measured base rates in `evidence.md` | **Quarterly** |
+| Anything before publishing, installing widely, or citing in public | **Every time** |
+
+Stamp the date when you recheck. If a claim here is more than one cadence past
+its check, treat it the way this package treats any unverified claim: name it as
+stale rather than repeating it. The failure mode is specific and has already
+happened once to a source pack this project consulted, where 81 of 96 sources
+were past their refresh date and every version-pinned fact in them had to be
+discounted.
+
 ## Rerunning this
 
 Each test is four lines of shell: make a temporary directory, write a rules file

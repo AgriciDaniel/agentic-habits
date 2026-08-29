@@ -269,10 +269,11 @@ skills/habits/
     precedence.md          the conflict ladder across five instruction channels
     gates.md               the enforcement tier, the shipped gate, install
     judging.md             what makes a habit good, and how adherence is scored
+    evidence.md            measured base rates, and what a judge can actually do
     verification.md        what is tested, what is quoted, what is neither
   assets/
     gates/                 completion-gate.sh, the Stop hook
-    templates/             habit file, path-scoped variant, case, archive, log
+    templates/             habit file, path-scoped variant, case, decision, archive, log
     starter/               the installable card sets
 agents/
   habit-judge.md           read-only verifier, cannot edit what it judges
