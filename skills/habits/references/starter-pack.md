@@ -14,14 +14,21 @@ Worth knowing before adopting any of them, and the reason the card format has an
 
 | Grade | Habits | Meaning |
 |---|---|---|
-| `sourced` | SYS-05 Stop at two | Official documentation backs it: after roughly two failed corrections, restart rather than keep patching |
-| `practitioner` | SYS-03 Verify with the real thing | One outside report that auditing progress claims against real tool results nearly eliminated fabricated status. A single blog, not a vendor measurement |
-| `reasoned` | the other seventeen | An argument, and often a good one. Not a finding |
+| `sourced` | SYS-03, SYS-05 | Official Claude Code documentation states the practice directly. Both citations are filed in `verification.md` |
+| `practitioner` | none | |
+| `reasoned` | the other eighteen | An argument, and often a good one. Not a finding |
 
-That distribution is the honest state of the field, not a gap in this pack.
-There is no published measurement for most agent behavior rules. Adopt them
-because the failure they prevent has happened to you, which is evidence of a
-better kind, and record the case when it does.
+SYS-05 is backed by "After two failed corrections, `/clear` and write a better
+initial prompt incorporating what you learned." SYS-03 by "Have Claude show
+evidence rather than asserting success: the test output, the command it ran and
+what it returned, or a screenshot of the result", alongside a named failure
+pattern, the trust-then-verify gap, whose stated fix is "If you can't verify it,
+don't ship it."
+
+Two of twenty is the honest state of the field, not a gap in this pack. There is
+no published measurement for most agent behavior rules. Adopt the rest because
+the failure they prevent has happened to you, which is evidence of a better
+kind, and record the case when it does.
 
 ---
 
@@ -207,6 +214,19 @@ Check: no message consists only of intent.
 Why: narration reads like progress and is not, and the tool calls already show
 the work.
 
+### SYS-16 · Compression never drops a dissent
+**When** I am summarising, compacting, or reporting on work I already did.
+**Instead** Carry every disagreement, caveat, and unresolved question forward, and drop detail instead.
+
+Check: no caveat present in the earlier output is missing from the summary.
+Why: filtering volume is the job and filtering disconfirmation is the failure,
+and from the inside the two are identical. This is the one place an agent can
+delete the inconvenient half of its own work and leave no trace, because the
+reader is reading the summary precisely so they do not have to read the rest.
+Nothing else here covers it: `SYS-13` governs the order of a report and `SYS-04`
+governs where a failure appears in one, but neither governs what a second pass
+over your own output is allowed to lose.
+
 ---
 
 ## Recommended installs
@@ -219,8 +239,8 @@ the work.
 | Research, analysis, and writing | core plus truth |
 | Reports that other people read | core plus communication |
 
-Core plus one pack is nine or ten habits, inside the system budget with room to
-add the two or three that come from the user's own repeated corrections. Those
+Core plus one pack is eight or nine habits, inside the system budget with room
+to add the two or three that come from the user's own repeated corrections. Those
 last ones usually matter more than anything in this file, because they came from
 something that actually happened.
 

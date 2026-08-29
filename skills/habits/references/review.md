@@ -29,6 +29,12 @@ Under the tables, and only when there is something to say:
 - conflicts found between files
 - the count in the archive, so the record stays visible
 
+A habit that has never been observed and a habit observed twenty times without a
+miss are not the same thing, and printing `0` for both is the one place this
+package puts a number where an `unknown` belongs. Render the lapse column as a
+dash until the habit has actually been judged, and a number only after a ledger
+has cleared or failed it. A zero gets trusted; a dash does not.
+
 If no habit file exists anywhere, do not render an empty board. Say there are no
 habits yet and offer `/habits setup`.
 

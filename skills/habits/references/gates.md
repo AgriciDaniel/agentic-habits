@@ -77,9 +77,20 @@ In order, and it exits 0 the moment any step is uncertain:
 2. The message discloses that the check was not run. Allow. Honest disclosure is
    the behavior being asked for, so blocking it would train the wrong lesson.
 3. The message contains no claim that a runnable check came back clean. Allow.
-4. A verification command ran in this turn and its result did not come back as
-   an error. Allow.
+4. A tool call in this turn looks like a real check and its result came back
+   without an error. Allow. "Looks like a real check" means a shell command
+   whose text matches a check pattern (`npm test`, `pytest`, `cargo build`,
+   `tsc`, `eslint` and friends), or a non-shell tool whose *name* matches one.
+   Be clear-eyed about that second case: a name is not an observation, so an
+   MCP tool called `check_page` would count. Closing that would mean blocking
+   everyone who runs tests through a tool the gate has never heard of, which is
+   the expensive failure. The gate is honest about being one learned sentence
+   from being defeated; it raises the floor, it is not a wall.
 5. Otherwise block with exit 2, and say what to do about it.
+
+Step 3 is per sentence, not per message, because a disclosure about one check
+must not launder an unverified claim about a different one. "I have not run the
+formatter, and separately all tests pass" still blocks on the second clause.
 
 Step 4 has a subtlety worth stating, because the first version got it wrong and
 a live session caught it: **an attempted command is not evidence.** The model
@@ -104,7 +115,31 @@ through. It now matches each call to its result and ignores any whose
 - **Reward the honest path.** Any gate that punishes disclosure produces
   concealment.
 - **Narrow triggers.** Enforce claims that are cheap to actually verify. A gate
-  on something expensive to check will be routed around.
+  on something expensive to check will be routed around. Narrow means the
+  trigger is an unhedged past-tense assertion, not any sentence containing the
+  word "pass": an instruction, a question, reported speech, and a hedged future
+  are all not claims, and an early version of this gate blocked all four.
+- **Know the ceiling.** Claude Code overrides a `Stop` hook and ends the turn
+  after eight consecutive blocks. A gate cannot hold a session hostage, which is
+  a good property, and it also means a gate that fires constantly stops working
+  rather than escalating.
+
+## Between prose and a hook
+
+A hook is not the only mechanism stronger than a rules file. Two others are
+documented and worth knowing before you write a script.
+
+- **A check in the prompt.** Ask for the check and the iteration in the same
+  message. Weakest, but free, and the official guidance leads with it.
+- **A `/goal` condition.** A separate evaluator re-checks the condition after
+  every turn and the agent keeps working until it resolves. This sits between a
+  prompt and a hook: no script to write, but scoped to one session.
+- **An adversarial review subagent.** Officially recommended before treating a
+  task as done, because a fresh context is not biased toward the code it just
+  wrote. That is the judged tier, and `judging.md` covers it.
+
+Reach for a hook when the check must apply to every session without anyone
+remembering to ask for it.
 
 ## Other events worth a gate
 

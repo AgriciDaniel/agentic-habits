@@ -25,6 +25,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Unit test the Stop hook
         run: bash .github/test-gate.sh
+      - name: Replay the recorded gate session
+        run: bash .github/live-checks/gate-replay.sh
 
   plugin:
     name: plugin manifest
