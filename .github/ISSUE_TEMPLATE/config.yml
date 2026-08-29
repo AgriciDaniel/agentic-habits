@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security report
+    url: https://github.com/AgriciDaniel/agentic-habits/security/advisories/new
+    about: Report privately anything that would let a crafted habit file change an agent's behavior on someone else's machine.
+  - name: Claude Code documentation
+    url: https://code.claude.com/docs/en/memory
+    about: How rules files, path scoping, and memory actually load. Worth checking before filing a behavior report.

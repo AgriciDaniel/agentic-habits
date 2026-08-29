@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-marketplace.json",
+  "name": "agentic-habits",
+  "owner": {
+    "name": "Daniel Agrici",
+    "url": "https://github.com/AgriciDaniel"
+  },
+  "plugins": [
+    {
+      "name": "habits",
+      "source": "./",
+      "description": "Agentic habits. One command to give an agent standing behavior that survives the end of a chat: capture a habit as a trigger, place it where the trigger fires, review adherence from evidence, and retire what does not earn its context."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Local habit state, if anyone works on the skill from inside a vault
+.claude/habits/
+.claude/rules/habits*.md
+
+# Scratch
+/tmp/
+*.log
