@@ -126,7 +126,12 @@ note "blocks once per turn and never twice, so a repeated claim clears."
 if [ "$assume_yes" != 1 ] && [ ! -t 0 ]; then
   die "--apply without a terminal needs --yes. Refusing."
 fi
-[ -n "${CI:-}" ] && die "--apply refuses to run in CI."
+# Refuse an unattended settings write against a real home. A caller that has
+# redirected the install root with HABITS_INSTALL_HOME is sandboxed by
+# definition, which is how the installer's own tests exercise this path.
+if [ -n "${CI:-}" ] && [ -z "${HABITS_INSTALL_HOME:-}" ]; then
+  die "--apply refuses to write to a real settings.json in CI."
+fi
 
 if [ -f "$settings" ]; then
   jq empty "$settings" 2>/dev/null || die "$settings is not valid JSON. Refusing to touch it. Fix the file first."
