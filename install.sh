@@ -66,10 +66,13 @@ install_dir() { # $1 = source dir, $2 = destination dir
   fi
   stage="$(dirname "$dest")/.habits-stage.$$"
   rm -rf "$stage"; mkdir -p "$stage" && chmod 700 "$stage" || die "Could not stage."
-  cp -R "$src/." "$stage/" || { rm -rf "$stage"; die "Copy failed."; }
+  # tar rather than cp: `cp -R src/. dest/` is not portable between GNU and BSD,
+  # and on macOS it left a second copy of the tree behind on reinstall.
+  ( cd "$src" && tar cf - . ) | ( cd "$stage" && tar xf - ) \
+    || { rm -rf "$stage"; die "Copy failed."; }
   printf '%s\n' "$MARKER" > "$stage/.habits-owned"
   if [ -e "$dest" ]; then mv "$dest" "$dest.old.$$" || { rm -rf "$stage"; die "Could not move existing install aside."; }; fi
-  if mv "$stage" "$dest"; then rm -rf "$dest.old.$$"
+  if mv "$stage" "$dest"; then rm -rf "$dest.old.$$" "$stage"
   else rm -rf "$stage"; [ -e "$dest.old.$$" ] && mv "$dest.old.$$" "$dest"; die "Install failed, previous state restored."; fi
 }
 

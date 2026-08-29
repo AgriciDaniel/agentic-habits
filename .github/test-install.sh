@@ -18,7 +18,10 @@ printf '\n\033[1mFresh install\033[0m\n'
 printf '\n\033[1mReinstall, the upgrade path the README used to break on\033[0m\n'
 ./install.sh >/dev/null 2>&1 && ok "second run succeeds" || bad "second run failed"
 [ -d "$H/.claude/skills/habits/habits" ] && bad "created a nested duplicate habits/habits/" || ok "no nested duplicate"
-[ "$(find "$H/.claude/skills" -name SKILL.md | wc -l)" = "1" ] && ok "exactly one SKILL.md" || bad "more than one SKILL.md"
+n=$(find "$H/.claude/skills" -name SKILL.md | wc -l | tr -d ' ')
+[ "$n" = "1" ] && ok "exactly one SKILL.md" || { bad "expected 1 SKILL.md, found $n:"; find "$H/.claude/skills" -name SKILL.md | sed "s|$H|~|;s/^/        /"; }
+leftovers=$(find "$H/.claude/skills" -maxdepth 1 \( -name '.habits-stage.*' -o -name '*.old.*' \) 2>/dev/null)
+[ -z "$leftovers" ] && ok "no staging or backup directories left behind" || { bad "leftovers:"; printf '%s\n' "$leftovers" | sed "s|$H|~|;s/^/        /"; }
 
 printf '\n\033[1mGate: staged but never enabled without --apply\033[0m\n'
 ./install.sh --with-gate >/dev/null 2>&1
