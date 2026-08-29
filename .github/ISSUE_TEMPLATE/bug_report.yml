@@ -1,0 +1,37 @@
+name: Bug report
+description: Something in the skill is wrong, unclear, or does not do what it says
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        An agent not following a habit is adherence, not a bug. The repair
+        ladder covers it. A bug is the skill doing the wrong thing: writing
+        without approval, producing a malformed card, contradicting itself, or
+        stating something about Claude Code that is not true.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you ran, what you expected, what you got. Paste the exchange if you can.
+    validations:
+      required: true
+  - type: input
+    id: file
+    attributes:
+      label: Where
+      description: The file and line, if you know it.
+      placeholder: skills/habits/references/placement.md:84
+  - type: input
+    id: version
+    attributes:
+      label: Claude Code version
+      placeholder: "2.1.251"
+  - type: checkboxes
+    id: severity
+    attributes:
+      label: Does it involve a write?
+      options:
+        - label: The skill wrote or proposed writing something without showing it and asking first
+        - label: It fabricated adherence data, a lapse count, or a streak

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="1200" height="340" role="img" aria-label="agentic habits, a skill for Claude Code">
+  <rect width="1200" height="340" rx="18" fill="#0F0E0D"/>
+  <g font-family="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+    <text x="64" y="92" font-size="14" font-weight="600" letter-spacing="3.4" fill="#A8A29E">A SKILL FOR CLAUDE CODE</text>
+    <text x="64" y="182" font-size="74" font-weight="700" letter-spacing="-2.4" fill="#FAFAF9">agentic habits</text>
+    <text x="64" y="224" font-size="21" font-weight="400" fill="#A8A29E">An agent has no willpower and no memory. It has context.</text>
+    <text x="64" y="256" font-size="21" font-weight="500" fill="#E8896A">So a habit is not repetition. It is placement.</text>
+    <g>
+      <circle cx="68.6" cy="298" r="4.6" fill="none" stroke="#44403C" stroke-width="1.4"/>
+      <circle cx="91.6" cy="298" r="4.6" fill="none" stroke="#44403C" stroke-width="1.4"/>
+      <circle cx="114.6" cy="298" r="4.6" fill="none" stroke="#44403C" stroke-width="1.4"/>
+      <circle cx="137.6" cy="298" r="4.6" fill="none" stroke="#44403C" stroke-width="1.4"/>
+      <circle cx="160.6" cy="298" r="4.6" fill="none" stroke="#44403C" stroke-width="1.4"/>
+      <circle cx="183.6" cy="298" r="4.6" fill="none" stroke="#44403C" stroke-width="1.4"/>
+      <circle cx="206.6" cy="298" r="4.6" fill="none" stroke="#44403C" stroke-width="1.4"/>
+      <circle cx="229.6" cy="298" r="4.6" fill="none" stroke="#44403C" stroke-width="1.4"/>
+      <circle cx="252.6" cy="298" r="4.6" fill="none" stroke="#44403C" stroke-width="1.4"/>
+      <circle cx="275.6" cy="298" r="4.6" fill="none" stroke="#44403C" stroke-width="1.4"/>
+      <circle cx="298.6" cy="298" r="4.6" fill="none" stroke="#44403C" stroke-width="1.4"/>
+      <circle cx="321.6" cy="298" r="4.6" fill="none" stroke="#44403C" stroke-width="1.4"/>
+      <circle cx="344.6" cy="298" r="4.6" fill="#E8896A"/>
+      <circle cx="367.6" cy="298" r="4.6" fill="#E8896A"/>
+      <circle cx="390.6" cy="298" r="4.6" fill="#E8896A"/>
+      <circle cx="413.6" cy="298" r="4.6" fill="#E8896A"/>
+      <circle cx="436.6" cy="298" r="4.6" fill="#E8896A"/>
+      <circle cx="459.6" cy="298" r="4.6" fill="none" stroke="#44403C" stroke-width="1.4"/>
+      <circle cx="482.6" cy="298" r="4.6" fill="#E8896A"/>
+      <circle cx="505.6" cy="298" r="4.6" fill="#E8896A"/>
+      <circle cx="528.6" cy="298" r="4.6" fill="#E8896A"/>
+      <circle cx="551.6" cy="298" r="4.6" fill="#E8896A"/>
+      <circle cx="574.6" cy="298" r="4.6" fill="#E8896A"/>
+      <circle cx="597.6" cy="298" r="4.6" fill="none" stroke="#44403C" stroke-width="1.4"/>
+      <circle cx="620.6" cy="298" r="4.6" fill="#E8896A"/>
+      <circle cx="643.6" cy="298" r="4.6" fill="#E8896A"/>
+      <circle cx="666.6" cy="298" r="4.6" fill="#E8896A"/>
+      <circle cx="689.6" cy="298" r="4.6" fill="#E8896A"/>
+      <circle cx="712.6" cy="298" r="4.6" fill="#E8896A"/>
+      <circle cx="735.6" cy="298" r="4.6" fill="#E8896A"/>
+    </g>
+    <g>
+      <rect x="772" y="96" width="364" height="152" rx="14" fill="#1A1817" stroke="#2C2825" stroke-width="1.5"/>
+      <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="13.5">
+        <text x="800" y="134" fill="#E8896A" font-weight="600">SYS-03 &#183; Verify with the real thing</text>
+        <text x="800" y="170" fill="#A8A29E" font-weight="600">When</text>
+        <text x="852" y="170" fill="#FAFAF9">I am about to say it works.</text>
+        <text x="800" y="196" fill="#A8A29E" font-weight="600">Do</text>
+        <text x="852" y="196" fill="#FAFAF9">Run the check, show the output.</text>
+        <text x="800" y="226" fill="#A8A29E">two lines. one moment. one action.</text>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,59 @@
+name: Habit proposal
+description: Propose a new habit for the starter pack
+title: "habit: "
+labels: ["habit proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The most useful proposals read like an incident report. Describe the
+        moment, not the principle.
+  - type: textarea
+    id: incident
+    attributes:
+      label: What happened
+      description: The session, the task, and what the agent did. Enough detail that someone else would recognize it.
+      placeholder: I asked for a fix, it said the build was green, the build had not been run.
+    validations:
+      required: true
+  - type: input
+    id: when
+    attributes:
+      label: When
+      description: The moment it should fire. First person, present tense, one sentence.
+      placeholder: I am about to say something works.
+    validations:
+      required: true
+  - type: input
+    id: do
+    attributes:
+      label: Do (or Instead)
+      description: One action. Use Instead when it redirects a bad reflex.
+      placeholder: Run the closest real check and show its actual output.
+    validations:
+      required: true
+  - type: input
+    id: check
+    attributes:
+      label: Check
+      description: What is observably different in the transcript when this fires.
+      placeholder: The message claiming success contains real output from a real run.
+    validations:
+      required: true
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - system, the trigger has no repo in it
+        - project, it names a codebase
+        - path, it only involves certain files
+    validations:
+      required: true
+  - type: textarea
+    id: neighbours
+    attributes:
+      label: Neighbours you considered
+      description: Which existing habits are closest, and why this is not a duplicate. If it pushes a scope past its budget, say what it displaces.
+    validations:
+      required: true
