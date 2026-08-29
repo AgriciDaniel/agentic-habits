@@ -7,6 +7,22 @@ working set, and the budget exists to make that choice deliberate.
 Each entry gives the card as it goes in the file, the check that would show it
 fired, and why it exists. Only the card goes in the live file.
 
+## How well evidenced these are
+
+Worth knowing before adopting any of them, and the reason the card format has an
+`evidence` field.
+
+| Grade | Habits | Meaning |
+|---|---|---|
+| `sourced` | SYS-05 Stop at two | Official documentation backs it: after roughly two failed corrections, restart rather than keep patching |
+| `practitioner` | SYS-03 Verify with the real thing | One outside report that auditing progress claims against real tool results nearly eliminated fabricated status. A single blog, not a vendor measurement |
+| `reasoned` | the other seventeen | An argument, and often a good one. Not a finding |
+
+That distribution is the honest state of the field, not a gap in this pack.
+There is no published measurement for most agent behavior rules. Adopt them
+because the failure they prevent has happened to you, which is evidence of a
+better kind, and record the case when it does.
+
 ---
 
 ## Pack: core

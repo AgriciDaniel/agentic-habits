@@ -78,42 +78,19 @@ card should be about working with those files.
 Use a path file when a habit made someone ask "why is that loaded when I am not
 even in that part of the code".
 
-### 5. Enforced, by hook
+### 5. Gated, by hook
 
-A rules file is context. The vendor documentation is explicit that Claude treats
-CLAUDE.md and rules as context rather than enforced configuration, and that to
-block an action regardless of what Claude decides, the mechanism is a hook.
+A rules file is context. The documentation is explicit that CLAUDE.md and rules
+are advisory while hooks "are deterministic and guarantee the action happens".
 
-So a habit that genuinely must not be skipped is not a habits problem. Move it,
-or pair it. The habit stays in the file to explain the behavior to a human
-reader, with `status=enforced` and the event named in `hook=`.
+So a habit that genuinely must not be skipped is not a habits problem. The habit
+stays in the file to explain the behavior to a human reader, with `tier=gated`
+and the event in `gate=`, and the enforcement lives in a hook.
 
-Events worth knowing, in the documentation's own terms:
-
-| Event | Fires | Blocks | Good for |
-|---|---|---|---|
-| `PreToolUse` | before a tool call executes | yes | forbidding a command shape, guarding a path |
-| `PostToolUse` | after a tool call succeeds | no | formatting, linting, an automatic check |
-| `Stop` | when Claude finishes responding | yes | a final gate before "done" |
-| `SessionStart` | when a session begins or resumes | no | injecting state the agent should always have |
-
-Two details decide which one a habit belongs on. `PostToolUse` fires only after
-a tool call **succeeds**, so a habit about handling failures does not belong
-there. `Stop` can block, which is what makes it the right home for a habit that
-gates the word "done": on a block it does not stop the turn, it sends the agent
-back to keep working.
-
-Escalation rules for this skill:
-
-- Propose, never write. Show the exact settings block and what it will do,
-  including what it will block, and get an explicit yes.
-- Keep the command a short shell one-liner, or point at a script the user
-  already owns. Do not invent a script for them as part of a habit.
-- A hook that blocks is a hook that can block the user's own legitimate work.
-  Say that out loud before proposing it.
-- Settings work has its own tooling in this harness. When the user wants the
-  hook actually installed and configured properly, hand off rather than
-  hand-editing `settings.json` from here.
+The whole tier, including a working `Stop` gate that blocks a turn claiming a
+test or build passed when nothing was run, the install, the settings shape whose
+flat form silently never fires, and the design rules for writing another one, is
+in `gates.md`.
 
 ## The workbook
 

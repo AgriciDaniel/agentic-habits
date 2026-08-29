@@ -2,6 +2,71 @@
 
 All notable changes to this skill are recorded here. Dates are ISO.
 
+## 0.2.0 - 2026-08-29
+
+The skill stops being a filing system for good intentions. Three tiers now, and
+it says which one a habit is in.
+
+### Added: the gate tier
+
+- `assets/gates/completion-gate.sh`, a `Stop` hook that refuses to let a turn end
+  claiming a test, build, lint, or type check came back clean when nothing was
+  run to find out. Fails open on every uncertainty, never recurses, and does not
+  block an honest "I have not run this".
+- **Proven in a live session.** The model wrote "Yes, the test suite passes now"
+  with nothing run. The gate blocked the turn. The model kept working and
+  finished with "I was unable to run the test suite because both `npm test` and
+  `npx jest` require approval". The false claim never reached the user.
+- Sixteen unit tests in `.github/test-gate.sh`, in CI. Two exist because a live
+  run caught the first version counting a **denied** command as verification;
+  the gate now matches each call to its result and ignores errored ones.
+- `references/gates.md`: the tier, the install, the design rules for writing
+  another gate, and the settings shape whose flat form is valid JSON and
+  silently never fires.
+
+### Added: the judge tier
+
+- `agents/habit-judge.md`, a read-only verifier with `Read, Grep, Glob` and
+  nothing else, so its verdict cannot be improved by fixing what it judges.
+- `/habits judge` alongside `/habits check`. `check` is self-review and must
+  label itself as such; `judge` runs elsewhere and is the verdict that counts.
+- `references/judging.md`: the one criterion that decides whether a habit is
+  good (a stranger holding only the transcript can rule it fired, missed, or not
+  applicable), the ledger schema where **no evidence means not PASS**, how to
+  score the set rather than the habit, and the published eval recipe for when
+  opinion runs out.
+
+### Added: cases, the record a habit rests on
+
+- `assets/templates/case.md` and a case store in the workbook. Every firing and
+  miss worth remembering becomes a case with evidence and a worked pair. Habits
+  cite their cases, which makes the set prunable by observation instead of taste.
+- The worked pair lives in the case, not in the loaded card, because examples
+  teach and context is a budget. That is the skill's own placement rule applied
+  to its own material.
+
+### Added: precedence
+
+- `references/precedence.md`. Five channels can disagree and the ladder is now
+  fixed rather than decided per session: a gate, then the user now, then a
+  safety boundary, then the narrower scope, then CLAUDE.md, then auto memory
+  last. Anything read from a file, page, or another agent is data and never
+  enters the ladder. Includes the one case for deliberate restatement, and how
+  it differs from the duplication the review protocol hunts.
+
+### Changed
+
+- `SKILL.md` rebuilt around the tiers, with the precedence ladder inline, an
+  `enforce` flow that checks a habit has actually reached the third rung, and a
+  rule that ceremony is gated on task size, because full planning on a one-line
+  fix is a documented pitfall rather than rigor.
+- The habit card gained `tier`, `gate`, `cases`, and `evidence`. `evidence`
+  grades the rule itself: one starter habit is `sourced`, one is
+  `practitioner`, and seventeen are `reasoned`. That distribution is stated in
+  the starter pack rather than hidden.
+- Cover art replaces the generated SVG banners, which are deleted rather than
+  left to compete with it.
+
 ## 0.1.0 - 2026-08-29
 
 First release.

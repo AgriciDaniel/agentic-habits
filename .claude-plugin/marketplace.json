@@ -9,7 +9,7 @@
     {
       "name": "habits",
       "source": "./",
-      "description": "Agentic habits. One command to give an agent standing behavior that survives the end of a chat: capture a habit as a trigger, place it where the trigger fires, review adherence from evidence, and retire what does not earn its context."
+      "description": "Agentic habits in three tiers: stated rules placed where their trigger fires, gates that make the ones that must not fail deterministic, and a read-only judge that scores adherence from evidence. Ships a working Stop hook, 19 starter habits, and 12 named anti-habits."
     }
   ]
 }

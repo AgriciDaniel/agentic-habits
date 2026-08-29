@@ -50,6 +50,31 @@ This constraint is not a limitation to apologize for. A habit board that invents
 its own adherence data is the same failure as an agent claiming a test passed
 without running it.
 
+## Cases: the record a habit rests on
+
+A habit is a sentence. A case is what happened. The sentence is worth keeping
+only as long as the cases are.
+
+Cases live in the workbook, at `~/.claude/habits/cases/` or
+`<repo>/.claude/habits/cases/`, one file per incident, named
+`<YYYY-MM-DD>-<slug>.md`. They are not loaded into context, so a case can be as
+long as it needs to be. The template is in `assets/templates/case.md`.
+
+A case is opened when a habit is missed, when a habit visibly saves something,
+or when something happens that no habit covers yet. That third kind is the most
+valuable, because it is a habit proposal with its evidence already attached.
+
+The card cites its cases in `cases=`. That link is what makes the set prunable
+by observation instead of by taste:
+
+- A habit with cases showing it firing is earning its context.
+- A habit with only miss cases has a placement problem, and the ladder applies.
+- A habit with no cases at all after ninety days is not protecting anything that
+  has come up. Retire it. It can come back from the archive the day it does.
+
+Never write a case without evidence in it. A case whose evidence line is empty
+is an opinion with a date on it, and it will be cited later as if it were more.
+
 ## `/habits check`
 
 Score the live habits against a specific target: this session, a diff, a file, a
@@ -70,6 +95,13 @@ The command earns its place through the `missed` rows.
 
 A `missed` row is an offer, not an automatic write. Ask before incrementing a
 lapse count, because the user may know the miss was correct in context.
+
+**`check` in this context is self-review, and must be labelled as such.** The
+context that produced the work is not an independent reviewer of it. `/habits
+judge` dispatches the read-only `habit-judge` agent instead, which cannot edit
+what it is judging and did not write it. That verdict is the one worth
+recording. When the agent is not installed, say so plainly rather than letting a
+self-review stand in for it. Method and ledger schema: `judging.md`.
 
 ## The repair ladder
 
