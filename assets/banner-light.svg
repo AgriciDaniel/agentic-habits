@@ -3,8 +3,8 @@
   <g font-family="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
     <text x="64" y="92" font-size="14" font-weight="600" letter-spacing="3.4" fill="#79716B">A SKILL FOR CLAUDE CODE</text>
     <text x="64" y="182" font-size="74" font-weight="700" letter-spacing="-2.4" fill="#1C1917">agentic habits</text>
-    <text x="64" y="224" font-size="21" font-weight="400" fill="#79716B">An agent has no willpower and no memory. It has context.</text>
-    <text x="64" y="256" font-size="21" font-weight="500" fill="#C2410C">So a habit is not repetition. It is placement.</text>
+    <text x="64" y="224" font-size="21" font-weight="400" fill="#79716B">An agent has abundant memory and no enforcement.</text>
+    <text x="64" y="256" font-size="21" font-weight="500" fill="#C2410C">Loading a rule is guaranteed. Following it is not.</text>
     <g>
       <circle cx="68.6" cy="298" r="4.6" fill="none" stroke="#D6D3D1" stroke-width="1.4"/>
       <circle cx="91.6" cy="298" r="4.6" fill="none" stroke="#D6D3D1" stroke-width="1.4"/>

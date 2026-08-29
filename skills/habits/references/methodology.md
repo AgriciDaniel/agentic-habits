@@ -2,9 +2,16 @@
 
 ## The problem this solves
 
-Every session starts the agent from zero. Corrections given yesterday, the
-convention explained twice last week, the near miss that nobody wants repeated:
-none of it exists in the next conversation unless something put it back.
+It is tempting to say the agent forgets. That is false, and the falsehood
+matters, because it points the fix in the wrong direction. Claude Code persists
+instructions at four CLAUDE.md scopes, in `.claude/rules/`, in skills, in hooks
+and settings, and in auto memory that Claude writes for itself and reloads every
+session. Delivery is a solved problem, five times over.
+
+The real gap is between an instruction arriving in the context window and the
+model's next tokens actually bending to it. The first is deterministic. The
+second is probabilistic, degrades as the file grows, and is the only thing
+anyone actually wants.
 
 The usual answers both fail in a specific way.
 
@@ -18,23 +25,36 @@ and contradictory instructions get resolved arbitrarily.
 So the question is not "how do I tell the agent to be better". It is "what
 exactly is loaded at the moment the agent is about to get it wrong".
 
-## Three laws
+## Four laws
 
-**1. Placement over repetition.** A person forms a habit by doing the thing
+**1. Placement decides loading.** A person forms a habit by doing the thing
 until the doing gets cheap. An agent has no such continuity. Its version of
-repetition is the file that reloads. A habit exists if and only if it is in
-context when its trigger fires, so the real design work is choosing where the
-rule lives, not how firmly it is worded. Moving a rule from a global file into
-a path-scoped rule that loads when the agent opens a migration file does more
-for adherence than any amount of emphasis.
+repetition is the file that reloads. A rule is in context when its trigger
+fires, or it may as well not exist, and the file it lives in is the only thing
+that decides that. This is a claim about loading, and it is tested in
+`verification.md`, both directions.
 
-**2. Specificity over sentiment.** "Be rigorous" is a feeling. "When a test
+It is not a claim about compliance, and the two must not be blurred. Nothing in
+the official documentation ranks a rules file above CLAUDE.md for adherence.
+What differs between the advisory mechanisms is *when they load*, not how
+binding they are. Placement is necessary. It is not sufficient, and a skill that
+implies otherwise is selling the same hint in a better filing system.
+
+**2. Only a gate decides adherence.** The documentation draws the line for you:
+CLAUDE.md instructions are advisory, hooks "are deterministic and guarantee the
+action happens". Permissions, tool scoping on a subagent, and plan mode are
+enforcement too, because the harness executes them rather than asking the model
+to. Everything else on the list is a hint, however firmly it is worded. That is
+not an argument against hints. It is an argument for knowing which is which, and
+for escalating the few habits whose failure you cannot accept.
+
+**3. Specificity over sentiment.** "Be rigorous" is a feeling. "When a test
 fails, never change the assertion to make it pass" is a decision procedure. The
 test for a habit is whether an observer could tell, from the transcript alone,
 whether it fired. If nothing observable differs, the habit is decoration, and
 decoration is not free: it takes context from the habits that work.
 
-**3. Budget over accumulation.** Adherence behaves like a shared resource. The
+**4. Budget over accumulation.** Adherence behaves like a shared resource. The
 twentieth rule does not simply get followed slightly less often, it makes the
 other nineteen slightly blurrier. The specific caps in this skill are design
 choices anchored to the documented guidance that instruction files past roughly

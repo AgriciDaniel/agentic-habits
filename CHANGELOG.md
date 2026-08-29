@@ -12,10 +12,11 @@ First release.
   bare-text fallback routed from one command, the five placements, the habit
   card, and the rules the skill follows when writing to a user's instruction
   files.
-- `references/methodology.md`: agentic habits as a concept. The three laws
-  (placement over repetition, specificity over sentiment, budget over
-  accumulation), what the format borrows from implementation intentions, habit
-  stacking, keystone habits and never miss twice, and where that analogy stops.
+- `references/methodology.md`: agentic habits as a concept. The four laws
+  (placement decides loading, only a gate decides adherence, specificity over
+  sentiment, budget over accumulation), what the format borrows from
+  implementation intentions, habit stacking, keystone habits and never miss
+  twice, and where that analogy stops.
 - `references/habit-card.md`: the two-line card, the metadata comment, ID scheme
   by scope, file anatomy, budgets, and conflict resolution.
 - `references/placement.md`: session, system, project, path, and enforced
@@ -64,6 +65,29 @@ bookkeeping comment is stripped, confirmed against a plain-text control; a
 path-scoped habit is absent until a matching file is read and present after; the
 package passes `claude plugin validate` in both normal and `--strict` form; and
 the skill resolves to `/habits`.
+
+### Corrected: the premise was false
+
+The skill shipped claiming "an agent has no willpower and no memory", on the
+banner and in three files. Both halves are wrong. Claude Code persists
+instructions five ways, including auto memory the agent writes for itself, and
+character adherence is trained rather than absent. The claim also contradicted
+`methodology.md` in the same package, which described auto memory as the
+detector that feeds habits, and it survived a thirty-check CI suite because
+every check tested structure rather than truth.
+
+- Premise replaced everywhere with abundant memory and no enforcement. Loading
+  an instruction is deterministic; following it is not.
+- The laws are now four, not three. "Placement over repetition" became
+  "placement decides loading", which is what the tests in this repository
+  actually measured, and a new second law states the documented enforcement
+  line: everything short of a hook is a hint.
+- `verification.md` gained a corrections section and three new entries under
+  "neither tested nor documented": that trigger-shaped wording improves
+  adherence at all, the counter-signal that emphatic phrasing overtriggers on
+  current models, and the fact that phantom completion rests on a single
+  practitioner source while reward hacking, green-washing, and scope creep have
+  no published measurement.
 
 ### Fixed after review
 

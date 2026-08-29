@@ -6,12 +6,14 @@ argument-hint: "[setup | add <text> | review | check | lapse <id> | move <id> <s
 
 # Habits
 
-A habit is behavior that repeats without being asked for. An agent cannot form
-one the way a person does: it has no willpower to spend and no memory of last
-week. What it has is context. A rule the agent followed brilliantly yesterday
-does not exist today unless something loaded it back in.
+A habit is behavior that repeats without being asked for. The obstacle is not
+memory. This harness persists instructions five ways, and the agent writes notes
+to itself on top of that. The obstacle is that being loaded and being followed
+are different things: CLAUDE.md and rules files are advisory prose, and hooks
+are the only mechanism the documentation calls deterministic.
 
-So habit formation here is not repetition. It is placement.
+So a habit here has two halves. Put the rule where its trigger fires, and be
+honest about which rules are hints and which are gates.
 
 **Place the rule where its trigger fires.** A rule about editing code belongs
 where code editing happens. A rule that must never be skipped belongs in a hook,
@@ -189,7 +191,7 @@ came from somewhere else.
 
 ## References
 
-- `references/methodology.md` - what an agentic habit is, the three laws, the
+- `references/methodology.md` - what an agentic habit is, the four laws, the
   human research behind the shape, and what makes a habit good or bad.
 - `references/habit-card.md` - the format spec, IDs, budgets, conflicts.
 - `references/placement.md` - every scope, its exact file, its load behavior,
