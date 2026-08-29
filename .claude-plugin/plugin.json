@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "habits",
-  "version": "0.5.0",
-  "description": "Agentic habits in three tiers: stated rules placed where their trigger fires, gates that make the ones that must not fail deterministic, and a read-only judge that scores adherence from evidence. Ships a working Stop hook, 19 starter habits, and 12 named anti-habits.",
+  "version": "0.6.0",
+  "description": "Agentic habits in three tiers: stated rules placed where their trigger fires, gates that make the ones that must not fail deterministic, and a read-only judge that scores adherence from evidence. Ships a working Stop hook, 20 starter habits, and 12 named anti-habits.",
   "author": {
     "name": "Daniel Agrici"
   },
@@ -17,5 +17,18 @@
     "hooks",
     "verification",
     "rules"
-  ]
+  ],
+  "metadata": {
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob"
+    ],
+    "permissions": {
+      "filesystem": "Reads this repository. Writes only to a user's instruction files, and only after showing the exact content and receiving an explicit yes.",
+      "settings": "Never edits settings.json without showing the exact block and receiving an explicit yes. The Stop gate is proposed, never silently installed.",
+      "network": "None. No script here makes a network call.",
+      "credentials": "Never read, never stored, never written to a habit file or a case."
+    }
+  }
 }

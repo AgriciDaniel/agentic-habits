@@ -8,5 +8,5 @@ is not loaded into context.
 ### <ID> · <name>
 **When** <trigger>.
 **Do** <action>.
-<!-- habit: id=<ID> added=<YYYY-MM-DD> retired=<YYYY-MM-DD> lapses=<n> status=retired -->
+<!-- habit: id=<ID> added=<YYYY-MM-DD> retired=<YYYY-MM-DD> lapses=<n|-> status=retired -->
 Retired: <one line, why>.

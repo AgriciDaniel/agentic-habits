@@ -73,7 +73,7 @@ scenario, which is a demonstration rather than a measurement.
 
 ### The gate's unit tests, including a bug a live run found
 
-Sixteen cases in `.github/test-gate.sh`, run in CI: blocks for claims about
+Forty-six cases in `.github/test-gate.sh`, run in CI: blocks for claims about
 tests, build, lint, and compilation with nothing run; allows a claim backed by a
 real command, a message with no claim, honest disclosure, a recursion guard, a
 missing transcript, an empty message, an unparseable transcript, and prose about
@@ -239,6 +239,41 @@ for rules authored upfront, which is what the starter pack is, and
   trigger wording is unmeasured, and it should be read as a reason to prefer
   incident-derived habits when choosing among them, not as a finding.
 
+## Corrected after the second review, and it was the worst defect in this project
+
+The gate blocked honest reports that a check had **failed**. Measured by an
+independent reviewer and reproduced here:
+
+```
+exit 2  The tests do not pass yet.
+exit 2  The build is not clean.
+exit 2  The lint is not clean; there are 12 errors.
+exit 2  CI is red: the tests do not pass.
+```
+
+The claim pattern matched a noun and a success verb inside a sliding window and
+was blind to the negation between them. An installed gate would have taught an
+agent that reporting failure is punished and reporting nothing is safe, which is
+the concealment outcome `gates.md` names, produced by the artefact meant to
+prevent it, against the exact behaviour `SYS-04` requires.
+
+Three more measured defects in the same pass: the printed remedy "if the
+evidence came from an earlier turn, say so" was unreachable by construction; a
+single common word (`will`, `should`) let a real false claim through; and 21 of
+35 non-claiming sentences were blocked, including "I added a test that works
+around the flaky timer".
+
+Rebuilt as high-precision pattern matching: an explicit list of claim shapes,
+disqualifiers for negation, attribution, instruction and modality, attribution
+evaluated at sentence scope and the rest per clause. 46 tests now, on Linux and
+macOS, carrying every phrasing both reviewers measured.
+
+The same rewrite removed a portability bug found in the same review: sentence
+splitting used `sed 's/x/\n/'`, which produces a newline on GNU and a literal
+`n` on BSD, so on macOS the whole message collapsed to one line and the
+laundering case the docs claim to defeat was allowed. It is `awk` now, and macOS
+is in CI.
+
 ## Corrected after review
 
 Recorded because the skill shipped with a false premise and the correction is
@@ -371,3 +406,19 @@ Each test is four lines of shell: make a temporary directory, write a rules file
 with a canary habit, run `claude -p` in it, delete it. Anyone repeating it on a
 newer version should update the version stamp at the top and correct anything
 that no longer holds, rather than leaving a stale record in place.
+
+## Known and unfixed, stated rather than hidden
+
+- **The gate's input contract is an unfiled harness claim.** It depends on a
+  `Stop` payload supplying `last_assistant_message`, and on a transcript JSONL
+  schema (`.type`, `.isMeta`, `.message.content[].type == "tool_result"`,
+  `.tool_use_id`, `.is_error`). Those were read off real transcripts during
+  development and are not quoted from documentation. If the payload field is
+  absent the gate exits 0 and never fires, so the failure is silent.
+- **`/context` and `/memory` behaviour** is described in `placement.md` from
+  documentation but is not in the quoted list here.
+- **The plugin invocation name** was never tested. `claude plugin validate`
+  passing is not the same as installing the plugin and seeing what it is called.
+- **The live-session records above are author testimony.** The scripts in
+  `.github/live-checks/` reproduce the mechanisms; they do not prove that a
+  particular session happened.

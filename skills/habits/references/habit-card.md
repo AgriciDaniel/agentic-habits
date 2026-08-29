@@ -26,7 +26,7 @@ you need "and then", you have two habits.
 bad reflex. Same rules. Use it when the natural phrasing would have been "do not":
 
 ```markdown
-### SYS-08 · No green-washing
+### PRJ-03 · No green-washing
 **When** a test fails and the fastest fix is to change the test.
 **Instead** Fix the code, or report the failure verbatim and stop.
 ```

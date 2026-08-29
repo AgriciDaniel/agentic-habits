@@ -2,6 +2,125 @@
 
 All notable changes to this skill are recorded here. Dates are ISO.
 
+## 0.6.0 - 2026-08-30
+
+Two adversarial reviewers in separate contexts, per the doctrine this package
+adopted in 0.5.0. One audited the artefact against frozen criteria; one audited
+packaging and portability. Both returned `improved_not_passed`. Every measured
+finding was reproduced here before being acted on.
+
+### Fixed: the gate blocked honest reports of failure
+
+The worst defect in this project's history.
+
+```
+exit 2  The tests do not pass yet.
+exit 2  The build is not clean.
+exit 2  CI is red: the tests do not pass.
+```
+
+The claim pattern matched a noun and a success verb inside a sliding window and
+could not see the negation between them. Installed, that gate would have taught
+an agent that reporting failure is punished and saying nothing is safe: the
+concealment outcome `gates.md` names, produced by the artefact meant to prevent
+it, against the exact behaviour `SYS-04` requires.
+
+Three more measured defects in the same pass. The printed remedy "if the
+evidence came from an earlier turn, say so" was unreachable by construction. One
+common word (`will`, `should`) let a real false claim through. And 21 of 35
+non-claiming sentences were blocked, including "I added a test that works around
+the flaky timer".
+
+Rebuilt as high-precision matching: an explicit list of claim shapes, then
+disqualifiers for negation, attribution, instruction and modality, with
+attribution at sentence scope and the rest per clause so "all tests pass and I
+will commit" is still caught. 46 tests, carrying every phrasing both reviewers
+measured.
+
+### Fixed: the gate failed open on macOS
+
+Sentence splitting used `sed 's/x/\n/'`, which yields a newline on GNU and a
+literal `n` on BSD. On macOS the message collapsed to one line and the laundering
+case the docs claim to defeat was allowed. It is `awk` now, and macOS is in CI.
+
+### Fixed: the install command had never been run
+
+`cp -r ... ~/.claude/skills/habits` failed outright on a machine with no
+`~/.claude/skills`, and on a second run produced `skills/habits/habits/`, a
+complete nested duplicate with a stale `SKILL.md` above it. A repository whose
+flagship habit is verify with the real thing shipped an install command nobody
+executed.
+
+Replaced by `install.sh` and `uninstall.sh`, with 17 tests in CI on Linux and
+macOS: fresh install, reinstall with no nested duplicate, ownership marker,
+atomic staging, gate staged but never enabled without `--apply`, `--apply`
+appending rather than replacing and being idempotent by resolved command path,
+refusal on invalid JSON, backup with a hash guard and `--revert`, and an
+uninstall that deliberately keeps your habits and cases.
+
+It never installs a habit. `/habits setup` does that, after showing you the file.
+
+### Fixed: twenty habits ship and seven files said nineteen
+
+`SYS-16` was added in 0.3.0 and no count followed it, including both manifests
+and the marketplace description a stranger reads. The README pack table omitted
+it entirely. `.github/checks.sh` now asserts the count, so it cannot drift again.
+
+### Fixed: the grader existed in two divergent copies
+
+The 0.5.0 rule says a `check` may not be changed in response to a failure it
+produced. The package then shipped every check twice, seven of twenty differed
+substantively, no copy was canonical, and `CONTRIBUTING.md` claimed CI compared
+them when it compared only the card text. All twenty are now identical, the
+shipped card is canonical, and CI compares them verbatim.
+
+### Fixed: two precedence ladders, again
+
+The 0.5.0 fix moved the contradiction rather than removing it: `SKILL.md` still
+carried the old six-rung ladder with safety below the user and no skills channel,
+while `precedence.md` carried the corrected eight. `SKILL.md` is the file the
+agent loads. They now match.
+
+### Fixed, smaller
+
+- `habit-card.md` contradicted its own new evidence vocabulary twenty lines
+  later, still describing `sourced` and `reasoned` and saying the grade
+  describes the rule, which is the inversion of the 0.5.0 rule.
+- Every shipped card now carries an `evidence` grade. The 0.5.0 regrade was
+  announced in the changelog and absent from the artefact.
+- Shipped cards no longer carry `lapses=0`. The package forbids exactly that
+  fabricated zero and stamped it on twenty un-judged cards.
+- `verification.md` said reward hacking, green-washing and scope creep had no
+  published measurement, one release after `evidence.md` published rates for all
+  three; and said sixteen gate tests when there were 27, now 46.
+- `review.md` carried a third verdict vocabulary in the release that forbade
+  mixing two, omitted the `stakes=critical` route to enforcement, and pointed at
+  the wrong reference for hooks.
+- `SECURITY.md` said all the live checks run in CI; one spends model quota and
+  never runs there.
+- A worked example cited `SYS-08` for green-washing, which is `PRJ-03`.
+
+### Added: packaging
+
+`AGENTS.md` with a portability table that says plainly which three of the four
+mechanisms do not travel; thin `CLAUDE.md` and `GEMINI.md` pointers rather than
+duplicated copies, since a repo about not duplicating rules cannot duplicate its
+own. `NOTICE` carving quoted Anthropic documentation out of the MIT grant, with
+a trademark and non-affiliation statement. `assets/PROVENANCE.md`, which records
+honestly that the cover image's origin is **not established** and must be before
+publication. `RELEASE_CHECKLIST.md`, `SUPPORT.md`, `.gitattributes`,
+`dependabot.yml`, and a `.shellcheckrc` whose exclusions carry their reasons.
+
+Manifests gained the marketplace description whose absence was failing
+`claude plugin validate --strict`, matching versions, and a `metadata` block
+declaring the package's tools and permissions. A reviewer suggested top-level
+`allowed-tools` and `permissions` keys, copied from a sibling repository; that
+was verified and rejected, because the validator warns on both as unknown fields
+and `--strict` fails.
+
+CI now runs structure, 46 gate tests, 17 installer tests, shellcheck at warning
+severity, and manifest validation, on Linux and macOS.
+
 ## 0.5.0 - 2026-08-29
 
 Read `AgriciDaniel/secretary`, `AgriciDaniel/sync`, and

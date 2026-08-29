@@ -9,7 +9,26 @@
     {
       "name": "habits",
       "source": "./",
-      "description": "Agentic habits in three tiers: stated rules placed where their trigger fires, gates that make the ones that must not fail deterministic, and a read-only judge that scores adherence from evidence. Ships a working Stop hook, 19 starter habits, and 12 named anti-habits."
+      "description": "Agentic habits in three tiers: stated rules placed where their trigger fires, gates that make the ones that must not fail deterministic, and a read-only judge that scores adherence from evidence. Ships a working Stop hook, 20 starter habits, and 12 named anti-habits.",
+      "version": "0.6.0",
+      "author": {
+        "name": "Daniel Agrici"
+      },
+      "repository": "https://github.com/AgriciDaniel/agentic-habits",
+      "license": "MIT",
+      "category": "workflow",
+      "keywords": [
+        "habits",
+        "hooks",
+        "verification",
+        "rules",
+        "agent-behavior"
+      ]
     }
-  ]
+  ],
+  "description": "Agentic habits in three tiers: stated rules placed where their trigger fires, gates that make the ones that must not fail deterministic, and a read-only judge that scores adherence from evidence.",
+  "metadata": {
+    "description": "Agentic habits in three tiers: stated rules placed where their trigger fires, gates that make the ones that must not fail deterministic, and a read-only judge that scores adherence from evidence.",
+    "version": "0.6.0"
+  }
 }
