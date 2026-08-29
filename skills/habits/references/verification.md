@@ -85,6 +85,35 @@ for guidance here.
 - `description` and `when_to_use` are truncated at 1,536 characters in the
   listing.
 
+## Corrected after review
+
+Recorded because the skill shipped with a false premise and the correction is
+part of the evidence trail.
+
+**"An agent has no willpower and no memory" was wrong on both halves.** Claude
+Code persists instructions at four CLAUDE.md scopes, in `.claude/rules/`, in
+skills, in hooks and settings, and in auto memory that Claude writes for itself
+and reloads every session. The willpower half fails too: character and
+constitution adherence are trained rather than prompted, and Anthropic's Fable 5
+system card reports adherence at least as strong as prior models. The corrected
+premise is abundant memory and no enforcement.
+
+**Advisory mechanisms are not ranked against each other.** Nothing in the
+documentation says a rules file is more binding than CLAUDE.md. What differs
+between CLAUDE.md, rules, skills, and auto memory is *when they load*, not how
+binding they are. The tests in this file measure loading, which is what they
+were designed to measure. Do not read them as evidence about compliance.
+
+**The enforcement line is the documented one.** CLAUDE.md instructions are
+advisory; hooks "are deterministic and guarantee the action happens". Permissions,
+subagent tool scoping, and plan mode are enforcement for the same reason: the
+harness executes them rather than asking the model to.
+
+**Adherence degrades with volume, qualitatively.** The official statement is
+that bloated CLAUDE.md files cause Claude to ignore your instructions, with a
+target under two hundred lines per file. No threshold, count, or percentage is
+published anywhere. The budgets here remain design choices.
+
 ## Neither tested nor documented
 
 Named so that nothing here reads as more certain than it is.
@@ -99,6 +128,21 @@ Named so that nothing here reads as more certain than it is.
   rule improves adherence more than rewording it, is a design argument built on
   the vendor's own statement about file length and adherence. It has not been
   measured here.
+- **That trigger-shaped wording improves adherence at all.** The When and Do
+  format comes from research on people. No published source measures it on a
+  model. There is a counter-signal worth knowing: emphatic CRITICAL and MUST
+  phrasing is documented to cause tool overtriggering on current models, and
+  scaffolding written for weaker models is reported to degrade output on this
+  generation. Plain triggers are not emphatic markers, but nobody has drawn the
+  line, so treat the format as a legibility choice rather than a performance
+  claim.
+- **Whether phantom completion is a measured failure mode.** The strongest
+  available source is a single practitioner write-up reporting that auditing
+  every progress claim against a session tool result nearly eliminated fabricated
+  status reports, and that fresh-context verifier subagents outperform
+  self-critique. That is one blog, not a vendor measurement. Reward hacking,
+  test green-washing, and scope creep have no published measurement at all, which
+  is why `anti-habits.md` presents all twelve as patterns rather than findings.
 - **Anything about model internals.** The pull described for each anti-habit is
   a pattern and a plausible pressure, not a mechanism claim.
 

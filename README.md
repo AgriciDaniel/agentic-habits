@@ -20,19 +20,21 @@
 
 ## The idea
 
-An agent has no willpower and no memory of last week. A correction you gave
-yesterday does not exist today unless something loaded it back into context.
+An agent is not short of memory. Claude Code persists instructions five ways:
+CLAUDE.md at four scopes, `.claude/rules/`, skills, hooks, and auto memory the
+agent writes for itself. What it is short of is **enforcement**.
 
-So habit formation for an agent is not repetition. It is **placement**: putting
-a trigger-shaped rule in the file that loads at the moment its trigger fires.
+Loading an instruction is deterministic. Following it is not. The documentation
+is blunt about which is which: CLAUDE.md and rules are advisory, while hooks
+"are deterministic and guarantee the action happens".
 
-Everything here follows from that.
+So a habit is two things, and most rule sets ship only the first.
 
-> **Placement over repetition.** A habit exists if and only if it is loaded when its trigger fires.
+> **Placement decides loading.** A rule is in context when its trigger fires, or it may as well not exist, and the file it lives in is the only thing that decides. Tested, both directions.
 >
-> **Specificity over sentiment.** If nothing observable would differ, it is decoration, and decoration costs context.
+> **Only a gate decides adherence.** Everything short of a hook is a hint. This skill says that out loud rather than letting "durable rule" imply "reliable rule", and it escalates a habit that must not fail.
 >
-> **Budget over accumulation.** Adherence is one shared resource. Twelve at system scope, ten per project, six per path file. At the cap, adding means retiring.
+> **Budget over accumulation.** The one adherence finding in the official docs is that bloated instruction files cause Claude to ignore your instructions. Twelve at system scope, ten per project, six per path file. At the cap, adding means retiring.
 
 ## Quickstart
 
@@ -210,7 +212,7 @@ rather than in the skill.
 skills/habits/
   SKILL.md                 the operating contract, what the agent reads
   references/
-    methodology.md         the concept, the three laws, the research, the limits
+    methodology.md         the concept, the four laws, the research, the limits
     habit-card.md          format, IDs, metadata, budgets, conflicts
     placement.md           every scope, load order, hooks, verification
     starter-pack.md        19 habits with rationale
