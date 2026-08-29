@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "habits",
-  "version": "0.1.0",
-  "description": "Agentic habits. One command to give an agent standing behavior that survives the end of a chat: capture a habit as a trigger, place it at system, project, path, or session scope so it loads when the trigger fires, review adherence from evidence, sharpen or escalate what lapses, and retire what does not earn its context.",
+  "version": "0.2.0",
+  "description": "Agentic habits in three tiers: stated rules placed where their trigger fires, gates that make the ones that must not fail deterministic, and a read-only judge that scores adherence from evidence. Ships a working Stop hook, 19 starter habits, and 12 named anti-habits.",
   "author": {
     "name": "Daniel Agrici"
   },
@@ -14,7 +14,8 @@
     "agent-behavior",
     "context-engineering",
     "claude-code",
-    "rules",
-    "memory"
+    "hooks",
+    "verification",
+    "rules"
   ]
 }

@@ -18,6 +18,14 @@ jobs:
       - name: Run structural checks
         run: bash .github/checks.sh
 
+  gate:
+    name: completion gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unit test the Stop hook
+        run: bash .github/test-gate.sh
+
   plugin:
     name: plugin manifest
     runs-on: ubuntu-latest

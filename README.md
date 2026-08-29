@@ -1,8 +1,5 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
-    <img alt="agentic habits, a skill for Claude Code" src="assets/banner-light.svg" width="900">
-  </picture>
+  <img alt="agentic habits: rules load into the agent, then a magnifier, an eye and a check verify what it actually did" src="assets/cover.png" width="900">
 </p>
 
 <p align="center">
@@ -36,11 +33,23 @@ So a habit is two things, and most rule sets ship only the first.
 >
 > **Budget over accumulation.** The one adherence finding in the official docs is that bloated instruction files cause Claude to ignore your instructions. Twelve at system scope, ten per project, six per path file. At the cap, adding means retiring.
 
+## Three tiers
+
+| Tier | Mechanism | Guarantee |
+|---|---|---|
+| **Stated** | a rules file that loads when the trigger fires | none, it is a hint |
+| **Gated** | a hook that executes regardless of what the agent decides | deterministic |
+| **Judged** | a read-only verifier scoring adherence from evidence | after the fact, but real |
+
+Most rule sets ship the first tier and imply the second. This one says which
+tier a habit is in, in the card itself.
+
 ## Quickstart
 
 ```bash
 git clone https://github.com/AgriciDaniel/agentic-habits.git
 cp -r agentic-habits/skills/habits ~/.claude/skills/habits
+cp agentic-habits/agents/habit-judge.md ~/.claude/agents/     # optional, for /habits judge
 ```
 
 Then, in Claude Code:
@@ -124,6 +133,31 @@ flowchart LR
 There is no fourth rung. A rule that survives three misses unchanged is a rule
 the context cannot carry, and keeping it costs every session that follows.
 
+## The gate, and why it is the point
+
+A rules file asks. A hook does not ask.
+
+`assets/gates/completion-gate.sh` is a `Stop` hook that refuses to let a turn end
+claiming a test, build, lint, or type check came back clean when nothing was run
+to find out. Here is what happened when it met a real session, with the model
+given no way to run anything:
+
+```text
+1.  model:  "Yes, the test suite passes now."        <- nothing had been run
+2.  gate:   exit 2, turn blocked
+3.  model:  "I fixed the bug ... but I was unable to run the test suite
+             because both npm test and npx jest require approval."
+4.  gate:   exit 0, turn allowed
+```
+
+The false claim never reached the user. That is the difference between a rule
+and a gate, and it is the reason this repository is not just a better-organised
+list of good intentions.
+
+It fails open on every uncertainty, never recurses, and does not block an honest
+"I have not run this". Sixteen unit tests in CI, two of which exist because a
+live run caught the first version counting a *denied* command as verification.
+
 ## What ships
 
 <details>
@@ -185,6 +219,9 @@ Tested on Claude Code 2.1.251 rather than asserted:
 | The bookkeeping comment is stripped from the agent's context | confirmed, against a plain-text control |
 | A path-scoped habit is absent until a matching file is read, present after | confirmed, both directions |
 | The package validates and resolves to `/habits` | confirmed, `--strict` included |
+| The completion gate blocks a false claim in a live session and the model corrects | confirmed, transcript in the record |
+| The skill previews and asks before writing, with Write actually available | confirmed |
+| A flat hook settings shape is valid JSON and silently never fires | confirmed by instrumenting the hook |
 
 Method, results, and reruns in
 [`verification.md`](skills/habits/references/verification.md), which also names
@@ -217,15 +254,22 @@ skills/habits/
     placement.md           every scope, load order, hooks, verification
     starter-pack.md        19 habits with rationale
     anti-habits.md         12 failure modes and their replacements
-    review.md              the board, adherence rules, the repair ladder
+    review.md              the board, cases, the repair ladder
+    precedence.md          the conflict ladder across five instruction channels
+    gates.md               the enforcement tier, the shipped gate, install
+    judging.md             what makes a habit good, and how adherence is scored
     verification.md        what is tested, what is quoted, what is neither
   assets/
-    templates/             empty habit file, path-scoped variant, archive, log
+    gates/                 completion-gate.sh, the Stop hook
+    templates/             habit file, path-scoped variant, case, archive, log
     starter/               the installable card sets
+agents/
+  habit-judge.md           read-only verifier, cannot edit what it judges
 ```
 
-Nothing executes. No scripts, no dependencies, no state outside the markdown
-files it writes with your approval.
+The stated tier is markdown and nothing else. The gate tier is one shell script
+you install deliberately, which needs `jq`. Nothing runs that you did not
+approve, and no state lives outside the files it writes with your yes.
 
 ## Install as a plugin
 

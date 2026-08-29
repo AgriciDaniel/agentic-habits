@@ -69,9 +69,16 @@ done
 [ "$(jq -r .name .claude-plugin/plugin.json)" = "habits" ] && pass "plugin name is habits" || bad "plugin name is wrong"
 
 head_ "Assets"
-for a in assets/banner-light.svg assets/banner-dark.svg; do
-  [ -f "$a" ] && grep -q "$a" README.md && pass "$a exists and is used in the README" || bad "$a missing or unreferenced"
-done
+[ -f assets/cover.png ] && grep -q "assets/cover.png" README.md && pass "cover image exists and is the README hero" || bad "assets/cover.png missing or unreferenced"
+[ -f assets/social-preview.png ] && pass "social preview image present" || bad "assets/social-preview.png missing"
+
+head_ "Gate"
+GATE="skills/habits/assets/gates/completion-gate.sh"
+[ -x "$GATE" ] && pass "completion-gate.sh is present and executable" || bad "completion-gate.sh missing or not executable"
+bash -n "$GATE" 2>/dev/null && pass "completion-gate.sh parses" || bad "completion-gate.sh has a syntax error"
+grep -q "stop_hook_active" "$GATE" && pass "gate has a recursion guard" || bad "gate is missing its recursion guard"
+grep -q "exit 2" "$GATE" && pass "gate can actually block (exit 2)" || bad "gate never exits 2, so it can never block"
+[ -f agents/habit-judge.md ] && grep -q "^tools: Read, Grep, Glob$" agents/habit-judge.md && pass "habit-judge is read-only" || bad "habit-judge missing or not read-only"
 
 printf '\n'
 if [ "$fail" -eq 0 ]; then printf '\033[32mAll checks passed.\033[0m\n'; else printf '\033[31mChecks failed.\033[0m\n'; fi

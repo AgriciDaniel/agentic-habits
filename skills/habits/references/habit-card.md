@@ -54,11 +54,22 @@ never put anything in it that the agent would need in order to follow the habit.
 | `last_lapse` | ISO date of the most recent recorded miss, omitted if none |
 | `status` | `active`, `probation`, `enforced`, or `retired` |
 | `check` | Quoted. What is observably different when this fired |
-| `hook` | Present only when a hook enforces this habit, naming the event |
+| `tier` | `stated`, `gated`, or `judged`. Absent means stated |
+| `gate` | Event and script when a gate enforces it, such as `Stop/completion-gate` |
+| `cases` | Comma-separated case IDs from the workbook that this habit rests on |
+| `evidence` | `sourced`, `practitioner`, or `reasoned`. How well the habit itself is supported |
 
 `probation` marks a habit on its second miss, currently placed differently and
-being watched. `enforced` marks a habit that also has a hook, kept in the file
+being watched. `enforced` marks a habit that also has a gate, kept in the file
 so a reader knows why the agent behaves that way.
+
+`tier` is the honesty field. A `stated` habit is a hint and the skill says so.
+`gated` means a hook enforces it and the `gate` field names which. `evidence`
+records how well the rule itself is supported, which is separate from whether it
+was followed: `sourced` means official documentation backs it, `practitioner`
+means a single outside report, `reasoned` means it is an argument. Most habits
+are `reasoned`, and there is nothing wrong with that as long as nobody calls
+them findings.
 
 ## IDs
 

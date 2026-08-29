@@ -127,6 +127,48 @@ is worth dropping.
   never fail, it belongs in a hook. Prose is guidance, not enforcement, and
   saying it more firmly does not change that.
 
+## Three tiers, and the honesty they force
+
+Once you accept that loading and following are different, the design falls out.
+
+**Stated** is a rule in a file that loads when its trigger fires. It is a hint.
+A well-placed, well-worded, well-timed hint, which is worth a great deal and
+guarantees nothing.
+
+**Gated** is a hook. The harness executes it whether the model agrees or not,
+which is the only guarantee available. It costs more to build, it can fire
+wrongly, and it can only see what a script can see. Reserve it for the few
+habits whose failure you actually cannot accept.
+
+**Judged** is a verdict after the fact, from evidence, in a context that did not
+produce the work. It cannot prevent anything. What it does is make adherence
+observable, and a habit set that cannot be observed cannot improve, which is how
+rule sets quietly become decoration.
+
+Most published rule sets are tier one presented as if they were tier two. The
+tell is a document full of MUST and ALWAYS with no mechanism anywhere in it. The
+correction is not to write softer rules. It is to say which tier you are in.
+
+## Case law
+
+A habit that never accumulates evidence is an opinion that got filed.
+
+So every firing and every miss worth remembering becomes a case: what happened,
+the evidence, and the worked pair showing what was done beside what the habit
+asks for. Habits cite their cases. The cases are the reason the habit exists,
+and they are what makes it possible to retire one without arguing.
+
+This is also where the format earns itself. Anthropic's own production prompts
+spend their largest line budget on worked good and bad pairs with rationales,
+because a rule stated abstractly does not generalize while a worked pair does.
+The same logic applies here, with one constraint: the pair is expensive and the
+loaded file has a budget. So the two-line card stays in context and the worked
+pair lives in the case file, loaded when someone is judging, reviewing, or
+learning the habit rather than in every session forever.
+
+That is the same placement decision as everything else here, applied to the
+skill's own material.
+
 ## The lifecycle
 
 An ever-growing habit set is not one that only grows. It is one that keeps
