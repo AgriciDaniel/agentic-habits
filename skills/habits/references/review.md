@@ -139,6 +139,17 @@ Two honest options:
 
 There is no fourth rung. Never leave a habit on `probation` indefinitely.
 
+## The review has a budget
+
+An eight-step protocol with no limit is a protocol that quietly becomes a
+half-protocol nobody reports on. Before starting, fix: how many habit files, how
+many cases, and how long. When the budget runs out, stop and report
+`budget_stopped` with the steps that ran, rather than skipping steps silently or
+producing thinner findings to fit.
+
+And the standing rule above every budget: the user can stop the run at any point,
+and a stopped run reports what it did, not what it intended to do.
+
 ## Review protocol
 
 Run on request, and suggest one when any of these is true: a scope is over

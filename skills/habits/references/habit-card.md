@@ -57,12 +57,33 @@ never put anything in it that the agent would need in order to follow the habit.
 | `tier` | `stated`, `gated`, or `judged`. Absent means stated |
 | `gate` | Event and script when a gate enforces it, such as `Stop/completion-gate` |
 | `cases` | Comma-separated case IDs from the workbook that this habit rests on |
-| `evidence` | `sourced`, `practitioner`, or `reasoned`. How well the habit itself is supported |
+| `evidence` | Strength of the fact the habit rests on. One of `evidence-based`, `institutional`, `practitioner`, `contested`, `folklore` |
 | `stakes` | `normal` or `critical`. What a failure costs. **The user sets this, never the agent** |
 
 `probation` marks a habit on its second miss, currently placed differently and
 being watched. `enforced` marks a habit that also has a gate, kept in the file
 so a reader knows why the agent behaves that way.
+
+`evidence` grades **the fact underneath**, not the rule. The vocabulary is
+borrowed deliberately, and so is its hardest rule:
+
+| Value | Meaning |
+|---|---|
+| `evidence-based` | Replicated empirical or peer-reviewed measurement |
+| `institutional` | Official documentation or professional doctrine, in its own setting |
+| `practitioner` | Widely adopted convention, single origin, untested |
+| `contested` | Disputed, or the sources conflict |
+| `folklore` | Familiar and unsupported |
+
+**A local operating rule is synthesis even when every input is official.** That
+sentence does more work than the whole table. A habit built on documented
+guidance is not itself documented: the fact may be `institutional`, and the
+decision to make it a standing rule at this scope, with this trigger, is yours.
+Grade the fact, and never let the grade imply that somebody authoritative
+endorsed your rule.
+
+When a habit mixes evidence levels, take the **least certain** material that
+affects what the habit actually does.
 
 `stakes` and `tier` are deliberately separate and must not be collapsed. `tier`
 records the mechanism that happens to exist: a habit is `gated` because someone
@@ -84,6 +105,54 @@ was followed: `sourced` means official documentation backs it, `practitioner`
 means a single outside report, `reasoned` means it is an argument. Most habits
 are `reasoned`, and there is nothing wrong with that as long as nobody calls
 them findings.
+
+## The check should be a command, not an adjective
+
+The weakest field on most cards is `check`, and there is a standard worth
+holding it to:
+
+> Done criteria must be commands with exit codes, never adjectives. "Tests pass"
+> is not a criterion; `pytest -q` exiting 0 is.
+
+Applied here, in descending order of strength:
+
+1. **A command and its exit code.** `check="npm test exits 0 and its output is
+   in the message"`. This is the strongest kind, and it is the only kind that
+   makes a habit mechanically gateable, because a script can evaluate it.
+2. **A transcript predicate a stranger could apply.** `check="every Edit is
+   preceded by a Read of that file in the same session"`. Judgeable, not
+   gateable.
+3. **An adjective.** `check="the work is thorough"`. Not a check. Rewrite it or
+   drop the habit.
+
+Most habits will sit at level 2, and that is fine. But a habit at level 1 has a
+path to the gate tier, and a habit stuck at level 3 has no path to anything.
+
+## Never edit a check to make a failure go away
+
+The rule that keeps this whole system honest, and the one most easily broken
+without noticing.
+
+A habit's `check` is its grader. When a judge returns `FAIL`, the tempting fix is
+to narrow the check until the failure stops qualifying. That is the same move as
+editing a test to make a suite green, and it is worse, because nobody is
+watching a metadata comment.
+
+So: **a `check` may not be changed in response to a failure it produced.** If
+the check was genuinely wrong, that is a separate decision:
+
+1. Record it. `assets/templates/decision.md` exists for this, and the record goes
+   in the workbook beside the cases.
+2. Say what was wrong with the old check, in a sentence that does not mention the
+   failure it produced.
+3. **Re-baseline.** Reset `lapses` to a dash, because the history was measured
+   against a grader that no longer exists. A lapse count carried across a check
+   change is a number measuring two different things.
+
+Sharpening a *trigger* after a miss is the first rung of the repair ladder and is
+encouraged. Sharpening a *check* after a miss is grader tampering. The difference
+is that the trigger decides when the habit applies, and the check decides whether
+you failed it.
 
 ## IDs
 

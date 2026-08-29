@@ -109,6 +109,45 @@ the first rung of the repair ladder rather than to the lapse count.
 know the miss was correct in context, and a lapse count that includes justified
 misses will retire the wrong habits.
 
+## Evaluator authority
+
+When the tiers disagree, the order is fixed. A judge is the weakest of the three
+and must never be allowed to overturn the other two.
+
+1. **Safety, truth, and authorization gates are blocking.** Nothing overrides them.
+2. **Deterministic outcome evidence outranks prose judgment.** A command's exit
+   code beats a model's reading of the transcript, every time.
+3. **The explicit instruction outranks generic taste.** What the user asked for
+   beats what the judge would have preferred.
+4. **A model judge may grade what a script cannot, and may not override a failed
+   hard gate.** If the gate blocked, the gate blocked.
+5. **Unresolved disagreement is recorded and escalated, never averaged into a
+   convenient pass.** Two judges splitting is a result to report, not a number
+   to take the mean of.
+
+Rule 5 is the one that decays quietly. Averaging feels like fairness and is
+actually the disappearance of the dissent, which is what `SYS-16` exists to stop.
+
+## The run outcome
+
+A ledger row is per habit. A *run* of `/habits judge` or `/habits review` also
+needs one honest outcome, because "I scored eleven habits" does not say whether
+the exercise finished:
+
+| Outcome | Means |
+|---|---|
+| `passed` | Every habit judged, every acceptance criterion met |
+| `improved_not_passed` | Real progress, criteria still unmet. A legitimate result, not a softened failure |
+| `inconclusive` | The material could not settle it |
+| `blocked` | Something outside the run stopped it |
+| `budget_stopped` | The run hit its limit before finishing. Say which steps ran |
+| `needs_human_decision` | A judgment only the user can make |
+
+Use these for the run, never for a row. A row has `PASS`, `FAIL`, `N/A`,
+`UNKNOWN`, and those four carry all the weight the row needs. Mixing the
+vocabularies blurs the `FAIL` versus `UNKNOWN` line, which is the distinction the
+whole ledger is built on.
+
 ## Validate the judge before you trust it
 
 Anthropic's published procedure for a judge in a code migration is two runs, and

@@ -2,6 +2,78 @@
 
 All notable changes to this skill are recorded here. Dates are ISO.
 
+## 0.5.0 - 2026-08-29
+
+Read `AgriciDaniel/secretary`, `AgriciDaniel/sync`, and
+`AgriciDaniel/gauntlet-loop-brain` and applied what transferred. All three keep
+their evidence in a separate, dated, refreshable place from their rules, which
+is what this package was already trying to do without the discipline to name it.
+`methodology.md` now credits each borrowing to its source.
+
+### Added: the rule that closes the largest hole
+
+**A `check` may not be changed in response to a failure it produced.** Nothing
+prevented that before, and it is the same move as editing a test to make a suite
+green, except worse, because nobody is watching a metadata comment. A check may
+change only through a recorded decision that stands without reference to the
+failure, and the lapse history re-baselines because it was measured against a
+grader that no longer exists.
+
+Sharpening a *trigger* after a miss is the repair ladder. Sharpening a *check*
+after a miss is grader tampering. `assets/templates/decision.md` exists to make
+the difference visible.
+
+### Changed: the evidence vocabulary, and one rule that reframes it
+
+`evidence` now takes `evidence-based`, `institutional`, `practitioner`,
+`contested`, or `folklore`, and it grades **the fact underneath the habit, not
+the habit**. The rule that makes it work:
+
+> A local operating rule is synthesis even when every input is official.
+
+Two habits previously graded `sourced` are regraded `institutional`, and the
+grade no longer implies anyone authoritative endorsed the rule. `PRJ-03` is now
+`contested` rather than carrying a footnote. When a habit mixes levels, take the
+least certain material that affects what it does.
+
+### Added: a check should be a command, not an adjective
+
+Three strengths, in order: a command and its exit code, a transcript predicate a
+stranger could apply, an adjective. Only the first is mechanically gateable, and
+the third is not a check at all. Most habits will sit in the middle, which is
+fine, but the ranking tells you which ones have a path to the gate tier.
+
+### Added: evaluator authority, and no averaging
+
+Five rules for when the tiers disagree. Deterministic outcome evidence outranks
+prose judgment; a model judge may grade what a script cannot and may not override
+a failed hard gate; and unresolved disagreement is recorded and escalated, never
+averaged into a convenient pass. That last one decays quietly, because averaging
+feels like fairness and is the disappearance of a dissent.
+
+### Added: run outcomes and a stop contract, reconciling the two reviews
+
+The independent review called the six-value outcome vocabulary cargo cult, and it
+was right about the ledger row: `PASS`, `FAIL`, `N/A`, `UNKNOWN` carry that
+weight and mixing vocabularies blurs the distinction the ledger is built on. It
+also named the real gap, that `/habits review` could run three of eight steps
+with no way to say so.
+
+So the vocabulary is adopted at the **run** level only. Every run fixes a budget
+before starting, and a run that hits it reports `budget_stopped` with the steps
+that ran.
+
+### Added: two operating rules, and a refresh cadence
+
+Classification is the skill's job; enforcement and evidence belong to the
+mechanism; neither does the other's work. And an escalation trigger is evaluated
+before starting, never mid-task, because a trigger checked under sunk cost bends.
+
+`verification.md` gained three refresh clocks: monthly for harness behavior,
+quarterly for research, every time before publishing. A record with no expiry
+becomes a confident account of how things used to work, which has already
+happened once to a source pack this project consulted.
+
 ## 0.4.0 - 2026-08-29
 
 The evidence pass. A research stream returned measured base rates for the

@@ -251,6 +251,44 @@ and that is fine. What matters is catching the ones that visibly miss.
 
 **Sharpen, promote, escalate, retire.** The repair ladder in `review.md`.
 
+## Two operating rules worth stating outright
+
+**Classification is the agent's job, enforcement is the mechanism's job, and
+neither should do the other's work.** The agent decides which habit applies at
+this moment and what the situation actually is. The gate decides whether the turn
+ends. When the agent starts adjudicating what the gate should have allowed, or
+the gate starts encoding judgment it cannot see, both get worse. This is the same
+division the tiers already imply, and it is worth saying in one line because it
+is the first thing to erode.
+
+**Evaluate an escalation trigger before starting, not in the middle.** A trigger
+checked mid-task is checked under sunk cost, when abandoning an approach means
+discarding work already done, and that is precisely when the answer bends. The
+repair ladder, the decision to gate a habit, and the decision that a task is
+beyond a rule set are all cheaper and more honest at the start.
+
+## Where the borrowed parts came from
+
+Several of the strongest ideas here are not original to this package, and saying
+so is cheaper than being caught at it later.
+
+| Borrowed | From | What it fixed |
+|---|---|---|
+| The five-value confidence vocabulary, and the rule that a local operating rule is synthesis even when every input is official | `AgriciDaniel/secretary`, its confidence-tag convention | An ad-hoc four-value grade that let a habit inherit authority from a fact |
+| Separating source genre, evidence strength, and binding authority | same | Conflating "official" with "binds us" |
+| The honest run-outcome vocabulary and the stop contract | `AgriciDaniel/gauntlet-loop-brain` | A review protocol that could stop early with no way to say so |
+| Evaluator authority, and that disagreement is escalated rather than averaged into a convenient pass | same | A judge with no defined relationship to a gate |
+| No altering tests, rubrics, thresholds, or grader prompts to manufacture acceptance | same | The largest hole in this package: nothing stopped a `check` being edited until a failure disappeared |
+| Done criteria as commands with exit codes, never adjectives | `AgriciDaniel/sync` | Checks written as prose, which cannot be gated and are hard to judge |
+| Classification is the model's job, enforcement and evidence belong to the mechanism | same | The tiers implied it; nothing said it |
+| Evaluate an escalation trigger before starting, because a trigger checked mid-task is checked under sunk cost | same | A repair ladder that was silent on *when* it is consulted |
+| The mindguard: compression may drop detail, never a dissent | `secretary`, tracing it to briefing-compression failures in an accident investigation | Nothing governed what a second pass over your own output may lose |
+| The two-challenge structure: a clarifying question, then a supporting statement, then escalate | `secretary`, from crew-resource-management doctrine | `SYS-12` had one round and no structure |
+
+The pattern worth noticing across all three: each keeps its evidence in a
+separate, dated, refreshable place from its rules. This package does the same,
+and it did not before it read them.
+
 ## The relationship to everything else
 
 Four mechanisms, four jobs, and confusing them is the most common way an

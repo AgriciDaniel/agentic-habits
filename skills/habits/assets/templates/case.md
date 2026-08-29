@@ -1,7 +1,20 @@
+---
+type: case
+title: "<short title>"
+status: current
+created: <YYYY-MM-DD>
+updated: <YYYY-MM-DD>
+tags: ["#type/case", "#habit/<ID>"]
+verdict: <PASS|FAIL|N/A|UNKNOWN>
+source: <observed|reported|judge>
+related: ["<HABIT-ID>"]
+---
+
 # <YYYY-MM-DD> <short title>
 
-<!-- case: id=<YYYY-MM-DD-slug> habit=<ID|none> verdict=<PASS|FAIL|N/A|UNKNOWN>
-     source=<observed|reported|judge> -->
+A case is evidence. Once written it is not revised to match a later decision:
+if the reading changes, write a new case and link it. Correcting a typo is fine;
+rewriting what happened is not.
 
 **What happened.** Two or three sentences. What the agent did, at what moment,
 and what it cost. Written so someone who was not there can recognize the shape
