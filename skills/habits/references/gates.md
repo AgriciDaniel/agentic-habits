@@ -21,7 +21,7 @@ It is the enforcement counterpart of `SYS-03 Verify with the real thing`, which
 is the habit most worth enforcing: the failure is invisible to the person it
 lands on, and the fix costs one command.
 
-**Proven end to end.** In a live session the model wrote "Yes, the test suite
+**Demonstrated once, end to end.** In a live session the model wrote "Yes, the test suite
 passes now" with nothing run. The gate blocked the turn. The model kept working
 and finished with "I was unable to run the test suite because both `npm test`
 and `npx jest` require approval." The false claim never reached the user. Full
@@ -33,7 +33,7 @@ The gate needs `jq`. Copy it somewhere stable and register it.
 
 ```bash
 mkdir -p ~/.claude/hooks
-cp assets/gates/completion-gate.sh ~/.claude/hooks/
+cp skills/habits/assets/gates/completion-gate.sh ~/.claude/hooks/
 chmod +x ~/.claude/hooks/completion-gate.sh
 ```
 
@@ -129,7 +129,7 @@ decide for you:
   for a habit that never needed one, and every gate you add is a false-positive
   surface on every future turn.
 - **One gate that is already written and tested.** `completion-gate.sh` covers
-  the specific claim-versus-evidence case with 46 tests and a recorded live
+  the specific claim-versus-evidence case with 50 tests and a recorded live
   block.
 
 So `/habits enforce` should hand off to `hookify` for anything beyond the

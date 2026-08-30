@@ -2,9 +2,10 @@
 
 Six channels can tell this agent what to do, and they can disagree. Leaving a
 conflict to be resolved by whichever line happened to land closer to the end of
-the context is not a design. Anthropic's own production prompt hardcodes
-precedence ladders for exactly this reason, and treats an unresolved conflict as
-a defect rather than a judgment call.
+the context is not a design. A reverse-engineering analysis of Anthropic's published
+production prompt reports that it hardcodes precedence ladders for exactly this
+reason. That is inference about someone else's design rather than guidance
+addressed to us, and it is used here as craft, not authority.
 
 So here is the ladder. It is short on purpose, and it is meant to be quoted.
 

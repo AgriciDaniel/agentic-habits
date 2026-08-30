@@ -105,11 +105,10 @@ is exactly one vocabulary for it and this file must never grow a second.
 
 ## The check should be a command, not an adjective
 
-The weakest field on most cards is `check`, and there is a standard worth
-holding it to:
-
-> Done criteria must be commands with exit codes, never adjectives. "Tests pass"
-> is not a criterion; `pytest -q` exiting 0 is.
+The weakest field on most cards is `check`. The standard this package holds it
+to is borrowed from the maintainer's own `sync` repository, which puts it this
+way: done criteria must be commands with exit codes, never adjectives. "Tests
+pass" is not a criterion; `pytest -q` exiting 0 is.
 
 Applied here, in descending order of strength:
 

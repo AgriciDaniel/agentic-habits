@@ -18,9 +18,12 @@ applies to a habit a user writes.
 4. **It is not already covered.** Check the existing packs and say which
    neighbours you considered. Two rules on one subject is how a set starts
    contradicting itself.
-5. **It came from something that happened.** Habits written from a real incident
-   are followed better and are far easier to defend when the budget gets tight.
-   Say what happened, with enough detail to recognize it.
+5. **It came from something that happened.** Prefer a habit derived from a real
+   incident over one adopted on principle. Nobody has measured whether the first
+   is followed better, and `verification.md` says so; the defensible reason is
+   that an incident tells you where the temptation actually was, and makes the
+   habit far easier to justify when the budget gets tight. Say what happened,
+   with enough detail to recognize it.
 
 A proposal that adds a habit without proposing what it displaces will be asked
 the budget question, because a starter pack that only grows is the twelfth

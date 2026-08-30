@@ -27,8 +27,8 @@ Three supporting tests:
   and cannot be faked without fabricating output. "Be careful" is free to claim
   and free to fake.
 - **Written at the point of temptation.** The trigger should sit exactly where
-  skipping is attractive, which is why habits derived from an incident beat
-  habits derived from a principle. The incident tells you where the temptation
+  skipping is attractive, which is why this package prefers habits derived from
+  an incident, though nobody has measured whether they are followed better. The incident tells you where the temptation
   actually was.
 - **It earns its context.** It fires often enough, or prevents something
   expensive enough, to justify occupying two lines in every session. The
@@ -91,11 +91,14 @@ careful.
 **And know what the verdict is worth.** A judge reading only a transcript
 detects rule violations somewhat better than chance and well below reliably:
 roughly 0.65 AUROC on false-success detection, and conversation-level accuracy
-in the forties for the strongest frontier judges on one rule-violation
-benchmark. Giving a judge the actual artifacts moved alignment with human
-evaluation from roughly 60% to the mid-80s. That is why `habit-judge` has file
+of 47% and 49% for two strong judges in one domain of one benchmark, where the
+same models score 28% and 57% in another domain, on synthetic dialogues
+adversarially filtered so judges fail. Giving a judge the actual artifacts moved alignment with human
+evaluation from roughly 60%, which is the score with no trajectory at all, to
+the mid-80s. That is why `habit-judge` has file
 tools, why it prefers artifacts to the agent's narration, and why a `FAIL` is a
-flag worth checking rather than a finding. Sources in `evidence.md`.
+flag worth checking rather than a finding. Figures in `evidence.md`, which states plainly that none of them carries a
+source link.
 
 **Flag gaps, not near-misses.** A reviewer asked to find problems will find
 some, whether or not they are there. The official guidance on adversarial review
@@ -154,7 +157,7 @@ Anthropic's published procedure for a judge in a code migration is two runs, and
 it transfers directly:
 
 > "Run it against the original code to confirm it passes. Then run it against
-> deliberately broken code to confirm it fails, a judge that doesn't catch
+> deliberately broken code to confirm it fails — a judge that doesn't catch
 > breakage isn't a judge."
 
 So a judge or a gate that has only ever been observed **allowing** things is not
@@ -165,7 +168,7 @@ must block, and cases that must not.
 
 Two more principles from the same source, which set the order of preference:
 
-> "Let scripts, a compiler, a diff, a test suite, be the referee."
+> "Let scripts — a compiler, a diff, a test suite — be the referee."
 >
 > "Make review adversarial and verification mechanical."
 

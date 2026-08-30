@@ -60,7 +60,6 @@ bash .github/test-gate.sh
 bash .github/test-install.sh
 bash .github/live-checks/gate-replay.sh
 claude plugin validate . --strict
-claude plugin validate .claude-plugin/plugin.json --strict
 ```
 
 `bash .github/live-checks/rules-canary.sh` needs the `claude` CLI and spends

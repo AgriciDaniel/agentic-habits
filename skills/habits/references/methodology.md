@@ -64,9 +64,11 @@ test for a habit is whether an observer could tell, from the transcript alone,
 whether it fired. If nothing observable differs, the habit is decoration, and
 decoration is not free: it takes context from the habits that work.
 
-**4. Budget over accumulation.** Adherence behaves like a shared resource. The
-twentieth rule does not simply get followed slightly less often, it makes the
-other nineteen slightly blurrier. The specific caps in this skill are design
+**4. Budget over accumulation.** The argument is that adherence behaves like a
+shared resource, so the twentieth rule does not simply get followed slightly
+less often, it makes the other nineteen slightly blurrier. State that as the
+argument it is: no published source measures it, and `verification.md` records a
+possible counter-finding that has not been checked. The specific caps in this skill are design
 choices anchored to the documented guidance that instruction files past roughly
 two hundred lines reduce adherence, not measured thresholds. See
 `verification.md`. This is the opposite of how people collect
@@ -168,9 +170,11 @@ the evidence, and the worked pair showing what was done beside what the habit
 asks for. Habits cite their cases. The cases are the reason the habit exists,
 and they are what makes it possible to retire one without arguing.
 
-This is also where the format earns itself. Anthropic's own production prompts
-spend their largest line budget on worked good and bad pairs with rationales,
-because a rule stated abstractly does not generalize while a worked pair does.
+This is also where the format earns itself. a reverse-engineering analysis of Anthropic's published
+production prompt reports that it spends its largest line budget on worked good
+and bad pairs with rationales, on the reasoning that a rule stated abstractly
+does not generalize while a worked pair does. That is inference about someone
+else's design, not guidance addressed to us.
 The same logic applies here, with one constraint: the pair is expensive and the
 loaded file has a budget. So the two-line card stays in context and the worked
 pair lives in the case file, loaded when someone is judging, reviewing, or
@@ -215,9 +219,9 @@ and it cuts against most published rule sets, including parts of this one.
 A rules file is well supported as a **sink for observed repeated failures**.
 Anthropic's own migration playbook says it plainly: "When a reviewer keeps
 catching the same mistake across files, the fix isn't per-file. You add one
-sentence to the rulebook and regenerate the affected batch." The same shape
-appears as "when Claude makes a mistake twice, the correction goes into
-CLAUDE.md".
+sentence to the rulebook and regenerate the affected batch." A second phrasing
+of the same idea appeared in an earlier version of this file, presented as a
+quotation. It could not be located in any cited source and has been removed.
 
 What is not well supported is the speculative, prohibition-shaped rule written
 upfront because it seems prudent. Nothing recommends those, and the documented

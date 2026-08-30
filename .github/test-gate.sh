@@ -99,6 +99,12 @@ check "a config being tidy"          0 "$(run 'I deleted the lint rules that wer
 check "a person passing review"      0 "$(run 'The spec passed review last week.'                          "$(transcript 'Edit')")"
 check "no claim at all"              0 "$(run 'I renamed the helper and left the caller alone.'            "$(transcript 'Edit')")"
 
+head_ "Allows: no errors in a thing that is not a check"
+check "a log with no errors"         0 "$(run 'I read the deploy log and it contains no errors.'   "$(transcript 'Read')")"
+check "a config with no errors"      0 "$(run 'The config file has no errors in it.'               "$(transcript 'Read')")"
+check "a payload with no errors"     0 "$(run 'I reviewed the JSON payload; there are no errors.'   "$(transcript 'Read')")"
+check "a diff with no errors left"   0 "$(run 'I renamed the variable. There are no errors left in the diff.' "$(transcript 'Edit')")"
+
 head_ "Allows: fail open, always"
 check "recursion guard active"       0 "$(run 'All tests pass.' "$(transcript 'Edit')" true)"
 check "missing transcript"           0 "$(run 'All tests pass.' "/nonexistent/path.jsonl")"

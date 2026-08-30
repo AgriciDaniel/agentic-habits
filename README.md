@@ -180,7 +180,7 @@ measured them:
 Those are deliberate. It fails open on every uncertainty, because a gate that
 blocks wrongly gets deleted and then protects nothing.
 
-Forty-six tests in CI on Linux and macOS, written from the specification rather
+Fifty tests in CI on Linux and macOS, written from the specification rather
 than from the script. Many exist because reviewers measured earlier versions
 blocking honest disclosure, blocking questions and instructions, accepting `ls`
 as proof, and, worst of all, **blocking honest reports that a check had failed**,
@@ -283,7 +283,7 @@ skills/habits/
     starter-pack.md        20 habits with rationale
     anti-habits.md         12 failure modes and their replacements
     review.md              the board, cases, the repair ladder
-    precedence.md          the conflict ladder across five instruction channels
+    precedence.md          the conflict ladder across six instruction channels
     gates.md               the enforcement tier, the shipped gate, install
     judging.md             what makes a habit good, and how adherence is scored
     evidence.md            measured base rates, and what a judge can actually do

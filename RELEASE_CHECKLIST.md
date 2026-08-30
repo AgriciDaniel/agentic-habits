@@ -30,7 +30,9 @@
 - [ ] `bash .github/test-install.sh`
 - [ ] `bash .github/live-checks/gate-replay.sh`
 - [ ] `claude plugin validate . --strict`
-- [ ] `claude plugin validate .claude-plugin/plugin.json --strict`
+      (validating `plugin.json` directly warns about this repository's root
+      `CLAUDE.md`, which exists for repository development and is deliberately
+      not shipped as plugin context, so that invocation is not a release gate)
 - [ ] `shellcheck` clean on every shipped shell script
 - [ ] `./install.sh` and `./uninstall.sh` run clean against a scratch
       `HABITS_INSTALL_HOME`, twice, with and without `--with-gate`

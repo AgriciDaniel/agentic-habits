@@ -17,7 +17,14 @@ head_ "House style"
 # Build the characters at runtime so this file does not contain the thing it forbids.
 EMDASH=$(printf '\u2014')
 ENDASH=$(printf '\u2013')
-hits=$(grep -rn --exclude-dir=.git --binary-files=without-match -e "$EMDASH" -e "$ENDASH" . || true)
+# A blockquote line is exempt. Without this the house rule and the
+# verbatim-quotation rule are in conflict, and a mutation test showed the repo
+# resolving it silently in favour of the house rule, inside quotation marks, in
+# the two files whose job is to separate what is quoted from what is asserted.
+# If a quotation needs an em dash, it must be a blockquote so the exemption is
+# visible on the page rather than implicit.
+hits=$(grep -rn --exclude-dir=.git --binary-files=without-match -e "$EMDASH" -e "$ENDASH" . \
+       | grep -v ':[0-9]*:[[:space:]]*>' || true)
 if [ -n "$hits" ]; then
   bad "em dash or en dash found:"; printf '%s\n' "$hits" | head -5
 else
@@ -76,7 +83,7 @@ head_ "Prose and package agree"
 # These exist because three documents once described a package that no longer
 # existed, and structural checks could not see it. Each is a claim the prose
 # makes about the repository, checked against the repository.
-if grep -rq "\.sh$" /dev/null 2>&1 || ls skills/habits/assets/gates/*.sh >/dev/null 2>&1; then
+if ls skills/habits/assets/gates/*.sh >/dev/null 2>&1; then
   grep -qi "nothing here executes" SECURITY.md \
     && bad "SECURITY.md says nothing executes, but skills/ ships a shell script" \
     || pass "SECURITY.md does not claim the package is inert"
@@ -118,7 +125,9 @@ while IFS= read -r f; do
   while IFS= read -r n; do
     [ -z "$n" ] && continue
     [ "$n" = "$gt" ] && continue
-    case "$n" in 3|5|8|12|20|46) continue ;; esac   # counts of other things stated nearby
+    # No skip list. An earlier version skipped the live count itself, which
+    # suppressed the exact defect this check exists for the moment it changed.
+    # A mutation test proved it: 46 -> 47 with two stale documents reported ok.
     bad "$f claims $n gate tests; the suite has $gt"; badnum=1
   done < <(grep -oE '\b[0-9]+ (gate )?tests\b' "$f" 2>/dev/null | grep -oE '^[0-9]+')
 done < <(find . -name '*.md' -not -path './.git/*' | sort)

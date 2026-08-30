@@ -2,6 +2,95 @@
 
 All notable changes to this skill are recorded here. Dates are ISO.
 
+## 0.6.2 - 2026-08-30
+
+An anti-slop audit: 36 findings, 11 HIGH, 21 MEDIUM, 4 LOW. It opened by
+correcting its own miscount, which is the standard this repository asks for and
+rarely gets from a reviewer.
+
+### Fixed: the repository accused itself of a defect that does not exist
+
+0.6.1 recorded, in three files, a "model-family discrepancy nobody has
+resolved": `evidence.md` naming Opus 4.5 and 4.6 while `verification.md` named a
+Fable 5 system card. Confirmed by two independent routes that all three models
+are real, concurrently published, and have their own system cards. The two files
+cite different cards for different claims and never disagreed.
+
+A false self-accusation is an unverified claim stated as fact wearing humility
+instead of confidence, which makes it harder to spot, not easier. Removed.
+
+Four lines away sat a real defect the note had distracted from:
+`verification.md` attributed a constitution-adherence result to Fable 5 when the
+card states it about Mythos 5. Corrected.
+
+### Fixed: the gate blocked sentences about anything with no errors
+
+`\bno errors?\b` was the only claim pattern with no anchoring noun, so "I read
+the deploy log and it contains no errors" was blocked, with stderr insisting the
+turn had claimed a test or build passed. Five such sentences measured, five
+blocked. Removed, four regression cases added, suite now 50.
+
+### Fixed: a check that suppressed the defect it was written for
+
+`checks.sh` skipped the live gate-test count in its own comparison, so the
+moment the count changed the check went quiet. A mutation test proved it: 46 to
+47 with two stale documents reported `ok`. Skip list deleted, and on the next
+run the check immediately caught two files saying 46 when the suite had 50.
+
+The negative suite had the same disease: its mutation string was hardcoded, so
+it would silently stop matching. Mutations now derive the live count, and a
+sixteenth probe asserts a mutation that fails to apply is treated as a failure.
+
+### Fixed: two quotations altered inside the quotation marks
+
+The no-em-dash house rule had no exemption for quoted material, so two sentences
+quoted from Anthropic engineering writing had their em dashes replaced with
+commas. One changes the parse: "Let scripts, a compiler, a diff, a test suite,
+be the referee" reads as a four-item list where the original is an appositive.
+
+Both restored. Blockquote lines are now exempt, and the quotations are
+blockquotes, so the exemption is visible on the page rather than implicit.
+
+### Fixed: seven sources misstated, five figures named as untraceable
+
+The citation pass checked 34 third-party claims against primary sources: 21
+hold, 7 misstate a real source, 6 were not locatable.
+
+Corrected: the package-hallucination denominator (19.7% is of package
+references, not code samples); a rule-based checker gap presented as a general
+range when it is one agent on two benchmarks; "11 of 12 runs" of inline
+reimplementation when the paper says 5 of 12 and calls it not cheating; a
+judge-accuracy figure presented as a benchmark property when it is one domain's
+column; a "transcript-only" label on what is actually the no-trajectory
+condition; a completion-claims category renamed, its scope overstated, and its
+published rate described as absent when it exists and cuts against us.
+
+A sycophancy figure of ~42% and ~76% across eight models could not be traced to
+anything, and three near-neighbour papers contradict it. Removed, and `SYS-12`'s
+grade now rests on the half that holds. The other five untraceable figures are
+named individually in `evidence.md` rather than left looking like the rest.
+
+### Fixed: smaller, and there were many
+
+A `$schema` URL that 404s. A documented verification command that exits 1. A
+quotation with no locatable source. Five orphaned sentence tails left when the
+`Check:` lines were truncated. A third verdict vocabulary in the file that
+forbids two. `last_assistant_message` filed as undocumented when it is
+documented. A manifest claiming no script makes a network call, next to a
+manifest tool list that was the judge's rather than the package's. A live-checks
+README contradicting the CI that runs its script. An installer `--help` printing
+a line of shell and hiding two flags that relax its guards. `uninstall.sh`
+deleting two files it never checked ownership of, which would have destroyed a
+hand-written judge or gate at those paths.
+
+### Changed: inference is labelled where it is used, not only where it is filed
+
+Three claims about Anthropic's production prompt design were filed as inference
+in `verification.md` and stated as fact at every point of use. They now carry
+the label where they are read. The same for "habits from a real incident are
+followed better", which appeared as an acceptance criterion in
+`CONTRIBUTING.md` while `verification.md` recorded it as unmeasured.
+
 ## 0.6.1 - 2026-08-30
 
 Publication readiness. A fresh reviewer sequenced the work and found the worst
@@ -60,9 +149,11 @@ The file carries roughly thirty specific numeric claims about third-party
 research with **zero source links**. It now says so at the top, in full: treat
 every number as `[SEARCH]`-grade, this is a defect and not a style, and the
 right fix is a citation pass rather than a disclaimer. Filed under "Known and
-unfixed" alongside a discrepancy nobody has resolved: this file names Opus 4.5
-and 4.6 while `verification.md` refers to a Fable 5 system card, and at least
-one is wrong.
+unfixed". A "model-family discrepancy" recorded here in 0.6.1 turned out not to
+exist: Opus 4.5, Opus 4.6 and Fable 5 are three real, concurrently published
+models with their own system cards, and the two files cite different cards for
+different claims. That note was a false self-accusation, which is an unverified
+claim stated as fact wearing humility instead of confidence. Removed in 0.6.2.
 
 `NOTICE` no longer points at a disclosure that did not exist.
 
@@ -193,7 +284,7 @@ declaring the package's tools and permissions. A reviewer suggested top-level
 was verified and rejected, because the validator warns on both as unknown fields
 and `--strict` fails.
 
-CI now runs structure, 46 gate tests, 17 installer tests, shellcheck at warning
+CI now runs structure, 46 gate tests, 19 installer assertions, shellcheck at warning
 severity, and manifest validation, on Linux and macOS.
 
 ## 0.5.0 - 2026-08-29

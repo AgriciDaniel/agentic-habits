@@ -27,8 +27,14 @@ probe() { # $1 = description, $2 = mutation command run inside the copy
 
 printf '\n\033[1mEach defect below must make checks.sh exit non-zero\033[0m\n'
 
+# Derive the live count rather than hardcoding it: a hardcoded mutation string
+# silently stops matching when the count changes, and the probe then passes for
+# the wrong reason. That happened once already.
+GT=$(grep -c 'check "' .github/test-gate.sh)
 probe "a stale gate-test count in one file" \
-  "sed -i.bak 's/with 46 tests and a recorded live/with 27 tests and a recorded live/' skills/habits/references/gates.md"
+  "sed -i.bak 's/with $GT tests and a recorded live/with 27 tests and a recorded live/' skills/habits/references/gates.md"
+probe "a mutation that no longer matches (the probe must not pass vacuously)" \
+  "sed -i.bak 's/with $GT tests and a recorded live/with 27 tests and a recorded live/' skills/habits/references/gates.md; grep -q 'with 27 tests' skills/habits/references/gates.md || echo MUTATION_DID_NOT_APPLY >&2"
 probe "a wrong gate line count in SECURITY.md" \
   "sed -i.bak 's/It is 150 lines/It is 119 lines/' SECURITY.md"
 probe "an unresolved provenance row" \

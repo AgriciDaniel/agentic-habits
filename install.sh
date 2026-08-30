@@ -8,6 +8,11 @@
 #   ./install.sh --revert        undo the last settings.json change this made
 #   ./install.sh --help
 #
+# Two flags relax a guard, so they are documented rather than hidden:
+#   --force   replace an install this script does not own. It refuses otherwise.
+#   --yes     permit an unattended settings.json write, which is refused without
+#             a terminal. Ignored against a real home in CI.
+#
 # HABITS_INSTALL_HOME overrides the install root, for testing.
 set -uo pipefail
 
@@ -29,7 +34,7 @@ while [ $# -gt 0 ]; do
     --revert)    revert=1 ;;
     --force)     force=1 ;;
     --yes)       assume_yes=1 ;;
-    --help|-h)   sed -n '2,12p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    --help|-h)   sed -n '2,15p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
     *)           printf 'Unknown argument: %s\n' "$1" >&2; exit 2 ;;
   esac
   shift

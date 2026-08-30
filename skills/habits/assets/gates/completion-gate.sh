@@ -23,13 +23,13 @@ input=$(cat 2>/dev/null) || exit 0
 [ -n "$input" ] || exit 0
 command -v jq >/dev/null 2>&1 || exit 0
 
-# 2. Never recurse.
+# Never recurse.
 [ "$(jq -r '.stop_hook_active // false' <<<"$input" 2>/dev/null)" = "true" ] && exit 0
 
 msg=$(jq -r '.last_assistant_message // ""' <<<"$input" 2>/dev/null)
 [ -n "$msg" ] || exit 0
 
-# 3. Is there an unhedged first-hand assertion that a check came back clean?
+# Is there an unhedged first-hand assertion that a check came back clean?
 #
 #    High precision by construction. An explicit list of claim shapes, then a
 #    set of disqualifiers, evaluated per clause rather than per sentence so a
@@ -48,7 +48,7 @@ claim="$claim"'|\b(the |our )?build (succeeds|succeeded|passes|passed|is clean)\
 claim="$claim"'|\b(lint|linter|type ?check|typecheck|compilation) (is|was) (now )?clean\b'
 claim="$claim"'|\b(lint|linter|type ?check|typecheck) (passes|passed)\b'
 claim="$claim"'|\bit compiles\b|\bcompiles (cleanly|without errors?)\b|\beverything compiles\b'
-claim="$claim"'|\b(zero|no) (test )?failures\b|\bno errors?\b'
+claim="$claim"'|\b(zero|no) (test|build|lint)? ?failures\b'
 
 # Any one of these and the clause is not a first-hand present claim.
 # Order matters only for readability; any match disqualifies.
@@ -87,7 +87,7 @@ done <<< "$(printf '%s' "$msg" | tr '\n' ' ' | awk '{gsub(/[.!?;:]/,"&\n"); prin
 
 [ -n "$found" ] || exit 0
 
-# 4. Did a real check actually run this turn? Fail open if we cannot tell.
+# Did a real check actually run this turn? Fail open if we cannot tell.
 transcript=$(jq -r '.transcript_path // ""' <<<"$input" 2>/dev/null)
 [ -n "$transcript" ] && [ -r "$transcript" ] || exit 0
 
@@ -135,7 +135,7 @@ ran=$(jq -n --slurpfile t <(cat "$transcript" 2>/dev/null) --argjson start "$sta
 case "$ran" in ''|*[!0-9]*) exit 0 ;; esac
 [ "$ran" -gt 0 ] && exit 0
 
-# 6. Claimed a clean check, ran nothing. Block, and say exactly what to do.
+# Claimed a clean check, ran nothing. Block, and say exactly what to do.
 cat >&2 <<'MSG'
 COMPLETION GATE: this turn claims a test, build, lint, or type check came back
 clean, and no command was run in this turn to find out.

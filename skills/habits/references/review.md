@@ -9,9 +9,9 @@ show one table per scope.
 HABITS · system (10/12)
 
 ID       HABIT                     SINCE       LAPSES  LAST MISS   STATUS
-SYS-01   Ground before changing    2026-08-29       0  -           active
+SYS-01   Ground before changing    2026-08-29       -  -           active
 SYS-03   Verify with the real thing 2026-08-29      2  2026-09-14  probation
-SYS-06   Confirm the irreversible  2026-08-29       0  -           enforced
+SYS-06   Confirm the irreversible  2026-08-29       -  -           enforced
 
 HABITS · project: keyword-pro (4/10)
 ...
@@ -89,10 +89,10 @@ transcript the user pastes.
 For each habit return one of `PASS`, `FAIL`, `N/A`, or `UNKNOWN`, plus the evidence for anything that is not `unknown`.
 
 ```
-SYS-01 Ground before changing     followed    3 edits, each preceded by a read
-SYS-03 Verify with the real thing missed      "build is fixed" with no build output
-SYS-06 Confirm the irreversible   n/a         no irreversible action this session
-SYS-13 Outcome first              unknown     not visible from a diff
+SYS-01 Ground before changing     PASS      [RAW] 3 edits, each preceded by a read
+SYS-03 Verify with the real thing FAIL      [RAW] "build is fixed"; [INFER] no command ran
+SYS-06 Confirm the irreversible   N/A       no irreversible action this session
+SYS-13 Outcome first              UNKNOWN   [INFER] not visible from a diff
 ```
 
 Most rows will be `unknown` for most targets, and that is the expected shape.

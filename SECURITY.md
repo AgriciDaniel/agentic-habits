@@ -16,10 +16,12 @@ Read it before you install it. It is 150 lines, makes no network call, writes
 nothing but stderr, and never executes anything from the transcript, but you
 should confirm that yourself rather than take this paragraph's word for it.
 
-The repository also ships `.github/checks.sh`, `.github/test-gate.sh`, and
-`.github/live-checks/gate-replay.sh`, which run in CI and need no model. One
-further script, `.github/live-checks/rules-canary.sh`, invokes the `claude` CLI
-and spends model quota; it never runs in CI and only runs when you run it.
+The repository also ships `install.sh` and `uninstall.sh`, which you run
+deliberately, and five development scripts. Four of them run in CI and need no
+model: `.github/checks.sh`, `.github/test-checks.sh`, `.github/test-gate.sh`,
+`.github/test-install.sh`, plus `.github/live-checks/gate-replay.sh`. One,
+`.github/live-checks/rules-canary.sh`, invokes the `claude` CLI and spends model
+quota; it never runs in CI and only runs when you run it.
 
 ## Where the risk actually is
 

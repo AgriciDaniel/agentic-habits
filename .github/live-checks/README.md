@@ -4,9 +4,10 @@ The claims in `skills/habits/references/verification.md` were measured, not
 reasoned. These scripts are how they were measured, so the record is an artefact
 you can rerun rather than testimony you have to take on trust.
 
-They need the `claude` CLI, a working login, and they spend a small amount of
-model quota, so they do not run in CI. `.github/checks.sh` and
-`.github/test-gate.sh` do, and need neither.
+`rules-canary.sh` needs the `claude` CLI, a working login, and a small amount of
+model quota, so it never runs in CI. `gate-replay.sh` needs neither and **does**
+run in CI, alongside `.github/checks.sh`, `.github/test-checks.sh`,
+`.github/test-gate.sh` and `.github/test-install.sh`.
 
 ```bash
 bash .github/live-checks/rules-canary.sh      # do rules files load, are comments stripped, is path scoping real

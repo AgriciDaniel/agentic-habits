@@ -73,7 +73,7 @@ scenario, which is a demonstration rather than a measurement.
 
 ### The gate's unit tests, including a bug a live run found
 
-Forty-six cases in `.github/test-gate.sh`, run in CI: blocks for claims about
+Fifty cases in `.github/test-gate.sh`, run in CI: blocks for claims about
 tests, build, lint, and compilation with nothing run; allows a claim backed by a
 real command, a message with no claim, honest disclosure, a recursion guard, a
 missing transcript, an empty message, an unparseable transcript, and prose about
@@ -233,16 +233,20 @@ for guidance here.
 Confirmed by direct fetch of https://claude.com/blog/ai-code-migration during
 this session, not relayed.
 
-- "Run it against the original code to confirm it passes. Then run it against
-  deliberately broken code to confirm it fails, a judge that doesn't catch
-  breakage isn't a judge."
-- "Two adversarial reviewers evaluate the work of the implementers using
-  separate contexts and disagreement between reviewers goes to a third agent."
-- "When a reviewer keeps catching the same mistake across files, the fix isn't
-  per-file. You add one sentence to the rulebook and regenerate the affected
-  batch."
-- "Let scripts, a compiler, a diff, a test suite, be the referee."
-- "Make review adversarial and verification mechanical."
+> "Run it against the original code to confirm it passes. Then run it against
+> deliberately broken code to confirm it fails — a judge that doesn't catch
+> breakage isn't a judge."
+
+> "Two adversarial reviewers evaluate the work of the implementers using
+> separate contexts and disagreement between reviewers goes to a third agent."
+
+> "When a reviewer keeps catching the same mistake across files, the fix isn't
+> per-file. You add one sentence to the rulebook and regenerate the affected
+> batch."
+
+> "Let scripts — a compiler, a diff, a test suite — be the referee."
+
+> "Make review adversarial and verification mechanical."
 
 The third of these is the strongest first-party support this design has: a rules
 file is endorsed as a sink for *observed repeated* failures. It is not support
@@ -290,7 +294,7 @@ around the flaky timer".
 
 Rebuilt as high-precision pattern matching: an explicit list of claim shapes,
 disqualifiers for negation, attribution, instruction and modality, attribution
-evaluated at sentence scope and the rest per clause. 46 tests now, on Linux and
+evaluated at sentence scope and the rest per clause. 50 tests now, on Linux and
 macOS, carrying every phrasing both reviewers measured.
 
 The same rewrite removed a portability bug found in the same review: sentence
@@ -308,8 +312,11 @@ part of the evidence trail.
 Code persists instructions at four CLAUDE.md scopes, in `.claude/rules/`, in
 skills, in hooks and settings, and in auto memory that Claude writes for itself
 and reloads every session. The willpower half fails too: character and
-constitution adherence are trained rather than prompted, and Anthropic's Fable 5
-system card reports adherence at least as strong as prior models. The corrected
+constitution adherence are trained rather than prompted. The Fable 5 and
+Mythos 5 system card reports, in its constitution-adherence section, that
+**Claude Mythos 5** "was best or statistically equivalent to the best model on
+every dimension"; that result is about Mythos 5, not Fable 5, and an earlier
+version of this line attributed it to the wrong model. The corrected
 premise is abundant memory and no enforcement.
 
 **Advisory mechanisms are not ranked against each other.** Nothing in the
@@ -434,12 +441,13 @@ that no longer holds, rather than leaving a stale record in place.
 
 ## Known and unfixed, stated rather than hidden
 
-- **The gate's input contract is an unfiled harness claim.** It depends on a
-  `Stop` payload supplying `last_assistant_message`, and on a transcript JSONL
-  schema (`.type`, `.isMeta`, `.message.content[].type == "tool_result"`,
-  `.tool_use_id`, `.is_error`). Those were read off real transcripts during
-  development and are not quoted from documentation. If the payload field is
-  absent the gate exits 0 and never fires, so the failure is silent.
+- **Half the gate's input contract is documented; half is not.**
+  `last_assistant_message` **is** documented for `Stop` hooks, along with
+  `stop_hook_active`, `transcript_path`, `tool_use_id` and `is_error`. An
+  earlier version of this file wrongly filed the whole contract as unfiled.
+  What genuinely is undocumented is `.isMeta`, which appears nowhere in the
+  hooks documentation and was read off real transcripts. If the payload field
+  is absent the gate exits 0 and never fires, so that failure is silent.
 - **`/context` and `/memory` behaviour** is described in `placement.md` from
   documentation but is not in the quoted list here.
 - **The plugin invocation name** was never tested. `claude plugin validate`
@@ -450,13 +458,11 @@ that no longer holds, rather than leaving a stale record in place.
   re-verified against primary sources here. The file now says so at the top.
   This is the largest outstanding gap in the package and it is exactly the
   failure the package is about.
-- **Model families disagree between two shipped files.** `evidence.md` names
-  Opus 4.5 and 4.6; this file refers to a Fable 5 system card. At least one is
-  wrong and neither has been checked.
-- **Most quoted documentation lines lack a source URL.** The "quoted from
-  documentation" list below is accurate as quotation and thin as citation: one
-  URL for the whole list. `CONTRIBUTING.md` requires the link. The repository
-  does not yet meet its own rule here.
+- **Two quotations were silently altered to satisfy the house style.** The
+  no-em-dash rule has no exemption for quoted material, so two sentences quoted
+  from Anthropic engineering writing had their em dashes replaced with commas
+  inside the quotation marks. One of them changes the parse. Both are restored
+  and the check now exempts blockquotes.
 - **The live-session records above are author testimony.** The scripts in
   `.github/live-checks/` reproduce the mechanisms; they do not prove that a
   particular session happened.

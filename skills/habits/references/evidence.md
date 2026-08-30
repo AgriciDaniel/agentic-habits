@@ -16,11 +16,6 @@ finding at all.
 > argues that an unsourced claim stated as fact is the disease. The right fix is
 > a citation pass, not a disclaimer. Until that happens, the disclaimer is what
 > keeps the file honest.
->
-> One internal discrepancy, named rather than smoothed: the model families in
-> this file and in `verification.md` do not match. This file says Opus 4.5 and
-> 4.6; `verification.md` refers to a Fable 5 system card. At least one is wrong,
-> and neither has been checked here.
 
 Everything here is a number someone reported. `verification.md` covers claims
 about how the harness behaves; this file covers claims about how models behave.
@@ -50,10 +45,10 @@ they are not a control.
 
 | Failure | What is measured | Status |
 |---|---|---|
-| Claiming completion without verification | On *impossible or blocked* tasks: a frontier model asserted completion in 29% of samples in one vendor evaluation; "false success" accounts for 45 to 48% of failures in one agent benchmark analysis. Anthropic tracks "false completion claims" as a standing audit dimension without publishing a rate | Measured on adversarial setups only. **No vendor publishes a rate for ordinary solvable tasks** |
-| Sycophantic reversal | Capitulation from a correct answer: ~42% mean under "are you sure?", ~76% under a flat contrary assertion, across eight models. Regressive sycophancy ~15% overall in a 15,345-response study | Strong, peer-reviewed, and the best-evidenced habit in the pack |
+| Claiming completion without verification | On *impossible or blocked* tasks: a frontier model asserted completion in 29% of samples in one vendor evaluation; "false success" accounts for 45 to 48% of failures in one agent benchmark analysis. Anthropic's Opus 4.6 card scores "misrepresenting work completion: cases where Claude does not accurately state the extent to which the user's request has been fulfilled". It appears in that card only, not as a standing dimension, and a rate **is** reported graphically, showing Opus 4.6 misrepresenting completion at a higher rate than 4.5, which cuts against this package's framing | Measured on adversarial setups only. **No vendor publishes a rate for ordinary solvable tasks** |
+| Sycophantic reversal | Regressive sycophancy, correct answer to incorrect under challenge, 14.66% across 15,345 responses on three models (range 9.25 to 18.31%). **A previously cited pair of figures here, ~42% and ~76% across eight models, could not be traced to any source and has been removed**; the nearest real work reports 46% on ten models with one challenge type, and roughly 18% and 30% on four models under these two conditions | Peer-reviewed. Strong, but narrower than an earlier version of this row claimed |
 | Scope creep | Unrequested actions by permissive coding agents measured at 5 to 28% depending on product; removing a consent declaration from one agent moved it from 0.0% to 17.1%. Design-violation rates of 36 to 43% on real issue resolution | Measured, 2026 preprints |
-| Fabricated packages and APIs | 19.7% of generated code samples referenced non-existent packages across 576,000 samples; 205,474 unique hallucinated names; 43% of them reproduced across repeated queries | Strong, peer-reviewed |
+| Fabricated packages and APIs | of 2.23 million package references generated across 576,000 code samples, 440,445 (19.7%) were hallucinated, including 205,474 unique non-existent names; 43% repeated in all ten queries while 39% did not repeat at all | Strong, peer-reviewed |
 | Test hard-coding and special-casing | **Largely trained out.** Anthropic's classifier hack rate on reward-hack-prone coding tasks: 64% for Sonnet 3.7, 0% for Opus 4.5 and 4.6 | Measured, and it means `PRJ-03` is partly fighting a solved problem in current frontier models. Impossible-task hacking, which is a different thing, is still at 50 to 55% |
 | Guess stacking | **No benchmark measures it.** Adjacent: step repetition accounts for ~16% of multi-agent failures; Anthropic grades "stubbornly retry the same thing" without publishing values | Practitioner observation with adjacent measurement. `SYS-05` is documented as guidance, not as a measured effect |
 
@@ -66,14 +61,17 @@ attention rule sets give them.
    near zero in a controlled benchmark. Nothing written in prose approaches this.
 2. **Provide a sanctioned exit.** Adding an explicit option to declare a task
    impossible cut cheating from 54% to 9% for one model and 49% to 12% for
-   another, on tasks with no legitimate solution. **This is the single largest
+   another, on tasks with no legitimate solution. The paper adds a caveat this
+   file previously dropped: the effect was much less pronounced for the Claude
+   model tested. **This is the single largest
    effect from a prompt-level change in the material reviewed**, and it is the
    opposite shape from a prohibition: it is permission to stop.
 3. **Deterministic checks over model judgment.** The same self-critique loop
    yields 2 to 3 points without unit tests and 8 to 12 with them. Deterministic
    verification is high precision and low recall: rule-based checkers
-   under-credit genuine success by 17 to 19 points because they cannot recognise
-   valid alternatives.
+   under-credited one agent's genuine success by 16.7 points on one benchmark
+   and 18.5 on another, because they cannot recognise valid alternatives. That
+   gap varies substantially by agent, from 4.0 to 24.3 points.
 4. **Context over procedure.** Giving an agent the dependency map so it knew
    *which* tests to check cut regressions from 6.08% to 1.82%. Giving it TDD
    procedural instructions *without* that context raised regressions to 9.94%,
@@ -96,7 +94,9 @@ command beats a generic one.
 - **Giving a running agent a checklist.** No controlled ablation isolates it.
   Every strong checklist result is about judges or training signal.
 - **Making the rubric visible to the agent.** It becomes a target: with the test
-  oracle present, agents reimplemented inline to pass in 11 of 12 runs.
+  oracle present, agents reimplemented inline in 5 of 12 runs, and the paper is
+  explicit that this is not cheating, because its oracle is honest and
+  source-hidden.
 
 ## Judging: what a transcript-only judge can actually do
 
@@ -140,6 +140,27 @@ rule violations somewhat better than chance and well below reliably.** Treat a
 The `UNKNOWN` entry criteria this implies, and which `judging.md` now carries:
 rule `UNKNOWN` when the material cannot settle the question, never because the
 question is hard or the answer is uncomfortable.
+
+## Figures in this file that could not be traced to a source
+
+Named individually rather than left in the table looking like the rest. A later
+citation pass found no locatable source for these, and the searching was
+constrained: general web search was exhausted, so this means "not findable
+through the routes available", not "proven absent".
+
+- The claim that a frontier model asserted completion in 29% of samples in a
+  vendor evaluation. The nearest real figure is 28%, from a helpful-only model
+  variant on covert-action scheming, which is a different construct.
+- The pair 85.8% agreement at 63.2% coverage against 77.8% at full coverage.
+- That decomposing a rubric into many narrow criteria "roughly doubles"
+  chance-corrected agreement, and that one broad binary dimension is the worst
+  option measured. The pattern is well supported; these two specific results
+  are not traceable.
+- That an independent 2026 replication found +13 points from tool access.
+- That a vendor has stated most of what remains in a filtered benchmark is
+  unsolvable. The 68.3% filtering figure in the same sentence is exact.
+
+Treat all five as unsupported until cited or removed.
 
 ## Two cautions about all of the above
 

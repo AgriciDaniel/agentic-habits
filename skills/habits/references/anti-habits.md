@@ -137,8 +137,9 @@ the tells. Most bad sessions are one of these twelve wearing local clothes.
 
 **As a source of habits.** Do not install all twelve replacements. Install the
 ones matching failures that actually happened here. A rule written from a real
-incident is followed better than one adopted on principle, and it is far easier
-to justify keeping when the budget gets tight.
+incident is easier to justify keeping when the budget gets tight, and it names a
+temptation you have actually met. Whether it is *followed* better is
+unmeasured.
 
 **As a review lens.** During `/habits review`, ask which of these twelve the
 current set does not cover, and whether any of them have shown up since the last
