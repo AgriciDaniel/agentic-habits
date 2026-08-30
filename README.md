@@ -86,7 +86,7 @@ Two lines in a file that loads every session.
 ### SYS-03 · Verify with the real thing
 **When** I am about to say something works.
 **Do** Run the closest real check and show its actual output.
-<!-- habit: id=SYS-03 added=2026-08-29 source=starter/core lapses=0 status=active
+<!-- habit: id=SYS-03 added=2026-08-29 source=starter/core status=active
      check="the message claiming success contains real output from a real run" -->
 ```
 
@@ -188,7 +188,7 @@ measured them:
 Those are deliberate. It fails open on every uncertainty, because a gate that
 blocks wrongly gets deleted and then protects nothing.
 
-Fifty tests in CI on Linux and macOS, written from the specification rather
+Fifty-eight tests in CI on Linux and macOS, written from the specification rather
 than from the script. Many exist because reviewers measured earlier versions
 blocking honest disclosure, blocking questions and instructions, accepting `ls`
 as proof, and, worst of all, **blocking honest reports that a check had failed**,

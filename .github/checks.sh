@@ -84,9 +84,13 @@ head_ "Prose and package agree"
 # existed, and structural checks could not see it. Each is a claim the prose
 # makes about the repository, checked against the repository.
 if ls skills/habits/assets/gates/*.sh >/dev/null 2>&1; then
-  grep -qi "nothing here executes" SECURITY.md \
-    && bad "SECURITY.md says nothing executes, but skills/ ships a shell script" \
-    || pass "SECURITY.md does not claim the package is inert"
+  # Match the claim, not one phrasing of it. A review appended "Nothing in this
+  # package runs on its own." and the previous exact-sentence grep passed.
+  if grep -qiE 'nothing (here|in this (package|repo\w*)) (executes|runs)|no (code|scripts?) (here )?(executes|runs)|runs on its own|does not execute anything' SECURITY.md; then
+    bad "SECURITY.md claims the package is inert, and it ships an executable hook"
+  else
+    pass "SECURITY.md does not claim the package is inert"
+  fi
   grep -q "No scripts in the skill" CONTRIBUTING.md \
     && bad "CONTRIBUTING.md forbids scripts in skills/, which is where the gate lives" \
     || pass "CONTRIBUTING.md's script rule matches what ships"
@@ -106,11 +110,28 @@ head_ "Counts, because prose drifts from the package"
 shipped=$(grep -hc '^### \(SYS\|PRJ\)-' "$STARTER"/*.md | paste -sd+ | bc)
 doc=$(grep -c '^### \(SYS\|PRJ\)-' "$REFS/starter-pack.md")
 [ "$shipped" = "$doc" ] && pass "$shipped cards ship and $doc are documented" || bad "$shipped cards ship but starter-pack.md documents $doc"
-# CHANGELOG records history and must keep its old numbers; this script holds the patterns.
-stale=$(grep -rln "nineteen habits\|19 starter habits\|19 habits with\|all nineteen" \
-        --exclude-dir=.git --exclude=CHANGELOG.md --exclude=checks.sh \
-        --exclude=test-checks.sh . || true)
-[ -z "$stale" ] && pass "no stale habit count in prose" || { bad "files still claiming the old count:"; printf '%s\n' "$stale" | sed 's/^/        /'; }
+# Assert the number, not one historical spelling of it. The previous version
+# grepped for "nineteen" and "19", so "21 starter habits" passed: it recognised
+# the instance it was written for and not the class. A review proved it.
+stale=0
+n2w() { case "$1" in 0) echo zero;; 1) echo one;; 2) echo two;; 3) echo three;; 4) echo four;; 5) echo five;;
+                     6) echo six;; 7) echo seven;; 8) echo eight;; 9) echo nine;; 10) echo ten;;
+                     11) echo eleven;; 12) echo twelve;; 13) echo thirteen;; 14) echo fourteen;;
+                     15) echo fifteen;; 16) echo sixteen;; 17) echo seventeen;; 18) echo eighteen;;
+                     19) echo nineteen;; 20) echo twenty;; 21) echo twenty-one;; *) echo "__none__";; esac; }
+while IFS= read -r f; do
+  case "$f" in ./CHANGELOG.md|./.github/checks.sh|./.github/test-checks.sh) continue ;; esac
+  while IFS= read -r n; do
+    [ -z "$n" ] && continue; [ "$n" = "$shipped" ] && continue
+    bad "$f claims $n starter habits; $shipped ship"; stale=1
+  done < <(grep -oiE '\b[0-9]+ starter habits\b' "$f" 2>/dev/null | grep -oE '^[0-9]+')
+  for w in nineteen twenty twenty-one eighteen; do
+    [ "$w" = "$(n2w "$shipped")" ] && continue
+    grep -qi "all $w\b\|$w starter habits\|$w habits" "$f" 2>/dev/null \
+      && { bad "$f spells a habit count as \"$w\"; $shipped ship"; stale=1; }
+  done
+done < <(find . -name '*.md' -not -path './.git/*' | sort)
+[ "$stale" -eq 0 ] && pass "no file states a habit count other than $shipped"
 # Per file, not a disjunction. The previous version grepped three files with
 # grep -q and passed if ANY one carried the right number, so it reported ok on a
 # repository where gates.md said 27 and the suite had 46. A check that cannot
@@ -170,7 +191,13 @@ while IFS=$'\t' read -r id chk; do
 done < <(grep -ho 'id=[A-Z]*-[0-9]* .*check="[^"]*"' "$STARTER"/*.md \
          | sed 's/id=\([A-Z]*-[0-9]*\).*check="\([^"]*\)".*/\1\t\2/')
 [ "$drift" -eq 0 ] && pass "every shipped check matches its documented Check line"
-grep -q 'lapses=0' "$STARTER"/*.md && bad "a shipped card carries a fabricated lapses=0" || pass "no fabricated lapse counts on shipped cards"
+# Scoped to $STARTER once, so the two most-read example cards, in README.md and
+# habit-card.md, carried the fabricated zero the package forbids.
+if grep -rqn 'lapses=0' --include='*.md' --exclude=CHANGELOG.md .; then
+  bad "a card carries a fabricated lapses=0:"; grep -rn 'lapses=0' --include='*.md' --exclude=CHANGELOG.md . | sed 's/^/        /'
+else
+  pass "no fabricated lapse counts anywhere, including documented examples"
+fi
 missing=$(for f in "$STARTER"/*.md; do grep -o 'id=[A-Z]*-[0-9]*[^>]*' "$f" | grep -v 'evidence=' | sed 's/ .*//'; done)
 [ -z "$missing" ] && pass "every shipped card carries an evidence grade" || { bad "cards with no evidence grade:"; printf '%s\n' "$missing" | sed 's/^/        /'; }
 
@@ -180,8 +207,7 @@ declare -A tally
 for g in evidence-based institutional practitioner contested folklore; do
   tally[$g]=$(grep -ho "evidence=$g" "$STARTER"/*.md | wc -l | tr -d ' ')
 done
-words() { case "$1" in 0) echo zero;; 1) echo one;; 2) echo two;; 3) echo three;; 4) echo four;;
-                       14) echo fourteen;; 15) echo fifteen;; 16) echo sixteen;; *) echo "$1";; esac; }
+words() { n2w "$1"; }   # shared, and it covers 0 to 21 rather than a hand-picked set
 if grep -q "$(words "${tally[evidence-based]}") rest on published" "$REFS/methodology.md"; then
   pass "methodology.md's grade tally matches the shipped cards (${tally[evidence-based]} measured)"
 else

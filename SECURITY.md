@@ -12,7 +12,7 @@ Nothing executes.
 `skills/habits/assets/gates/completion-gate.sh` requires `jq`, is registered as
 a `Stop` hook, and therefore runs at the end of every turn in every session it
 is installed for, reading the session transcript to decide whether to block.
-Read it before you install it. It is 150 lines, makes no network call, writes
+Read it before you install it. It is 160 lines, makes no network call, writes
 nothing but stderr, and never executes anything from the transcript, but you
 should confirm that yourself rather than take this paragraph's word for it.
 

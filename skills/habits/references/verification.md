@@ -73,7 +73,7 @@ scenario, which is a demonstration rather than a measurement.
 
 ### The gate's unit tests, including a bug a live run found
 
-Fifty cases in `.github/test-gate.sh`, run in CI: blocks for claims about
+Fifty-eight cases in `.github/test-gate.sh`, run in CI: blocks for claims about
 tests, build, lint, and compilation with nothing run; allows a claim backed by a
 real command, a message with no claim, honest disclosure, a recursion guard, a
 missing transcript, an empty message, an unparseable transcript, and prose about
@@ -294,7 +294,7 @@ around the flaky timer".
 
 Rebuilt as high-precision pattern matching: an explicit list of claim shapes,
 disqualifiers for negation, attribution, instruction and modality, attribution
-evaluated at sentence scope and the rest per clause. 50 tests now, on Linux and
+evaluated at sentence scope and the rest per clause. 58 tests now, on Linux and
 macOS, carrying every phrasing both reviewers measured.
 
 The same rewrite removed a portability bug found in the same review: sentence

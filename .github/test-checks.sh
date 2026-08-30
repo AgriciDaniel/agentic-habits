@@ -35,8 +35,9 @@ probe "a stale gate-test count in one file" \
   "sed -i.bak 's/with $GT tests and a recorded live/with 27 tests and a recorded live/' skills/habits/references/gates.md"
 probe "a mutation that no longer matches (the probe must not pass vacuously)" \
   "sed -i.bak 's/with $GT tests and a recorded live/with 27 tests and a recorded live/' skills/habits/references/gates.md; grep -q 'with 27 tests' skills/habits/references/gates.md || echo MUTATION_DID_NOT_APPLY >&2"
+GL=$(wc -l < skills/habits/assets/gates/completion-gate.sh | tr -d ' ')
 probe "a wrong gate line count in SECURITY.md" \
-  "sed -i.bak 's/It is 150 lines/It is 119 lines/' SECURITY.md"
+  "sed -i.bak 's/It is $GL lines/It is 119 lines/' SECURITY.md"
 probe "an unresolved provenance row" \
   "sed -i.bak '0,/| Maintainer asserts/s//| **Not established** |/' assets/PROVENANCE.md"
 probe "a second, retired evidence vocabulary" \
@@ -67,6 +68,19 @@ probe "a document naming a path that does not exist" \
   "sed -i.bak 's|skills/habits/assets/gates/completion-gate.sh|assets/gates/completion-gate.sh|' README.md"
 probe "SECURITY.md miscounting the development scripts" \
   "sed -i.bak 's/six development scripts/five development scripts/' SECURITY.md"
+# These four use wordings that have never appeared in this repository. A check
+# that only recognises the defect it was written for is a veneer, and a review
+# proved both of these were exactly that.
+probe "a habit count never used before (21)" \
+  "sed -i.bak 's/20 starter habits/21 starter habits/' README.md"
+probe "a habit count in a new spelling (eighteen)" \
+  "sed -i.bak 's/all twenty/all eighteen/' README.md"
+probe "a reworded claim that the package is inert" \
+  "printf '\nNothing in this package runs on its own.\n' >> SECURITY.md"
+probe "a differently reworded inertness claim" \
+  "printf '\nNo code here executes.\n' >> SECURITY.md"
+probe "a fabricated lapses=0 in a documented example card" \
+  "sed -i.bak '0,/status=active/s//lapses=0 status=active/' README.md"
 probe "the judge gaining write tools" \
   "sed -i.bak 's/^tools: Read, Grep, Glob$/tools: Read, Grep, Glob, Write/' agents/habit-judge.md"
 

@@ -49,6 +49,16 @@ claim="$claim"'|\b(lint|linter|type ?check|typecheck|compilation) (is|was) (now 
 claim="$claim"'|\b(lint|linter|type ?check|typecheck) (passes|passed)\b'
 claim="$claim"'|\bit compiles\b|\bcompiles (cleanly|without errors?)\b|\beverything compiles\b'
 claim="$claim"'|\b(zero|no) (test|build|lint)? ?failures\b'
+# Added after a review measured these walking through. Removing the bare
+# "no errors" pattern fixed a false positive and silently traded away real
+# coverage, with four allow-direction tests and no block-direction test. Both
+# directions now, per the rule this package adopted for validating an instrument.
+claim="$claim"'|\b(the )?(tests?|specs?|suite|build|lint|linter|type ?check) (are|is) (now )?(passing|green|clean)\b'
+claim="$claim"'|\bno (test|build|lint|type ?check|compil\w+|syntax) errors?\b'
+claim="$claim"'|\b(the )?(build|lint|linter|type ?check|suite|tests?) (has|have|had) no errors?\b'
+# Claiming to have run a check is itself a claim. "I ran the linter and there
+# are no errors" splits across clauses, so neither half matches on its own.
+claim="$claim"'|\bi ran (the )?(linter|lint|tests?|test suite|build|suite|type ?check|typecheck)\b'
 
 # Any one of these and the clause is not a first-hand present claim.
 # Order matters only for readability; any match disqualifies.

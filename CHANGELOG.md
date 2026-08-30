@@ -2,6 +2,67 @@
 
 All notable changes to this skill are recorded here. Dates are ISO.
 
+## 0.6.5 - 2026-08-30
+
+A habit secretary judged the work that produced this repository against the
+twenty habits it ships. **PASS 10, FAIL 5, UNKNOWN 5.** The five UNKNOWNs are
+the evidence boundary of a git repository: it cannot record a read, a request,
+an approval, or a message. That is a property of the mandate, not difficulty.
+
+### Fixed: the class-level checks were a veneer, and it was demonstrated
+
+The reviewer copied the tree and introduced the same defects in **new wording**.
+`checks.sh` exited 0 on both:
+
+- `21 starter habits` passed, because the count check grepped for "nineteen" and
+  "19", the two spellings that had been wrong once.
+- A reworded inertness claim, "Nothing in this package runs on its own", passed,
+  because that check compared three exact sentences.
+
+Both now assert the property. The count check derives the live number and
+recognises spellings from zero to twenty-one; the inertness check matches the
+claim rather than one phrasing of it. Five negative tests use wordings that have
+never appeared in this repository, and all five fire.
+
+### Fixed: the gate traded away coverage silently
+
+Removing the bare `no errors` pattern in 0.6.2 fixed a real false positive and
+took real coverage with it, with four allow-direction tests added and no
+block-direction test. The reviewer measured the hole. Verified here: "The tests
+are passing", "The build has no errors", "The linter is clean now" and "I ran
+the linter and there are no errors" all walked through.
+
+Restored with patterns for the progressive form, for named-check errors, and for
+claiming to have **run** a check, which is itself a claim. Eight new cases, both
+directions, so the same trade cannot be made silently again. Suite is 58.
+
+### Fixed: the fabricated zero the package forbids, in its own examples
+
+`review.md:35` says "A zero gets trusted; a dash does not", and three example
+cards carried `lapses=0`: in `README.md`, in `habit-card.md`, and in a retired
+card in `review.md`. The check existed but was scoped to the shipped starter
+cards, so it could not see the two most-read examples in the package. Widened,
+and it immediately found the third instance neither review had caught.
+
+### Recorded, not fixed: what the ledger says about this repository
+
+Kept here rather than quietly dropped, because `SYS-16` is the habit this
+package calls keystone.
+
+- **Habit hoarding is real and measurable.** `git log -p -- assets/starter/`
+  shows **zero** cards ever removed. The set went 19 to 20 and stayed. The
+  shipped system file carries 16 cards against a stated budget of 12, discloses
+  it, and calls itself the hoarding failure. Disclosure is not a budget, and
+  `CONTRIBUTING.md` asks contributors a question the maintainer never answered.
+- **The repository does not use its own stated tier.** There is no
+  `.claude/rules/habits.md`, and `.gitignore` excludes one. Its standing rules
+  live in `AGENTS.md` as prose bullets with no IDs, no checks and no budget.
+- **The gate is not installed on the work that produced it.** No `settings.json`
+  anywhere.
+- **The judged tier produced no artifact in four review cycles.** No ledger, no
+  case file, no board. The record is commit prose, which
+  `live-checks/README.md` says a record must not be.
+
 ## 0.6.4 - 2026-08-30
 
 A habit secretary judged the shipped documents against the twenty habits the

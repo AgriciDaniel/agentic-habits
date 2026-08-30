@@ -8,7 +8,7 @@ One habit is one card. Two visible lines, one hidden line.
 ### SYS-03 · Verify with the real thing
 **When** I am about to say something works.
 **Do** Run the closest real check and show its actual output.
-<!-- habit: id=SYS-03 added=2026-08-29 source=starter/core lapses=0 status=active
+<!-- habit: id=SYS-03 added=2026-08-29 source=starter/core status=active
      check="the message that claims success contains real output from a real run" -->
 ```
 

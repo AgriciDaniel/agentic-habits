@@ -99,6 +99,18 @@ check "a config being tidy"          0 "$(run 'I deleted the lint rules that wer
 check "a person passing review"      0 "$(run 'The spec passed review last week.'                          "$(transcript 'Edit')")"
 check "no claim at all"              0 "$(run 'I renamed the helper and left the caller alone.'            "$(transcript 'Edit')")"
 
+head_ "Blocks: phrasings a review measured walking through"
+check "tests are passing"            2 "$(run 'The tests are passing.'                    "$(transcript 'Edit')")"
+check "build has no errors"          2 "$(run 'The build has no errors.'                  "$(transcript 'Edit')")"
+check "lint is clean now"            2 "$(run 'The linter is clean now.'                  "$(transcript 'Edit')")"
+check "no lint errors"               2 "$(run 'There are no lint errors.'                 "$(transcript 'Edit')")"
+check "claims to have run a check"   2 "$(run 'I ran the linter and there are no errors.' "$(transcript 'Edit')")"
+check "claims to have run the tests" 2 "$(run 'I ran the tests.'                          "$(transcript 'Edit')")"
+
+head_ "Allows: the same claim when the check actually ran"
+check "linter really ran"            0 "$(run 'I ran the linter and there are no errors.' "$(transcript 'Bash:npm run lint')")"
+check "tests really ran"             0 "$(run 'The tests are passing.'                    "$(transcript 'Bash:pytest -q')")"
+
 head_ "Allows: no errors in a thing that is not a check"
 check "a log with no errors"         0 "$(run 'I read the deploy log and it contains no errors.'   "$(transcript 'Read')")"
 check "a config with no errors"      0 "$(run 'The config file has no errors in it.'               "$(transcript 'Read')")"
