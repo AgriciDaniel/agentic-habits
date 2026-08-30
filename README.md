@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <b>One command that gives an agent standing behavior which survives the end of the chat.</b>
+  <b>One command that gives an agent behaviour which survives the end of the chat,<br>and says plainly which parts of it are enforced and which are only loaded.</b>
 </p>
 
 ---
@@ -43,10 +43,16 @@ So a habit is two things, and most rule sets ship only the first.
 |---|---|---|
 | **Stated** | a rules file that loads when the trigger fires | none, it is a hint |
 | **Gated** | a hook that executes regardless of what the agent decides | deterministic |
-| **Judged** | a read-only verifier scoring adherence from evidence | after the fact, but real |
+| **Judged** | a read-only verifier scoring adherence from evidence | after the fact, and weaker than it sounds |
 
 Most rule sets ship the first tier and imply the second. This one says which
 tier a habit is in, in the card itself.
+
+**What the first tier actually buys.** On Anthropic's Impossible Tasks
+evaluation, an explicit forceful written instruction moved the failure rate from
+55% to 35% for one model and 50% to 23% for the next. A written rule roughly
+halves the failure and leaves a quarter to a third standing. That is the ceiling
+this package works under, and it is why the other two tiers exist.
 
 ## Quickstart
 
@@ -89,8 +95,10 @@ transcript. The format is borrowed from implementation intentions, the finding
 that "when X happens, I will do Y" gets acted on where a stated goal does not.
 
 The bookkeeping rides in an HTML comment, which is stripped before the file
-reaches the agent's context. Tested, with a control, in
-[`verification.md`](skills/habits/references/verification.md).
+reaches the agent's context. Tested with a control on Claude Code 2.1.251, in
+[`verification.md`](skills/habits/references/verification.md). Treat it as
+version-specific: if bookkeeping ever starts showing up in the agent's
+reasoning, that test is the one to rerun.
 
 ## Where a habit goes
 
@@ -119,7 +127,7 @@ skipped gets escalated to a hook, proposed and approved, never written silently.
 | `/habits setup` | First run. Reads what exists, proposes a starter set, writes after approval |
 | `/habits add <text>` | Turn a loose wish into a habit card, pick the scope, preview, write |
 | `/habits review` | Conflicts, duplicates, dead weight, budget, promotions, retirements |
-| `/habits check` | Score this session against the live habits, from evidence only |
+| `/habits check` | Score this session against the live habits, from evidence only. Same-context self-review, and it must say so |
 | `/habits judge` | The same, in a fresh read-only context, which is the verdict that counts |
 | `/habits cases` | The case file: what actually happened, with evidence |
 | `/habits lapse <id>` | Record a miss and run the repair ladder |
@@ -150,7 +158,7 @@ the context cannot carry, and keeping it costs every session that follows.
 
 A rules file asks. A hook does not ask.
 
-`assets/gates/completion-gate.sh` is a `Stop` hook that refuses to let a turn end
+`skills/habits/assets/gates/completion-gate.sh` is a `Stop` hook that refuses to let a turn end
 claiming a test, build, lint, or type check came back clean when nothing was run
 to find out. Here is what happened when it met a real session, with the model
 given no way to run anything:
@@ -202,7 +210,13 @@ which is the behaviour `SYS-04` exists to require.
 | **communication** | Outcome first · Name the assumption · No narration · Compression never drops a dissent |
 
 Nobody should install all twenty. Core plus one pack is a working set, and the
-budget exists to make that choice deliberate. Full cards and rationale in
+budget exists to make that choice deliberate.
+
+**And know what they rest on.** Two of the twenty are backed by published
+measurement, two by official documentation, one is graded `contested` because
+the failure it targets has largely been trained out of current models, and the
+other fifteen are arguments. Good arguments, often. Not findings. Full cards,
+grades and rationale in
 [`starter-pack.md`](skills/habits/references/starter-pack.md).
 
 </details>
@@ -217,7 +231,9 @@ assumption · Context amnesia · Confident invention · Sycophantic fold · Boil
 ocean · Narration theatre · Cleanup by destruction · Habit hoarding
 
 You do not delete a bad habit. You give its trigger somewhere else to go, which
-is why every entry names a replacement rather than a prohibition. The twelfth is
+is why every entry names a replacement rather than a prohibition. Each entry
+describes a pattern and a plausible pressure, not a claim about model internals,
+and whether an incident-derived habit is *followed* better is unmeasured. The twelfth is
 the one that quietly disables all the others. Full catalogue in
 [`anti-habits.md`](skills/habits/references/anti-habits.md).
 
@@ -261,6 +277,17 @@ documented**, including where the budget numbers come from.
 The human habit research this borrows from is evidence about people, not about
 language models. Nothing here strengthens with use: two lines in a rules file
 are as strong on day ninety as on day one. What is being engineered is context.
+
+**The evidence file has no citations.** `evidence.md` carries roughly thirty
+specific numeric claims about third-party research with no source links, five of
+them named individually as untraceable. The file says so at the top, and
+`verification.md` files it as the largest outstanding gap in the package. That is
+disclosure, not a fix. Read it before quoting any figure from here.
+
+**A judge reading only a transcript is weak.** Detecting rule violations runs
+better than chance and well below reliably. That is why the judge is given file
+tools, why it is told to prefer artifacts to the agent's narration, and why a
+`FAIL` is a flag worth checking rather than a finding.
 
 The budgets are design choices anchored to Anthropic's documented guidance that
 instruction files past roughly two hundred lines reduce adherence. No experiment

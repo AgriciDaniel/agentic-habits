@@ -2,6 +2,67 @@
 
 All notable changes to this skill are recorded here. Dates are ISO.
 
+## 0.6.4 - 2026-08-30
+
+A habit secretary judged the shipped documents against the twenty habits the
+package ships. The verdict was concentrated in one place, and it was the
+keystone habit.
+
+### Fixed: the README broke SYS-16
+
+`SYS-16` says compression may drop detail but never a dissent. The README
+compresses eight reference files and dropped the calibrating caveat from almost
+every one. Measured by grep: the words `unmeasured`, `self-review`, `contested`,
+`ceiling` and `AUROC` appeared **zero** times in a document summarising files
+where each is load-bearing.
+
+Restored to the README:
+
+- **The ceiling.** `SKILL.md` tells the agent that a written rule roughly halves
+  the failure and leaves a quarter to a third standing. The README told the
+  human nothing. The file the agent loads was more honest than the file the
+  reader gets.
+- **What the pack rests on.** Two of twenty are backed by measurement, two by
+  documentation, one is `contested`, and fifteen are arguments. The README
+  shipped the pack with no grades at all.
+- **The package's own largest self-declared defect**, that `evidence.md` carries
+  ~30 numeric claims with no source links, which "Honest limits" did not mention.
+- **The judged tier is weaker than it sounded.** "After the fact, but real"
+  became "after the fact, and weaker than it sounds", and `/habits check`
+  regained the same-context self-review label that `judging.md` calls mandatory.
+- **Version scope** on the comment-stripping claim, and "patterns, not findings"
+  on the anti-habits.
+
+The headline also conflated a durable rule with a reliable one, which `SKILL.md`
+explicitly forbids.
+
+### Fixed: SYS-16 broken in the file that defines it
+
+`methodology.md` cited the package's most-quoted figure, the 54% to 9% drop from
+giving an agent a sanctioned way to declare a task impossible, without the
+caveat that the effect was much less pronounced for the Claude model tested.
+`evidence.md` carries that caveat **and records that this file had dropped it
+once before**. This package runs only on Claude, so the caveat is the reader's
+answer, not a footnote. Restored.
+
+### Fixed: a path that does not exist, and two wrong counts
+
+Three documents named `assets/gates/completion-gate.sh`. At the repository root
+`assets/` holds two images and a provenance file; the script is under
+`skills/habits/`. A reader wanting to audit the hook before installing it was
+sent to the wrong directory.
+
+`SECURITY.md` said "five development scripts. Four of them run in CI." There are
+six, and five run in CI. Both numbers wrong, in the document people read before
+deciding whether to trust the thing.
+
+### Added: checks for both classes
+
+CI now asserts that every repository path named in prose resolves, and that
+`SECURITY.md`'s two script counts match disk and the workflow. Two more negative
+tests bring the suite to nineteen, each proving its check fires on the defect it
+was written for.
+
 ## 0.6.3 - 2026-08-30
 
 Closing the last four anti-slop findings, one of which 0.6.2 created while

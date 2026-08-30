@@ -15,7 +15,7 @@ only. Do not describe them as portable, here or in anything you write.
 | Three tiers, the repair ladder, budgets, the 12 anti-habits, the judging method | yes | Prose discipline. Nothing harness-specific. |
 | The `<!-- habit: ... -->` bookkeeping | no | Stripping is a measured Claude Code behavior, tested against a control on 2.1.251. Elsewhere assume the comment is in the prompt, visible to the model and paid for in tokens. Strip it before porting. |
 | `.claude/rules/` and `paths:` scoping | no | Codex and Gemini load their instruction file whole, every session. Cursor's `globs:` is the nearest analogue and is untested here. Porting collapses four scopes into one, which removes the instrument this package calls the whole mechanism. |
-| `assets/gates/completion-gate.sh` | no | Reads a Claude Code `Stop` payload and a Claude Code JSONL transcript, and blocks with exit 2. Every one of those is Claude Code specific. The gated tier does not exist elsewhere. |
+| `skills/habits/assets/gates/completion-gate.sh` | no | Reads a Claude Code `Stop` payload and a Claude Code JSONL transcript, and blocks with exit 2. Every one of those is Claude Code specific. The gated tier does not exist elsewhere. |
 | `agents/habit-judge.md` | partly | The method ports. `tools: Read, Grep, Glob` does not, and that restriction is why the verdict means anything. Elsewhere the judge is a prompt asking not to edit, which is a hint. That distinction is what this package exists to make. |
 | `/habits` | no | A Claude Code skill invocation. |
 

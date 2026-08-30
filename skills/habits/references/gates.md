@@ -13,7 +13,7 @@ that fires wrongly is worse than a habit that is occasionally missed.
 
 ## What ships
 
-`assets/gates/completion-gate.sh`, a `Stop` hook that refuses to let a turn end
+`skills/habits/assets/gates/completion-gate.sh`, a `Stop` hook that refuses to let a turn end
 claiming a test, build, lint, or type check came back clean when nothing was run
 to find out.
 

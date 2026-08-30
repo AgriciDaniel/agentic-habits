@@ -197,7 +197,10 @@ notice -> draft -> place -> observe -> sharpen -> promote -> escalate -> retire
 The largest prompt-level effect in the measured material is not a rule against
 anything. Giving an agent an explicit, sanctioned way to **declare a task
 impossible** cut cheating from 54% to 9% for one model and 49% to 12% for
-another, on tasks with no legitimate solution. Forceful prohibitions in the same
+another, on tasks with no legitimate solution. Carry the caveat that comes with
+it, because this package runs only on Claude and the caveat is the reader's
+answer: the paper reports the effect was much less pronounced for the Claude
+model it tested. Forceful prohibitions in the same
 setting move the number by about half, and one politely worded prohibition made
 it worse.
 

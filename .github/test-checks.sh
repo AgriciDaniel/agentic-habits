@@ -63,6 +63,10 @@ probe "the gate losing its recursion guard" \
   "sed -i.bak 's/stop_hook_active/stop_hook_inactive/g' skills/habits/assets/gates/completion-gate.sh"
 probe "a grade withdrawn in the doc but left on the card" \
   "sed -i.bak '0,/evidence=practitioner/s//evidence=evidence-based/' skills/habits/assets/starter/system-habits.md"
+probe "a document naming a path that does not exist" \
+  "sed -i.bak 's|skills/habits/assets/gates/completion-gate.sh|assets/gates/completion-gate.sh|' README.md"
+probe "SECURITY.md miscounting the development scripts" \
+  "sed -i.bak 's/six development scripts/five development scripts/' SECURITY.md"
 probe "the judge gaining write tools" \
   "sed -i.bak 's/^tools: Read, Grep, Glob$/tools: Read, Grep, Glob, Write/' agents/habit-judge.md"
 

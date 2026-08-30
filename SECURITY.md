@@ -17,9 +17,9 @@ nothing but stderr, and never executes anything from the transcript, but you
 should confirm that yourself rather than take this paragraph's word for it.
 
 The repository also ships `install.sh` and `uninstall.sh`, which you run
-deliberately, and five development scripts. Four of them run in CI and need no
+deliberately, and six development scripts. Five of them run in CI and need no
 model: `.github/checks.sh`, `.github/test-checks.sh`, `.github/test-gate.sh`,
-`.github/test-install.sh`, plus `.github/live-checks/gate-replay.sh`. One,
+`.github/test-install.sh`, and `.github/live-checks/gate-replay.sh`. The sixth,
 `.github/live-checks/rules-canary.sh`, invokes the `claude` CLI and spends model
 quota; it never runs in CI and only runs when you run it.
 

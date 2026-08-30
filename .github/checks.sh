@@ -193,6 +193,38 @@ else
   bad "starter-pack.md's practitioner count does not match the cards (${tally[practitioner]})"
 fi
 
+# Two classes a document review caught that no check could see: a path named in
+# prose that does not exist, and a script count stated in prose.
+# A path in a file under skills/habits/ may be written relative to the skill
+# root; a path in a root-level document may not. Resolving both ways everywhere
+# is what let `assets/gates/...` pass in the README while the real file lives
+# under skills/habits/, which a document review caught and this check did not.
+badpath=0
+while IFS= read -r f; do
+  # A file inside the skill may address a path from the repo root or from the
+  # skill root. A root-level document has only the repo root.
+  skillrel=0; case "$f" in ./skills/habits/*) skillrel=1 ;; esac
+  while IFS= read -r ref; do
+    [ -n "$ref" ] || continue
+    case "$ref" in .github/copilot-instructions.md) continue ;; esac  # another harness's file, named as an example
+    if [ -e "$ref" ]; then continue; fi
+    if [ "$skillrel" = 1 ] && [ -e "skills/habits/$ref" ]; then continue; fi
+    bad "$f names $ref, which does not exist"; badpath=1
+  done < <(grep -ohE '`(skills/)?[a-z0-9_./-]+\.(sh|md|json|yml)`' "$f" | tr -d '`' \
+           | grep -E '^(skills|assets|agents|\.github)/' | sort -u)
+done < <(find . -name '*.md' -not -path './.git/*' -not -name CHANGELOG.md | sort)
+[ "$badpath" -eq 0 ] && pass "every repository path named in prose resolves from its own file"
+
+devscripts=$(ls .github/*.sh .github/live-checks/*.sh 2>/dev/null | wc -l | tr -d ' ')
+ciscripts=$(grep -oE 'bash \.github/[a-z/-]+\.sh' .github/workflows/ci.yml | sort -u | wc -l | tr -d ' ')
+n2w() { case "$1" in 4) echo four;; 5) echo five;; 6) echo six;; 7) echo seven;; *) echo "$1";; esac; }
+grep -q "$(n2w "$devscripts") development scripts" SECURITY.md \
+  && pass "SECURITY.md states the real development-script count ($devscripts)" \
+  || bad "SECURITY.md's development-script count does not match disk ($devscripts)"
+grep -qi "$(n2w "$ciscripts") of them run in CI" SECURITY.md \
+  && pass "SECURITY.md states how many run in CI ($ciscripts)" \
+  || bad "SECURITY.md's CI-script count does not match ci.yml ($ciscripts)"
+
 head_ "Manifests carry what a marketplace needs"
 jq -e '.description and (.description | length > 20)' .claude-plugin/marketplace.json >/dev/null 2>&1 \
   && pass "marketplace has a description (its absence fails plugin validate --strict)" \
