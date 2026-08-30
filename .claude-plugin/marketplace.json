@@ -10,7 +10,7 @@
       "name": "habits",
       "source": "./",
       "description": "Agentic habits in three tiers: stated rules placed where their trigger fires, gates that make the ones that must not fail deterministic, and a read-only judge that scores adherence from evidence. Ships a working Stop hook, 20 starter habits, and 12 named anti-habits.",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "author": {
         "name": "Daniel Agrici"
       },
@@ -29,6 +29,6 @@
   "description": "Agentic habits in three tiers: stated rules placed where their trigger fires, gates that make the ones that must not fail deterministic, and a read-only judge that scores adherence from evidence.",
   "metadata": {
     "description": "Agentic habits in three tiers: stated rules placed where their trigger fires, gates that make the ones that must not fail deterministic, and a read-only judge that scores adherence from evidence.",
-    "version": "0.6.0"
+    "version": "0.6.1"
   }
 }

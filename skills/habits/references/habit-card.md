@@ -99,12 +99,9 @@ a habit whose *first* failure is unacceptable unreachable. `stakes=critical` is
 how the user says "gate this before it ever fails".
 
 `tier` is the honesty field. A `stated` habit is a hint and the skill says so.
-`gated` means a hook enforces it and the `gate` field names which. `evidence`
-records how well the rule itself is supported, which is separate from whether it
-was followed: `sourced` means official documentation backs it, `practitioner`
-means a single outside report, `reasoned` means it is an argument. Most habits
-are `reasoned`, and there is nothing wrong with that as long as nobody calls
-them findings.
+`gated` means a hook enforces it and the `gate` field names which. `evidence` is
+defined once, above, and grades the fact underneath rather than the rule. There
+is exactly one vocabulary for it and this file must never grow a second.
 
 ## The check should be a command, not an adjective
 

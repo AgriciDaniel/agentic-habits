@@ -2,6 +2,81 @@
 
 All notable changes to this skill are recorded here. Dates are ISO.
 
+## 0.6.1 - 2026-08-30
+
+Publication readiness. A fresh reviewer sequenced the work and found the worst
+defect in the repository sitting in the one document whose job is to prevent it.
+
+### Fixed: the provenance document asserted a falsehood about its own asset
+
+`assets/PROVENANCE.md` said the cover image's origin was "not recorded" and that
+"the file carries no metadata chunks that would show it."
+
+The file carries a **23,617-byte C2PA manifest**. Verified here by reading the
+PNG chunks: `c2pa.created` with `softwareAgent: gpt-image 2.0`,
+`digitalSourceType: trainedAlgorithmicMedia`, `claim_generator_info: OpenAI
+Media Service API`, signed under a certificate issued to OpenAI OpCo, LLC.
+
+The sentence was written without opening the file, in the document that exists
+so nothing is written without opening the file. An unverified negative, asserted
+as fact, on the artifact at the top of the README. Rewritten with the manifest
+contents and a command a reader can run to check.
+
+Two related findings in the same pass: the derived `social-preview.png` **lost**
+those content credentials when ImageMagick resized it, which is now disclosed;
+and the retired SVG banners are still in git history, so a clone contains them,
+where the old text claimed they were "not part of the distribution".
+
+The README now discloses that the cover is AI-generated, which it never did.
+
+### Fixed: a check that could not detect the defect it was written for
+
+The gate-test-count assertion grepped three files with `grep -q`, which passes if
+**any one** carries the right number. So it reported `ok` on a repository where
+`gates.md` said 27 and the suite had 46. Its own pass message admitted it:
+"stated somewhere current."
+
+Rewritten per file. And `.github/test-checks.sh` now reintroduces fifteen
+defects into a copy of the repository, one at a time, and requires `checks.sh` to
+fail on each. This is the package's own rule about judges and gates, applied to
+the checks themselves: an instrument only ever observed passing is untested.
+
+It found two more bugs on its first run. The new count check called
+`git ls-files`, which returns nothing in a copied tree, so it passed vacuously.
+That is the same class as the disjunction it replaced.
+
+### Fixed: three stale counts and a duplicate vocabulary
+
+`gates.md` said 27 gate tests (46). `SECURITY.md` said the gate is 119 lines
+(150), in the paragraph telling readers to audit it. `CHANGELOG` said 17
+installer tests (19). `habit-card.md` defined `evidence` twice, thirty lines
+apart, with two incompatible vocabularies, one of which no shipped card uses.
+`methodology.md` described the pack's grades as "two documented, the rest
+arguments" when three rest on published measurements. CI now catches all of it.
+
+### Changed: evidence.md is demoted rather than dressed up
+
+The file carries roughly thirty specific numeric claims about third-party
+research with **zero source links**. It now says so at the top, in full: treat
+every number as `[SEARCH]`-grade, this is a defect and not a style, and the
+right fix is a citation pass rather than a disclaimer. Filed under "Known and
+unfixed" alongside a discrepancy nobody has resolved: this file names Opus 4.5
+and 4.6 while `verification.md` refers to a Fable 5 system card, and at least
+one is wrong.
+
+`NOTICE` no longer points at a disclosure that did not exist.
+
+### Added: citations, and a hedge where a claim was untested
+
+The quoted-documentation list in `verification.md` now carries its sources: six
+documentation URLs plus the plugin marketplace. The README's claim about the
+plugin invocation name is hedged to match `verification.md`, which says it was
+never tested.
+
+### Changed: commit history rewritten to a noreply address
+
+Before publication, while it was still cheap.
+
 ## 0.6.0 - 2026-08-30
 
 Two adversarial reviewers in separate contexts, per the doctrine this package
@@ -51,7 +126,7 @@ complete nested duplicate with a stale `SKILL.md` above it. A repository whose
 flagship habit is verify with the real thing shipped an install command nobody
 executed.
 
-Replaced by `install.sh` and `uninstall.sh`, with 17 tests in CI on Linux and
+Replaced by `install.sh` and `uninstall.sh`, with 19 assertions in CI on Linux and
 macOS: fresh install, reinstall with no nested duplicate, ownership marker,
 atomic staging, gate staged but never enabled without `--apply`, `--apply`
 appending rather than replacing and being idempotent by resolved command path,

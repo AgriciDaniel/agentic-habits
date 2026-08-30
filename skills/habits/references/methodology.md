@@ -228,8 +228,9 @@ authored upfront from what seems wise is not.** That distinction should decide
 what survives a review, and it is uncomfortable here for an obvious reason. The
 starter pack in this repository is authored upfront. It is a menu of plausible
 rules, drafted from known failure patterns rather than harvested from your
-sessions, and its own evidence grades say as much: two of twenty are documented,
-the rest are arguments.
+sessions, and its own evidence grades say as much: three rest on published
+measurements, two on official documentation, one is contested, and the other
+fourteen are arguments.
 
 Treat the pack as a vocabulary for writing your own, not as a set to adopt. The
 habits that will actually earn their context are the two or three you write

@@ -129,7 +129,7 @@ decide for you:
   for a habit that never needed one, and every gate you add is a false-positive
   surface on every future turn.
 - **One gate that is already written and tested.** `completion-gate.sh` covers
-  the specific claim-versus-evidence case with 27 tests and a recorded live
+  the specific claim-versus-evidence case with 46 tests and a recorded live
   block.
 
 So `/habits enforce` should hand off to `hookify` for anything beyond the

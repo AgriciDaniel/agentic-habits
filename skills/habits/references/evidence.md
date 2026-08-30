@@ -5,7 +5,24 @@ this package does. Kept separate from the rules so a reader can see what is
 established, what is estimated from adversarial setups, and what is nobody's
 finding at all.
 
-Everything here is a number someone published. `verification.md` covers claims
+> **Read this before quoting anything below.** Not one figure in this file
+> carries a source link. Every number came from a research pass in a single
+> session and none has been re-verified against a primary source inside this
+> repository. Treat all of it as `[SEARCH]`-grade: somebody's reading of
+> somebody's paper, recorded honestly and not checked.
+>
+> This is a defect, not a style. It is filed under "Known and unfixed" in
+> `verification.md`, and it is uncomfortable precisely because this package
+> argues that an unsourced claim stated as fact is the disease. The right fix is
+> a citation pass, not a disclaimer. Until that happens, the disclaimer is what
+> keeps the file honest.
+>
+> One internal discrepancy, named rather than smoothed: the model families in
+> this file and in `verification.md` do not match. This file says Opus 4.5 and
+> 4.6; `verification.md` refers to a Fable 5 system card. At least one is wrong,
+> and neither has been checked here.
+
+Everything here is a number someone reported. `verification.md` covers claims
 about how the harness behaves; this file covers claims about how models behave.
 
 ## The ceiling on what a written rule can do

@@ -4,7 +4,7 @@ What in this skill is tested, what is quoted from documentation, and what is
 neither. Kept separate from the claims themselves so a reader can check the
 evidence without taking the prose on trust.
 
-Environment: Claude Code 2.1.251, Linux, 2026-08-29. Every test ran in a
+Environment: Claude Code 2.1.251, Linux, 2026-08-30. Every test ran in a
 throwaway project directory, headless, on the cheapest available model, and the
 directory was deleted afterwards.
 
@@ -148,6 +148,31 @@ from the description is not guaranteed on a machine with many skills. Typing
 being loaded at all, since they live in rules files.
 
 ## Quoted from documentation, not independently tested
+
+Sources for this section, so a reader can check any line:
+
+- Memory, CLAUDE.md scopes, `.claude/rules/`, path-scoped rules, auto memory,
+  the 200-line guidance: <https://code.claude.com/docs/en/memory>
+- Hook events, exit-code semantics, the `Stop` payload and `stop_hook_active`:
+  <https://code.claude.com/docs/en/hooks>
+- "After two failed corrections", "have Claude show evidence rather than
+  asserting success", "if you could describe the diff in one sentence, skip the
+  plan", "bloated CLAUDE.md files cause Claude to ignore your actual
+  instructions", emphasis on one line, "hooks are deterministic and guarantee
+  the action happens", "convert it to a hook", `/goal` conditions, and the
+  adversarial review step with its over-flagging caveat:
+  <https://code.claude.com/docs/en/best-practices>
+- SKILL.md size guidance, the 1,536-character listing cap, and how a skill gets
+  its command name: <https://code.claude.com/docs/en/skills>
+- Plugin manifest fields and skill discovery:
+  <https://code.claude.com/docs/en/plugins-reference>
+- The official plugin marketplace catalogue, and `hookify`:
+  <https://code.claude.com/docs/en/discover-plugins> and
+  <https://github.com/anthropics/claude-code/tree/main/plugins>
+
+All fetched during development in August 2026. The documentation ships weekly;
+re-check before relying on a version-pinned detail.
+
 
 Each of these is stated in the Claude Code documentation and used as the basis
 for guidance here.
@@ -419,6 +444,19 @@ that no longer holds, rather than leaving a stale record in place.
   documentation but is not in the quoted list here.
 - **The plugin invocation name** was never tested. `claude plugin validate`
   passing is not the same as installing the plugin and seeing what it is called.
+- **`evidence.md` carries no citations at all.** Roughly thirty specific,
+  checkable, numeric claims about third-party research and vendor system cards,
+  with zero source links. They came from one research pass and have not been
+  re-verified against primary sources here. The file now says so at the top.
+  This is the largest outstanding gap in the package and it is exactly the
+  failure the package is about.
+- **Model families disagree between two shipped files.** `evidence.md` names
+  Opus 4.5 and 4.6; this file refers to a Fable 5 system card. At least one is
+  wrong and neither has been checked.
+- **Most quoted documentation lines lack a source URL.** The "quoted from
+  documentation" list below is accurate as quotation and thin as citation: one
+  URL for the whole list. `CONTRIBUTING.md` requires the link. The repository
+  does not yet meet its own rule here.
 - **The live-session records above are author testimony.** The scripts in
   `.github/live-checks/` reproduce the mechanisms; they do not prove that a
   particular session happened.

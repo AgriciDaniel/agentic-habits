@@ -3,6 +3,10 @@
 </p>
 
 <p align="center">
+  <sub>Cover image generated with OpenAI <code>gpt-image</code> and carrying C2PA content credentials. Provenance in <a href="assets/PROVENANCE.md">assets/PROVENANCE.md</a>.</sub>
+</p>
+
+<p align="center">
   <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-C2410C?style=flat-square"></a>
   <a href=".github/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/AgriciDaniel/agentic-habits/ci.yml?style=flat-square&label=checks&color=1C1917"></a>
   <img alt="rules: markdown" src="https://img.shields.io/badge/rules-markdown-1C1917?style=flat-square">
@@ -303,8 +307,10 @@ approve, and no state lives outside the files it writes with your yes.
 /plugin install habits@agentic-habits
 ```
 
-A plugin namespaces its skills, so this arrives as `/habits:habits`. Whether
-the bare `/habits` also resolves has not been tested here and is not claimed.
+Plugin skills are namespaced, so this should arrive as `/habits:habits`. That
+has **not** been tested here: `claude plugin validate` passing is not the same
+as installing the plugin and seeing what it is called. Filed as untested in
+`verification.md`.
 The installer route is the tested one.
 
 **The plugin route does not install the gate.** There is no `hooks/hooks.json`
