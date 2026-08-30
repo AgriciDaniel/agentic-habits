@@ -174,6 +174,25 @@ grep -q 'lapses=0' "$STARTER"/*.md && bad "a shipped card carries a fabricated l
 missing=$(for f in "$STARTER"/*.md; do grep -o 'id=[A-Z]*-[0-9]*[^>]*' "$f" | grep -v 'evidence=' | sed 's/ .*//'; done)
 [ -z "$missing" ] && pass "every shipped card carries an evidence grade" || { bad "cards with no evidence grade:"; printf '%s\n' "$missing" | sed 's/^/        /'; }
 
+# The grade tally in prose is a claim about the shipped cards. It drifted once,
+# when a grade was withdrawn in the reference doc and left on the card.
+declare -A tally
+for g in evidence-based institutional practitioner contested folklore; do
+  tally[$g]=$(grep -ho "evidence=$g" "$STARTER"/*.md | wc -l | tr -d ' ')
+done
+words() { case "$1" in 0) echo zero;; 1) echo one;; 2) echo two;; 3) echo three;; 4) echo four;;
+                       14) echo fourteen;; 15) echo fifteen;; 16) echo sixteen;; *) echo "$1";; esac; }
+if grep -q "$(words "${tally[evidence-based]}") rest on published" "$REFS/methodology.md"; then
+  pass "methodology.md's grade tally matches the shipped cards (${tally[evidence-based]} measured)"
+else
+  bad "methodology.md's grade tally does not match the cards: ${tally[evidence-based]} evidence-based, ${tally[institutional]} institutional, ${tally[contested]} contested, ${tally[practitioner]} practitioner"
+fi
+if grep -q "the other $(words "${tally[practitioner]}")" "$REFS/starter-pack.md"; then
+  pass "starter-pack.md's practitioner count matches the cards (${tally[practitioner]})"
+else
+  bad "starter-pack.md's practitioner count does not match the cards (${tally[practitioner]})"
+fi
+
 head_ "Manifests carry what a marketplace needs"
 jq -e '.description and (.description | length > 20)' .claude-plugin/marketplace.json >/dev/null 2>&1 \
   && pass "marketplace has a description (its absence fails plugin validate --strict)" \

@@ -82,8 +82,9 @@ should be removed, not ranked. `/habits review` looks for exactly three shapes:
 
 ## The one case for deliberate repetition
 
-There is a real exception, and it comes from how Anthropic writes its own
-prompts: a **hard limit** is restated at every surface where it can be violated,
+There is a real exception, and it comes from the same reverse-engineering
+analysis of Anthropic's published prompt, so treat it as inference about
+someone else's design rather than instruction: a **hard limit** is restated at every surface where it can be violated,
 rather than stated once in a central place. Defense in depth beats elegance when
 the cost of a miss is high.
 

@@ -43,7 +43,7 @@ here, and a conflict between the two is worth mentioning once.
 ### SYS-06 · Confirm the irreversible
 **When** an action deletes, overwrites, publishes, deploys, spends, or touches production.
 **Do** Name the exact target and its blast radius, and wait for an explicit yes.
-<!-- habit: id=SYS-06 evidence=evidence-based added=<added> source=starter/safety status=active check="a named target and an explicit approval precede the action" -->
+<!-- habit: id=SYS-06 evidence=practitioner added=<added> source=starter/safety status=active check="a named target and an explicit approval precede the action" -->
 
 ### SYS-07 · Protect what I did not write
 **When** I could resolve a mess by discarding changes, resetting, or rewriting history.

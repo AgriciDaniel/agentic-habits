@@ -2,6 +2,30 @@
 
 All notable changes to this skill are recorded here. Dates are ISO.
 
+## 0.6.3 - 2026-08-30
+
+Closing the last four anti-slop findings, one of which 0.6.2 created while
+fixing another.
+
+- **A grade withdrawn in the reference doc was left on the shipped card.** 0.6.2
+  removed `SYS-06` from the `evidence-based` row, because the rate cited there
+  measures unrequested actions, which is scope creep, not confirming an
+  irreversible action. The card kept `evidence=evidence-based`, so the doc and
+  the artifact disagreed. `SYS-06` is now `practitioner`, which is honest: it
+  has no published rate of its own.
+- **The evidence table still cited a figure removed from `evidence.md`**: the
+  untraceable ~42% and ~76% sycophancy pair. Replaced with the half that holds,
+  14.66% across 15,345 responses on three models.
+- **The wrong package-hallucination denominator survived** in `starter-pack.md`
+  after being corrected in `evidence.md`.
+- **A third assertion of Anthropic's prompt design as fact** in
+  `precedence.md`, after two were labelled as inference in 0.6.2.
+
+Tally after: two grades rest on measurement, two on documentation, one is
+contested, fifteen are arguments. CI now asserts that tally against the shipped
+cards in two places, and a seventeenth negative test proves it fires when a
+grade is withdrawn in prose and left on a card.
+
 ## 0.6.2 - 2026-08-30
 
 An anti-slop audit: 36 findings, 11 HIGH, 21 MEDIUM, 4 LOW. It opened by

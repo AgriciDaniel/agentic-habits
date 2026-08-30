@@ -20,10 +20,10 @@ is always yours and is never graded above `practitioner` by that fact alone.
 
 | Grade | Habits | The fact underneath |
 |---|---|---|
-| `evidence-based` | SYS-11, SYS-12 | Published rates. hallucinated package references in 19.7% of 576,000 samples; sycophantic reversal from a correct answer at ~42% under a mild challenge and ~76% under a flat contrary assertion |
+| `evidence-based` | SYS-11, SYS-12 | Published rates. Of 2.23 million package references generated across 576,000 code samples, 19.7% were hallucinated, including 205,474 unique non-existent names. Regressive sycophancy, a correct answer becoming incorrect under challenge, in 14.66% of 15,345 responses across three models |
 | `institutional` | SYS-03, SYS-05 | Official Claude Code documentation states the practice directly. Citations filed in `verification.md` |
 | `contested` | PRJ-03 | The failure it targets is largely trained out: test hard-coding fell from 64% on Sonnet 3.7 to 0% on Opus 4.5 and 4.6 |
-| `practitioner` | the other fourteen | A widely described pattern with no measurement behind it. Often right, never a finding |
+| `practitioner` | the other fifteen | A widely described pattern with no measurement behind it. Often right, never a finding |
 
 When a habit mixes levels, take the least certain material that affects what it
 actually does.
@@ -42,7 +42,7 @@ what it returned, or a screenshot of the result", alongside a named failure
 pattern, the trust-then-verify gap, whose stated fix is "If you can't verify it,
 don't ship it."
 
-Five of twenty rest on something external, and only three on measurement. That is the honest state of the field, not a gap in this pack. There is
+Four of twenty rest on something external, and only two on measurement. That is the honest state of the field, not a gap in this pack. There is
 no published measurement for most agent behavior rules. Adopt the rest because
 the failure they prevent has happened to you, which is evidence of a better
 kind, and record the case when it does.

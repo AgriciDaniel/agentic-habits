@@ -61,6 +61,8 @@ probe "a reference file SKILL.md never links" \
   "cp skills/habits/references/gates.md skills/habits/references/orphan.md"
 probe "the gate losing its recursion guard" \
   "sed -i.bak 's/stop_hook_active/stop_hook_inactive/g' skills/habits/assets/gates/completion-gate.sh"
+probe "a grade withdrawn in the doc but left on the card" \
+  "sed -i.bak '0,/evidence=practitioner/s//evidence=evidence-based/' skills/habits/assets/starter/system-habits.md"
 probe "the judge gaining write tools" \
   "sed -i.bak 's/^tools: Read, Grep, Glob$/tools: Read, Grep, Glob, Write/' agents/habit-judge.md"
 
