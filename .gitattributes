@@ -4,3 +4,8 @@
 *.yml text eol=lf
 *.md text eol=lf
 *.png binary
+
+# This repository is markdown with a small amount of shell. Linguist ignores
+# markdown by default, which made the language bar read "Shell 100%".
+*.md linguist-detectable=true
+*.md linguist-documentation=false

@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-C2410C?style=flat-square"></a>
-  <a href=".github/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/AgriciDaniel/agentic-habits/ci.yml?style=flat-square&label=checks&color=1C1917"></a>
+  <a href="https://github.com/AgriciDaniel/agentic-habits/actions/workflows/ci.yml"><img alt="checks" src="https://github.com/AgriciDaniel/agentic-habits/actions/workflows/ci.yml/badge.svg?branch=main"></a>
   <img alt="rules: markdown" src="https://img.shields.io/badge/rules-markdown-1C1917?style=flat-square">
   <img alt="gate: shell + jq" src="https://img.shields.io/badge/gate-shell%20%2B%20jq-1C1917?style=flat-square">
 </p>
